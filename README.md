@@ -5,4 +5,4 @@ This system detects signals of the students regarding physical bullying, verbal 
 Anti-Bullying System documentation
 
 ## Server Side
-- [Link](https://github.com/hothdung/Anti-Bullying-Physical-bullying-Cyberbullying-/wiki/Server-Side)
+- [Link](https://github.com/hothdung/Anti-Bullying-Physical-bullying-Cyberbullying-/blob/master/serverside.md)
