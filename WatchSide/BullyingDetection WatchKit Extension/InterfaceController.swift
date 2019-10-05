@@ -51,6 +51,16 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
     var manualLat: Double = 0.0
     var manualLong: Double = 0.0
     var heartRateVal: Double = 0.0
+    var prev_grav_z: Double = 0.0
+    var prev_acc_z: Double = 0.0
+    var grav_x:Double = 0.0
+    var grav_y:Double = 0.0
+    var grav_z:Double = 0.0
+    var acc_x:Double = 0.0
+    var acc_y:Double = 0.0
+    var acc_z:Double = 0.0
+    
+    var sendOrNot:Bool = false
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -80,8 +90,6 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
         let currentLoc =  locations[0]
         let lat = currentLoc.coordinate.latitude
         let long = currentLoc.coordinate.longitude
-        print(lat)
-        print(long)
         
         manualLat = lat
         manualLong = long
@@ -130,23 +138,49 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
                 print("Encountered error: \(error!)")
             }
             if deviceMotion != nil {
-                self.gravityStr = String(format: "X1: %.2f Y: %.2f Z: %.2f" ,
-                                         (deviceMotion?.gravity.x)!,
-                                         (deviceMotion?.gravity.y)!,
-                                         (deviceMotion?.gravity.z)!)
+                self.grav_x = (deviceMotion?.gravity.x)!
+                self.grav_y = (deviceMotion?.gravity.y)!
+                self.grav_z = (deviceMotion?.gravity.z)!
+                self.gravityStr = String(format: "grav_x: %.2f, grav_y: %.2f, grav_z: %.2f" ,
+                                         self.grav_x,
+                                         self.grav_y,
+                                         self.grav_z)
                 
+                if self.prev_grav_z == 0.0 {
+                    self.prev_grav_z = self.grav_z
+                    self.sendOrNot = true
+                }
+                else{
+                    if (self.grav_z - self.prev_grav_z) <= -0.25{
+                        //print("Gravity: ",self.grav_z, self.prev_grav_z)
+                        self.sendOrNot = true
+                    }
+                    else{
+                        self.sendOrNot = false
+                    }
+                    self.prev_grav_z = self.grav_z
+                }
                //self.sendData(x: self.gravityStr)
               // print(self.gravityStr)
                 
-                self.userAccelerStr = String(format: "X2: %.2f Y: %.2f Z: %.2f" ,
-                                             (deviceMotion?.userAcceleration.x)!,
-                                             (deviceMotion?.userAcceleration.y)!,
-                                             (deviceMotion?.userAcceleration.z)!)
+                self.acc_x = (deviceMotion?.userAcceleration.x)!
+                self.acc_y = (deviceMotion?.userAcceleration.y)!
+                self.acc_z = (deviceMotion?.userAcceleration.z)!
+                self.userAccelerStr = String(format: "acc_x: %.2f, acc_y: %.2f, acc_z: %.2f" ,
+                                             self.acc_x,
+                                             self.acc_y,
+                                             self.acc_z)
                 
-                //self.sendData(x: self.userAccelerStr)
-                //print(self.userAccelerStr)
+                if (self.acc_z - self.prev_acc_z) <= -0.2{
+                    //print("Accelero_z: ",self.acc_z, self.prev_acc_z)
+                    self.sendOrNot = true
+                }
+                else{
+                    self.sendOrNot = false
+                }
+                self.prev_acc_z = self.acc_z
                 
-                self.rotationRateStr = String(format: "X3: %.2f Y: %.2f Z: %.2f" ,
+                self.rotationRateStr = String(format: "rota_x: %.2f, rota_y: %.2f, rota_z: %.2f" ,
                                               (deviceMotion?.rotationRate.x)!,
                                               (deviceMotion?.rotationRate.y)!,
                                               (deviceMotion?.rotationRate.z)!)
@@ -156,7 +190,7 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
                //print(self.rotationRateStr)
                 
                 
-                self.attitudeStr = String(format: "R4: %.1f p: %.1f y: %.1f" ,
+                self.attitudeStr = String(format: "atti_roll: %.1f, atti_pitch: %.1f, atti_yaw: %.1f" ,
                                           (deviceMotion?.attitude.roll)!,
                                           (deviceMotion?.attitude.pitch)!,
                                           (deviceMotion?.attitude.yaw)!)
@@ -166,7 +200,15 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
                 //print(self.attitudeStr)
                 
                 //self.movement = self.gravityStr + self.userAccelerStr + self.rotationRateStr + self.attitudeStr
-                self.movement = "\(self.gravityStr) \(self.userAccelerStr) \(self.rotationRateStr) \(self.attitudeStr)"
+                if self.sendOrNot{
+                    //print("Falling motion detected!")
+                    self.movement = "\(self.gravityStr), \(self.userAccelerStr), \(self.rotationRateStr), \(self.attitudeStr), \("_1")"
+                }
+                else{
+                    self.movement = "\(self.gravityStr), \(self.userAccelerStr), \(self.rotationRateStr), \(self.attitudeStr), \("_0")"
+                }
+                //print(self.movement)
+                self.sendOrNot = false
             }
         }
     }
@@ -293,18 +335,18 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
             {(placemarks, error) in
                 if (error != nil)
                 {
-                    print("reverse geodcode fail: \(error!.localizedDescription)")
+                    //print("reverse geodcode fail: \(error!.localizedDescription)")
                 }
                 let pm = placemarks! as [CLPlacemark]
                 
                 if pm.count > 0 {
                     let pm = placemarks![0]
-                    print(pm.country)
-                    print(pm.locality)
-                    print(pm.subLocality)
-                    print(pm.thoroughfare)
-                    print(pm.postalCode)
-                    print(pm.subThoroughfare)
+                    //print(pm.country)
+                    //print(pm.locality)
+                    //print(pm.subLocality)
+                    //print(pm.thoroughfare)
+                    //print(pm.postalCode)
+                    //print(pm.subThoroughfare)
                     var addressString : String = ""
                     if pm.subLocality != nil {
                         addressString = addressString + pm.subLocality! + ", "
@@ -323,47 +365,61 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
                     }
                     
                     
-                    print(addressString)
+                    //print(addressString)
                 }
         })
         
     }
-    // when button clicked label is shown
-    @IBAction func btnPressed() {
-      
-        
+    
+    
+    @IBAction func manualBtnPressed() {
         // manual reporting functionality
         // generating 6 character long unique id
-        var uniqueId = ShortCodeGenerator.getCode(length: 6)
-        let txtMsg = "I am student \(uniqueId). I need help!"
         
+        let uniqueId = ShortCodeGenerator.getCode(length: 6)
+        let txtMsg = "I am student \(uniqueId). I need help!"
+        print(txtMsg)
+        
+       
         // Getting the address
+        
+        if manualLat != 0.0 && manualLong != 0.0 {
         var latStr = String(format:"%.2f",manualLat)
         var longStr = String(format:"%.2f",manualLong)
         getAddressFromLatLon(pdblLatitude: latStr, withLongitude: longStr)
         let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addmanual.php")! as URL)
         request.httpMethod = "POST"
         let postString = "a=\(manualLat)&b=\(manualLong)&c=\(txtMsg)"
+        print(postString)
         request.httpBody = postString.data(using: .utf8)
         
-        print(postString)
+   
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                //print("error=\(error)")
                 return
             }
             
-            print("response = \(response)")
+            //print("response = \(response)")
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
+            //print("responseString = \(responseString)")
         }
         
         task.resume()
-        
+        }
+
+    }
+    
+    
+    
+    
+    // when button clicked label is shown
+    @IBAction func btnPressed() {
+      
         if(!isRecording){
             let stopTitle = NSMutableAttributedString(string: "Stop Recording")
             stopTitle.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.red], range: NSMakeRange(0, stopTitle.length))
@@ -387,7 +443,7 @@ extension InterfaceController: HKWorkoutSessionDelegate{
     func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
         switch toState {
         case .running:
-            print(date)
+            //print(date)
             if let query = heartRateQuery(date){
                 self.currentQuery = query
                 healthStore.execute(query)
@@ -499,30 +555,30 @@ extension InterfaceController: HKWorkoutSessionDelegate{
                 
                 let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addall.php")! as URL)
                 request.httpMethod = "POST"
-                print(self.movement)
+                //print(self.movement)
                 //let randomStr = 42.0
                 let postString = "gps_x=\(self.manualLat)&gps_y=\(self.manualLong)&a=\(self.movement)&hr=\(value)"
-                print(postString)
+                //print(postString)
                 request.httpBody = postString.data(using: .utf8)
                 
                 let task = URLSession.shared.dataTask(with: request as URLRequest) {
                     data, response, error in
                     
                     if error != nil {
-                        print("error=\(error)")
+                        //print("error=\(error)")
                         return
                     }
                     
-                    print("response = \(response)")
+                    //print("response = \(response)")
                     
                     let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                    print("responseString = \(responseString)")
+                    //print("responseString = \(responseString)")
                 }
                 
                 task.resume()
                 
-                print("This line is executed!")
-                print(String(UInt16(value)))
+                //print("This line is executed!")
+                //print(String(UInt16(value)))
             }
             
         }
