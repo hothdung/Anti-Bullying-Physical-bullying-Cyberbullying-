@@ -19,12 +19,13 @@ let hrType:HKQuantityType = HKObjectType.quantityType(forIdentifier: HKQuantityT
 // Date will be constructed in database --> server side
 
 
-class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAudioRecorderDelegate{
+class InterfaceController: WKInterfaceController,AVAudioRecorderDelegate{
     
     var saveUrl: URL?
+    var outDoorLocation = LocationOutside
     
     // to conduct permission to retrieve location data
-    var locationManager: CLLocationManager = CLLocationManager()
+    //var locationManager: CLLocationManager = CLLocationManager()
     // Outlets for testing
     @IBOutlet weak var button: WKInterfaceButton!
     @IBOutlet weak var furtherSigLabels: WKInterfaceLabel!
@@ -65,10 +66,12 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
+        /**
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
         locationManager.requestLocation()
+        */
         
         // managing authorization
         let healthService:HealthDataService = HealthDataService()
@@ -86,6 +89,7 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
         motionManager.deviceMotionUpdateInterval = 0.5
     }
     
+    /**
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let currentLoc =  locations[0]
         let lat = currentLoc.coordinate.latitude
@@ -118,7 +122,9 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
         
         */
     }
-    
+ 
+ */
+    /**
     func locationManager(_: CLLocationManager, didFailWithError error: Error) {
         let err = CLError.Code(rawValue: (error as NSError).code)!
         switch err {
@@ -128,7 +134,7 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate,AVAu
             print(err)
         }
     }
-    
+    */
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user

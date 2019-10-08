@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B05D2B22348E91E00A55450 /* LocationOutside.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B05D2B12348E91E00A55450 /* LocationOutside.swift */; };
+		3B05D2BD234C162600A55450 /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B05D2BC234C162600A55450 /* WatchKit.framework */; };
+		3B05D2BF234C170800A55450 /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B05D2BE234C170800A55450 /* SharedConstants.swift */; };
 		AF2AA90C227830EC001F093A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2AA90B227830EC001F093A /* HealthKit.framework */; };
 		AF31D9C0227714A0008D1EC4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31D9BF227714A0008D1EC4 /* MapKit.framework */; };
 		AF31D9C322772E79008D1EC4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31D9C222772E79008D1EC4 /* HealthKit.framework */; };
@@ -69,6 +72,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B05D2B12348E91E00A55450 /* LocationOutside.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOutside.swift; sourceTree = "<group>"; };
+		3B05D2BC234C162600A55450 /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS6.0.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
+		3B05D2BE234C170800A55450 /* SharedConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		AF2AA90B227830EC001F093A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		AF31D9BF227714A0008D1EC4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS5.2.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		AF31D9C122772E79008D1EC4 /* BullyingDetection WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BullyingDetection WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B05D2BD234C162600A55450 /* WatchKit.framework in Frameworks */,
 				AFC35393227AA9AF00FE775B /* CoreLocation.framework in Frameworks */,
 				AF31D9C0227714A0008D1EC4 /* MapKit.framework in Frameworks */,
 				AF31D9C322772E79008D1EC4 /* HealthKit.framework in Frameworks */,
@@ -121,6 +128,7 @@
 		AF7506CC2275F92700A868A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3B05D2BC234C162600A55450 /* WatchKit.framework */,
 				AFC35390227AA9A100FE775B /* CoreLocation.framework */,
 				AFC35392227AA9AF00FE775B /* CoreLocation.framework */,
 				AF2AA90B227830EC001F093A /* HealthKit.framework */,
@@ -154,6 +162,7 @@
 		AF8B69582274E062008B75F9 /* BullyingDetection */ = {
 			isa = PBXGroup;
 			children = (
+				3B05D2BE234C170800A55450 /* SharedConstants.swift */,
 				AF7506CB2275F92700A868A1 /* BullyingDetection.entitlements */,
 				AF8B69592274E062008B75F9 /* AppDelegate.swift */,
 				AF8B695B2274E062008B75F9 /* ViewController.swift */,
@@ -184,6 +193,7 @@
 				AF8B697E2274E065008B75F9 /* ExtensionDelegate.swift */,
 				AF8B69802274E066008B75F9 /* Assets.xcassets */,
 				AF8B69822274E066008B75F9 /* Info.plist */,
+				3B05D2B12348E91E00A55450 /* LocationOutside.swift */,
 			);
 			path = "BullyingDetection WatchKit Extension";
 			sourceTree = "<group>";
@@ -348,6 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF8B695C2274E062008B75F9 /* ViewController.swift in Sources */,
+				3B05D2BF234C170800A55450 /* SharedConstants.swift in Sources */,
 				AF8B695A2274E062008B75F9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF8B697F2274E065008B75F9 /* ExtensionDelegate.swift in Sources */,
+				3B05D2B22348E91E00A55450 /* LocationOutside.swift in Sources */,
 				AF8B697D2274E065008B75F9 /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
