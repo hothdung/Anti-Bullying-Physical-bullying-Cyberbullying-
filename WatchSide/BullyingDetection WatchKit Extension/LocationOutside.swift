@@ -18,7 +18,7 @@ protocol LocationOutsideDelegate {
 class LocationOutside: NSObject,CLLocationManagerDelegate{
     
     var locationManager: CLLocationManager = CLLocationManager()
-    //var currentLocations = LocationSet()
+    var currentLoc = LocationSet()
     var delegate: LocationOutsideDelegate
     
         init(delegate:LocationOutsideDelegate){
@@ -33,31 +33,43 @@ class LocationOutside: NSObject,CLLocationManagerDelegate{
     }
     
     func requestLocation(){
-        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        switch authorizationStatus{
+        case .notDetermined:
+            print("requested location not determined")
+        case .authorizedWhenInUse:
+            locationManager.requestLocation()
+        case .denied:
+            print("requested location denied")
+        default:
+            print("default requested location")
+        }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let currentLoc =  locations[0]
-        let lat = currentLoc.coordinate.latitude
-        let long = currentLoc.coordinate.longitude
-        print(lat)
-        print(long)
-
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: LocationSet) {
+        currentLoc += [locations[0]]
+        delegate.processNewLocation(newLocation: locations[0])
     }
     
     func locationManager(_manager: CLLocationManager,didFailWithError error: Error){
-        if let locationErr = error as? CLError{
-            switch locationErr{
+        if let clErr = error as? CLError {
+            switch clErr {
             case CLError.locationUnknown:
-                print("unknown location")
+                delegate.processLocationFailure(error: clErr as NSError)
+                print("location unknown")
             case CLError.denied:
+                delegate.processLocationFailure(error: clErr as NSError)
                 print("denied")
             default:
-                print("another type of location error")
+                delegate.processLocationFailure(error: clErr as NSError)
+                print("other Core Location error")
             }
-        }else{
-                print("other error: ", error.localizedDescription)
-            }
+        } else {
+            print("other error:", error.localizedDescription)
         }
+        }
+    func resetLocations(){
+        currentLoc = []
+    }
 }
 

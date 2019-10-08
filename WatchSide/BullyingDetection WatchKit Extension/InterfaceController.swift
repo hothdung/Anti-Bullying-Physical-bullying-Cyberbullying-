@@ -19,10 +19,10 @@ let hrType:HKQuantityType = HKObjectType.quantityType(forIdentifier: HKQuantityT
 // Date will be constructed in database --> server side
 
 
-class InterfaceController: WKInterfaceController,AVAudioRecorderDelegate{
+class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudioRecorderDelegate{
     
     var saveUrl: URL?
-    var outDoorLocation = LocationOutside
+    var locationManager: LocationOutside!
     
     // to conduct permission to retrieve location data
     //var locationManager: CLLocationManager = CLLocationManager()
@@ -66,6 +66,8 @@ class InterfaceController: WKInterfaceController,AVAudioRecorderDelegate{
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
+        locationManager = LocationOutside(delegate:self)
+        locationManager.requestLocation()
         /**
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -87,6 +89,14 @@ class InterfaceController: WKInterfaceController,AVAudioRecorderDelegate{
         }
         
         motionManager.deviceMotionUpdateInterval = 0.5
+    }
+    
+    func processNewLocation(newLocation: CLLocation) {
+        print(newLocation)
+    }
+    
+    func processLocationFailure(error: NSError) {
+        print(error)
     }
     
     /**
