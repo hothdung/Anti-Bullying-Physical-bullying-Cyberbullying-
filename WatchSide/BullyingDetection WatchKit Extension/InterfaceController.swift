@@ -68,6 +68,7 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
         
         locationManager = LocationOutside(delegate:self)
         locationManager.requestLocation()
+        
         /**
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -92,7 +93,9 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
     }
     
     func processNewLocation(newLocation: CLLocation) {
-        print(newLocation)
+        // try to print
+        //print("Here I am!")
+        print("Latitude: \(newLocation.coordinate.latitude) \nLongitude: \(newLocation.coordinate.longitude)")
     }
     
     func processLocationFailure(error: NSError) {

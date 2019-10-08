@@ -25,11 +25,11 @@ class LocationOutside: NSObject,CLLocationManagerDelegate{
         self.delegate = delegate
         super.init()
         locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy =  kCLLocationAccuracyHundredMeters
+        locationManager.desiredAccuracy =  kCLLocationAccuracyBest
         locationManager.delegate = self
-            if CLLocationManager.authorizationStatus() == .notDetermined{
-                locationManager.requestWhenInUseAuthorization()
-            }
+        //locationManager.requestAlwaysAuthorization()
+        //locationManager.startUpdatingLocation()
+            
     }
     
     func requestLocation(){
@@ -44,6 +44,7 @@ class LocationOutside: NSObject,CLLocationManagerDelegate{
         default:
             print("default requested location")
         }
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: LocationSet) {

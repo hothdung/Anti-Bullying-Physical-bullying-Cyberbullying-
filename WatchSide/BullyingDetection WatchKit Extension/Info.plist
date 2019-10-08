@@ -38,5 +38,11 @@
     <string>Location information is required</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Access to mircrophone required!</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Required for location info.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Required for location info.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Required for location info.</string>
 </dict>
 </plist>
