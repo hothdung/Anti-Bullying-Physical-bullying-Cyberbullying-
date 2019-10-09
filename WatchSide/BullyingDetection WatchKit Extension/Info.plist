@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Location information required for outdoor tracking</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location information is required for outdoor tracking</string>
 	<key>CFBundleDisplayName</key>
 	<string>BullyingDetection WatchKit Extension</string>
 	<key>CFBundleExecutable</key>
@@ -30,19 +34,13 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access to mircrophone required!</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>WKExtensionDelegateClassName</key>
 	<string>$(PRODUCT_MODULE_NAME).ExtensionDelegate</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Location information is required</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Location information is required</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Access to mircrophone required!</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Required for location info.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Required for location info.</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Required for location info.</string>
 </dict>
 </plist>

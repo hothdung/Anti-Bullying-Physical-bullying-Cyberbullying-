@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Location information is required for outdoor tracking</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location information is required for outdoor tracking</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,23 +49,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Location information is required</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Location information is required</string>
-    <key>NSHealthUpdateUsageDescription</key>
-    <string>BullyingDetection saves interval workouts to your phone’s HealthKit data
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>BullyingDetection saves interval workouts to your phone’s HealthKit data
         store.</string>
-    <key>NSHealthShareUsageDescription</key>
-    <string>BullyingDetection accesses health data so that saved workouts can be
+	<key>NSHealthShareUsageDescription</key>
+	<string>BullyingDetection accesses health data so that saved workouts can be
         accessed later.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Access to mircrophone required!</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Required for location info.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Required for location info.</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Required for location info.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access to mircrophone required!</string>
 </dict>
 </plist>

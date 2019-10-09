@@ -22,7 +22,8 @@ let hrType:HKQuantityType = HKObjectType.quantityType(forIdentifier: HKQuantityT
 class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudioRecorderDelegate{
     
     var saveUrl: URL?
-    var locationManager: LocationOutside!
+   // instance of locationOutside exist already at runtime
+    var locationManager: LocationOutsideManager!
     
     // to conduct permission to retrieve location data
     //var locationManager: CLLocationManager = CLLocationManager()
@@ -66,15 +67,8 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        locationManager = LocationOutside(delegate:self)
-        locationManager.requestLocation()
-        
-        /**
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.delegate = self
-        locationManager.requestLocation()
-        */
+        // initialize locationManager
+         locationManager = LocationOutsideManager(delegate: self)
         
         // managing authorization
         let healthService:HealthDataService = HealthDataService()
@@ -92,62 +86,16 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
         motionManager.deviceMotionUpdateInterval = 0.5
     }
     
-    func processNewLocation(newLocation: CLLocation) {
-        // try to print
-        //print("Here I am!")
-        print("Latitude: \(newLocation.coordinate.latitude) \nLongitude: \(newLocation.coordinate.longitude)")
+  func processNewLocation(newLocation: CLLocation) {
+        let latitude = newLocation.coordinate.latitude
+        let longitude = newLocation.coordinate.longitude
+        print("Latitude \(latitude)")
+        print("Longitude \(longitude)")
     }
-    
     func processLocationFailure(error: NSError) {
         print(error)
     }
     
-    /**
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let currentLoc =  locations[0]
-        let lat = currentLoc.coordinate.latitude
-        let long = currentLoc.coordinate.longitude
-        
-        manualLat = lat
-        manualLong = long
-       
-        /**
-        let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addgps.php")! as URL)
-        request.httpMethod = "POST"
-        let postString = "a=\(lat)&b=\(long)"
-        request.httpBody = postString.data(using: .utf8)
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            data, response, error in
-            
-            if error != nil {
-                print("error=\(error)")
-                return
-            }
-            
-            print("response = \(response)")
-            
-            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
-        }
-        
-        task.resume()
-        
-        */
-    }
- 
- */
-    /**
-    func locationManager(_: CLLocationManager, didFailWithError error: Error) {
-        let err = CLError.Code(rawValue: (error as NSError).code)!
-        switch err {
-        case .locationUnknown:
-            break
-        default:
-            print(err)
-        }
-    }
-    */
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
@@ -621,3 +569,4 @@ class HealthDataService {
         }
     }
 }
+
