@@ -36,17 +36,20 @@ class LocationOutsideManager: NSObject,CLLocationManagerDelegate{
     func checkLocationAuthorization(){
         switch CLLocationManager.authorizationStatus(){
         case .authorizedWhenInUse:
-            print("Here")
+            print("allow app to retrieve location when app active")
             locationManager.startUpdatingLocation()
             break
         case .denied:
+            print("disallowed selected cannot query location data of user")
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
             break
         case .restricted:
+            print("constrained control of querying location data")
             break
         case .authorizedAlways:
+            print("give permission for app to get location data when app active or in background")
             break
         default:
             print("default value")
