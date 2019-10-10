@@ -57,11 +57,4 @@ class MovementManager: NSObject{
     motionManager.deviceMotionUpdateInterval = 0.5
     }
     
-    
-    
-    
-    
-    
-    
 }
-

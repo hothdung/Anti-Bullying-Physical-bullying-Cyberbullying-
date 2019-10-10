@@ -284,61 +284,6 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
     }
     
     
-    // Getting the address from longitude and latitude
-    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String) {
-        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
-        let lat: Double = Double("\(pdblLatitude)")!
-        //21.228124
-        let lon: Double = Double("\(pdblLongitude)")!
-        //72.833770
-        let ceo: CLGeocoder = CLGeocoder()
-        center.latitude = lat
-        center.longitude = lon
-        
-        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
-        
-        
-        ceo.reverseGeocodeLocation(loc, completionHandler:
-            {(placemarks, error) in
-                if (error != nil)
-                {
-                    //print("reverse geodcode fail: \(error!.localizedDescription)")
-                }
-                let pm = placemarks! as [CLPlacemark]
-                
-                if pm.count > 0 {
-                    let pm = placemarks![0]
-                    //print(pm.country)
-                    //print(pm.locality)
-                    //print(pm.subLocality)
-                    //print(pm.thoroughfare)
-                    //print(pm.postalCode)
-                    //print(pm.subThoroughfare)
-                    var addressString : String = ""
-                    if pm.subLocality != nil {
-                        addressString = addressString + pm.subLocality! + ", "
-                    }
-                    if pm.thoroughfare != nil {
-                        addressString = addressString + pm.thoroughfare! + ", "
-                    }
-                    if pm.locality != nil {
-                        addressString = addressString + pm.locality! + ", "
-                    }
-                    if pm.country != nil {
-                        addressString = addressString + pm.country! + ", "
-                    }
-                    if pm.postalCode != nil {
-                        addressString = addressString + pm.postalCode! + " "
-                    }
-                    
-                    
-                    //print(addressString)
-                }
-        })
-        
-    }
-    
-    
     @IBAction func manualBtnPressed() {
         // manual reporting functionality
         // generating 6 character long unique id
@@ -353,7 +298,6 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
         if manualLat != 0.0 && manualLong != 0.0 {
         var latStr = String(format:"%.2f",manualLat)
         var longStr = String(format:"%.2f",manualLong)
-        getAddressFromLatLon(pdblLatitude: latStr, withLongitude: longStr)
         let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addmanual.php")! as URL)
         request.httpMethod = "POST"
         let postString = "a=\(manualLat)&b=\(manualLong)&c=\(txtMsg)"
@@ -569,4 +513,5 @@ class HealthDataService {
         }
     }
 }
+
 
