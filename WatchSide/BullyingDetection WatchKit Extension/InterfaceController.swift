@@ -19,19 +19,14 @@ let hrType:HKQuantityType = HKObjectType.quantityType(forIdentifier: HKQuantityT
 // Date will be constructed in database --> server side
 
 
-class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudioRecorderDelegate{
+class InterfaceController: WKInterfaceController,LocationOutsideDelegate,MovementDelegate{
     
     var saveUrl: URL?
    // instance of locationOutside exist already at runtime
     var locationManager: LocationOutsideManager!
-    
-    // to conduct permission to retrieve location data
-    //var locationManager: CLLocationManager = CLLocationManager()
     // Outlets for testing
     @IBOutlet weak var button: WKInterfaceButton!
     @IBOutlet weak var furtherSigLabels: WKInterfaceLabel!
-    var recordingSession : AVAudioSession!
-    var audioRecorder : AVAudioRecorder!
     var settings = [String : Any]()
     
     // distinguish start recording heartbeat
@@ -42,33 +37,20 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
     var session: HKWorkoutSession?
     var currentQuery: HKQuery?
     var filename: String?
-    let motionManager = CMMotionManager()
-    let queue = OperationQueue()
-    var gravityStr = ""
-    var userAccelerStr = ""
-    var rotationRateStr = ""
-    var attitudeStr = ""
-    var movement = ""
+    var motionManager: MovementManager!
+    var movement: String = ""
+
     
     var manualLat: Double = 0.0
     var manualLong: Double = 0.0
     var heartRateVal: Double = 0.0
-    var prev_grav_z: Double = 0.0
-    var prev_acc_z: Double = 0.0
-    var grav_x:Double = 0.0
-    var grav_y:Double = 0.0
-    var grav_z:Double = 0.0
-    var acc_x:Double = 0.0
-    var acc_y:Double = 0.0
-    var acc_z:Double = 0.0
-    
-    var sendOrNot:Bool = false
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         // initialize locationManager
          locationManager = LocationOutsideManager(delegate: self)
+        motionManager = MovementManager(delegate: self)
         
         // managing authorization
         let healthService:HealthDataService = HealthDataService()
@@ -83,7 +65,6 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
             }
         }
         
-        motionManager.deviceMotionUpdateInterval = 0.5
     }
     
   func processNewLocation(newLocation: CLLocation) {
@@ -100,173 +81,27 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        motionManager.startDeviceMotionUpdates(to: queue) { (deviceMotion: CMDeviceMotion?, error: Error?) in
-            if error != nil {
-                print("Encountered error: \(error!)")
-            }
-            if deviceMotion != nil {
-                self.grav_x = (deviceMotion?.gravity.x)!
-                self.grav_y = (deviceMotion?.gravity.y)!
-                self.grav_z = (deviceMotion?.gravity.z)!
-                self.gravityStr = String(format: "grav_x: %.2f, grav_y: %.2f, grav_z: %.2f" ,
-                                         self.grav_x,
-                                         self.grav_y,
-                                         self.grav_z)
-                
-                if self.prev_grav_z == 0.0 {
-                    self.prev_grav_z = self.grav_z
-                    self.sendOrNot = true
-                }
-                else{
-                    if (self.grav_z - self.prev_grav_z) <= -0.25{
-                        //print("Gravity: ",self.grav_z, self.prev_grav_z)
-                        self.sendOrNot = true
-                    }
-                    else{
-                        self.sendOrNot = false
-                    }
-                    self.prev_grav_z = self.grav_z
-                }
-               //self.sendData(x: self.gravityStr)
-              // print(self.gravityStr)
-                
-                self.acc_x = (deviceMotion?.userAcceleration.x)!
-                self.acc_y = (deviceMotion?.userAcceleration.y)!
-                self.acc_z = (deviceMotion?.userAcceleration.z)!
-                self.userAccelerStr = String(format: "acc_x: %.2f, acc_y: %.2f, acc_z: %.2f" ,
-                                             self.acc_x,
-                                             self.acc_y,
-                                             self.acc_z)
-                
-                if (self.acc_z - self.prev_acc_z) <= -0.2{
-                    //print("Accelero_z: ",self.acc_z, self.prev_acc_z)
-                    self.sendOrNot = true
-                }
-                else{
-                    self.sendOrNot = false
-                }
-                self.prev_acc_z = self.acc_z
-                
-                self.rotationRateStr = String(format: "rota_x: %.2f, rota_y: %.2f, rota_z: %.2f" ,
-                                              (deviceMotion?.rotationRate.x)!,
-                                              (deviceMotion?.rotationRate.y)!,
-                                              (deviceMotion?.rotationRate.z)!)
-                
-               //self.sendData(x: self.rotationRateStr)
-                
-               //print(self.rotationRateStr)
-                
-                
-                self.attitudeStr = String(format: "atti_roll: %.1f, atti_pitch: %.1f, atti_yaw: %.1f" ,
-                                          (deviceMotion?.attitude.roll)!,
-                                          (deviceMotion?.attitude.pitch)!,
-                                          (deviceMotion?.attitude.yaw)!)
-                
-               //self.sendData(x: self.attitudeStr)
-                
-                //print(self.attitudeStr)
-                
-                //self.movement = self.gravityStr + self.userAccelerStr + self.rotationRateStr + self.attitudeStr
-                if self.sendOrNot{
-                    //print("Falling motion detected!")
-                    self.movement = "\(self.gravityStr), \(self.userAccelerStr), \(self.rotationRateStr), \(self.attitudeStr), \("_1")"
-                }
-                else{
-                    self.movement = "\(self.gravityStr), \(self.userAccelerStr), \(self.rotationRateStr), \(self.attitudeStr), \("_0")"
-                }
-                //print(self.movement)
-                self.sendOrNot = false
-            }
+        motionManager.startUpdatingMotions()
+    }
+    
+    func evalMovForSending(toSend: Bool, gravStr: String, accelStr: String, rotationStr: String, attStr: String){
+        var tmp = "\(gravStr), \(accelStr), \(rotationStr), \(attStr), "
+        if toSend{
+            print("Student has fallen down!")
+            movement = "\(tmp) _1"
+            print(movement)
+        }else{
+            movement = "\(tmp) _2"
+            print(movement)
         }
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-        motionManager.stopDeviceMotionUpdates()
+        motionManager.stopUpdatingMotions()
     }
    
-    /**
-    func sendData(x:String){
-        let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addgyro2.php")! as URL)
-        request.httpMethod = "POST"
-        let postString = "a=\(x)"
-        request.httpBody = postString.data(using: .utf8)
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            data, response, error in
-            
-            if error != nil {
-                print("error=\(error)")
-                return
-            }
-            
-            print("response = \(response)")
-            
-            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
-        }
-        
-        task.resume()
-        
-    }
- 
-*/
-   /**
-    func getDocumentsDirectory() -> URL
-    {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        return documentsDirectory
-    }
-    
-    func getFileUrl() -> URL
-    {
-        let filePath = getDocumentsDirectory().appendingPathComponent(filename!)
-        return filePath
-    }
-    
-    func startRecording(){
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do{
-            audioRecorder = try AVAudioRecorder(url: getFileUrl(),
-                                                settings: settings)
-            audioRecorder.delegate = self
-            audioRecorder.prepareToRecord()
-            audioRecorder.record(forDuration: 5.0)
-            
-        }
-        catch {
-            finishRecording(success: false)
-        }
-        
-        do {
-            try audioSession.setActive(true)
-            audioRecorder.record()
-        } catch {
-        }
-    }
-    
-    func finishRecording(success: Bool) {
-        audioRecorder.stop()
-        audioRecorder = nil
-
-        if success {
-            print(success)
-        } else {
-            audioRecorder = nil
-            print("Somthing Wrong.")
-        }
-    }
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if !flag {
-            finishRecording(success: false)
-        }
-    }
-*/
-    
     // generate a short unique id
     struct ShortCodeGenerator {
         
@@ -292,9 +127,7 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
         let txtMsg = "I am student \(uniqueId). I need help!"
         print(txtMsg)
         
-       
-        // Getting the address
-        
+    
         if manualLat != 0.0 && manualLong != 0.0 {
         var latStr = String(format:"%.2f",manualLat)
         var longStr = String(format:"%.2f",manualLong)
@@ -322,7 +155,6 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate, AVAudi
         
         task.resume()
         }
-
     }
     
     
@@ -392,57 +224,6 @@ extension InterfaceController: HKWorkoutSessionDelegate{
         
         healthStore.start(self.session!)
         //print("Start Workout Session")
-        
-        
-      // Here audio?
-    /**
-        if audioRecorder == nil {
-            print("Pressed")
-            filename = NSUUID().uuidString+".wav"
-            self.startRecording()
-            
-            
-        } else {
-            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-            let url = URL(fileURLWithPath: path)
-            print("Filename\(filename!)")
-            let pathPart = url.appendingPathComponent(filename!)
-            let filePath = pathPart.path
-            
-            let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addsound.php")! as URL)
-            request.httpMethod = "POST"
-            let audioData = NSData(contentsOfFile: filePath)
-            print("Result is\(getFileUrl().path)")
-            print("Binary data printing")
-            print(audioData)
-            let postString = "a=\(audioData)"
-            
-            
-            request.httpBody = postString.data(using: .utf8)
-            
-            let task = URLSession.shared.dataTask(with: request as URLRequest){
-                data, response, error in
-                
-                if error != nil {
-                    print("error=\(error)")
-                    return
-                }
-                print("response = \(response)")
-                
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                print("responseString = \(responseString)")
-                
-                
-            }
-            task.resume()
-        
-            print("Pressed2")
-            self.finishRecording(success: true)
-            
-        }
- 
- */
-        
         
     }
     
