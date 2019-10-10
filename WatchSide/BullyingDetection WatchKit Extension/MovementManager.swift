@@ -62,13 +62,7 @@ class MovementManager: NSObject{
                 print("Encountered error: \(error!)")
             }
         if deviceMotion != nil {
-            self.grav_x = (deviceMotion?.gravity.x)!
-            self.grav_y = (deviceMotion?.gravity.y)!
-            self.grav_z = (deviceMotion?.gravity.z)!
-            self.gravityStr = String(format: "grav_x: %.2f, grav_y: %.2f, grav_z: %.2f" ,
-                                     self.grav_x,
-                                     self.grav_y,
-                                     self.grav_z)
+            self.buildCoordinateStr(x:(deviceMotion?.gravity.x)!,y:(deviceMotion?.gravity.y)!, z: (deviceMotion?.gravity.z)!, motionKind: "G")
             
             if self.prev_grav_z == 0.0 {
                 self.prev_grav_z = self.grav_z
@@ -85,14 +79,7 @@ class MovementManager: NSObject{
                 }
                 self.prev_grav_z = self.grav_z
             }
-            
-            self.acc_x = (deviceMotion?.userAcceleration.x)!
-            self.acc_y = (deviceMotion?.userAcceleration.y)!
-            self.acc_z = (deviceMotion?.userAcceleration.z)!
-            self.userAccelerStr = String(format: "acc_x: %.2f, acc_y: %.2f, acc_z: %.2f" ,
-                                         self.acc_x,
-                                         self.acc_y,
-                                         self.acc_z)
+            self.buildCoordinateStr(x: (deviceMotion?.userAcceleration.x)!, y: (deviceMotion?.userAcceleration.y)!, z: (deviceMotion?.userAcceleration.z)!, motionKind: "U")
             
             if (self.acc_z - self.prev_acc_z) <= -0.2{
                 //print("Accelero_z: ",self.acc_z, self.prev_acc_z)
@@ -104,22 +91,45 @@ class MovementManager: NSObject{
                 self.sendOrNot = false
             }
             self.prev_acc_z = self.acc_z
+            self.buildCoordinateStr(x: (deviceMotion?.rotationRate.x)!, y: (deviceMotion?.rotationRate.y)!, z: (deviceMotion?.rotationRate.z)!, motionKind: "R")
             
-            self.rotationRateStr = String(format: "rota_x: %.2f, rota_y: %.2f, rota_z: %.2f" ,
-                                          (deviceMotion?.rotationRate.x)!,
-                                          (deviceMotion?.rotationRate.y)!,
-                                          (deviceMotion?.rotationRate.z)!)
             print(self.rotationRateStr)
             
-            self.attitudeStr = String(format: "atti_roll: %.1f, atti_pitch: %.1f, atti_yaw: %.1f" ,
-                                      (deviceMotion?.attitude.roll)!,
-                                      (deviceMotion?.attitude.pitch)!,
-                                      (deviceMotion?.attitude.yaw)!)
+            self.buildCoordinateStr(x:(deviceMotion?.attitude.roll)! , y: (deviceMotion?.attitude.pitch)!, z: (deviceMotion?.attitude.yaw)!, motionKind: "A")
             print(self.attitudeStr)
             self.delegate.evalMovForSending(toSend: self.sendOrNot,gravStr: self.gravityStr,accelStr: self.userAccelerStr,rotationStr: self.rotationRateStr,attStr: self.attitudeStr )
             self.sendOrNot = self.flip()
             }
         }
+    }
+    
+    
+    // setting the each coordinates from the movement components and building coordinate string for information conveyance
+    func buildCoordinateStr(x:Double,y:Double,z:Double, motionKind: Character){
+        
+        switch motionKind{
+        case "G":
+        self.grav_x = x
+        self.grav_y = y
+        self.grav_z = z
+        self.gravityStr = String(format: "grav_x: %.2f, grav_y: %.2f, grav_z: %.2f" ,self.grav_x,self.grav_y,self.grav_z)
+        break
+        case "U":
+        self.acc_x = x
+        self.acc_y = y
+        self.acc_z = z
+        self.userAccelerStr = String(format: "acc_x: %.2f, acc_y: %.2f, acc_z: %.2f" ,self.acc_x,self.acc_y,self.acc_z)
+        break
+        case "R":
+        self.rotationRateStr = String(format: "rota_x: %.2f, rota_y: %.2f, rota_z: %.2f" ,x,y,z)
+        break
+        case "A":
+        self.attitudeStr = String(format: "atti_roll: %.1f, atti_pitch: %.1f, atti_yaw: %.1f" ,x,y,z)
+        break
+        default:
+        print("Not found!")
+        }
+        
     }
     
     func flip() -> Bool{
