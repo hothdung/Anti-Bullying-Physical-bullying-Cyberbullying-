@@ -7,23 +7,23 @@
 //
 import WatchKit
 import Foundation
-import CoreLocation
 import HealthKit
 import AVFoundation
 import CoreMotion
 
 
 
-let hrType:HKQuantityType = HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
 
 // Date will be constructed in database --> server side
 
 
-class InterfaceController: WKInterfaceController,LocationOutsideDelegate,MovementDelegate{
+class InterfaceController: WKInterfaceController,LocationOutsideDelegate,MovementDelegate, HeartRateManagerDelegate{
     
     var saveUrl: URL?
    // instance of locationOutside exist already at runtime
     var locationManager: LocationOutsideManager!
+    let healthService:HealthDataService = HealthDataService()
+    var heartRateManager: HeartRateManager!
     // Outlets for testing
     @IBOutlet weak var button: WKInterfaceButton!
     @IBOutlet weak var furtherSigLabels: WKInterfaceLabel!
@@ -33,8 +33,6 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate,Movemen
     var isRecording = false
     
     //For workout session
-    let healthStore = HKHealthStore()
-    var session: HKWorkoutSession?
     var currentQuery: HKQuery?
     var filename: String?
     var motionManager: MovementManager!
@@ -43,27 +41,25 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate,Movemen
     
     var manualLat: Double = 0.0
     var manualLong: Double = 0.0
-    var heartRateVal: Double = 0.0
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        heartRateManager = HeartRateManager(delegate:self)
+        // managing authorization
+               healthService.authorizeHealthKitAccess { (success, error) in
+                   if success {
+                       print("HealthKit authorization received.")
+                   } else {
+                       print("HealthKit authorization denied!")
+                       if error != nil {
+                           print("\(String(describing: error))")
+                       }
+                   }
+               }
         
         // initialize locationManager
          locationManager = LocationOutsideManager(delegate: self)
         motionManager = MovementManager(delegate: self)
-        
-        // managing authorization
-        let healthService:HealthDataService = HealthDataService()
-        healthService.authorizeHealthKitAccess { (success, error) in
-            if success {
-                print("HealthKit authorization received.")
-            } else {
-                print("HealthKit authorization denied!")
-                if error != nil {
-                    print("\(String(describing: error))")
-                }
-            }
-        }
         
     }
     
@@ -75,6 +71,10 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate,Movemen
     }
     func processLocationFailure(error: NSError) {
         print(error)
+    }
+    
+    func handleNewHeartRate(newHeartRate: Double) {
+        print("New Heartrate \(newHeartRate)")
     }
     
     
@@ -168,13 +168,15 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate,Movemen
             stopTitle.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.red], range: NSMakeRange(0, stopTitle.length))
             button.setAttributedTitle(stopTitle)
             isRecording = true
-            startWorkout() //Start workout session/healthkit streaming
+            heartRateManager.startWorkout() //Start workout session/healthkit streaming
         }else{
             let exitTitle = NSMutableAttributedString(string: "Start Recording")
             exitTitle.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.red], range: NSMakeRange(0, exitTitle.length))
             button.setAttributedTitle(exitTitle)
             isRecording = false
-            healthStore.end(session!)
+            heartRateManager.stopWorkout()
+            //healthStore.end(session!)
+            // an der Stelle stopWorkout aufrufen
             
         }
         
@@ -182,117 +184,6 @@ class InterfaceController: WKInterfaceController,LocationOutsideDelegate,Movemen
     
 }
 
-extension InterfaceController: HKWorkoutSessionDelegate{
-    func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-        switch toState {
-        case .running:
-            //print(date)
-            if let query = heartRateQuery(date){
-                self.currentQuery = query
-                healthStore.execute(query)
-            }
-        //Execute Query
-        case .ended:
-            //Stop Query
-            healthStore.stop(self.currentQuery!)
-            session = nil
-        default:
-            print("Unexpected state: \(toState)")
-        }
-    }
-    
-    func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-        //Do Nothing
-    }
-    
-    func startWorkout(){
-        // If a workout has already been started, do nothing.
-        if (session != nil) {
-            return
-        }
-        // Configure the workout session.
-        let workoutConfiguration = HKWorkoutConfiguration()
-        workoutConfiguration.activityType = .running
-        workoutConfiguration.locationType = .outdoor
-        
-        do {
-            session = try HKWorkoutSession(configuration: workoutConfiguration)
-            session?.delegate = self
-        } catch {
-            fatalError("Unable to create workout session")
-        }
-        
-        healthStore.start(self.session!)
-        //print("Start Workout Session")
-        
-    }
-    
-    func heartRateQuery(_ startDate: Date) -> HKQuery? {
-        let datePredicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: .strictEndDate)
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates:[datePredicate])
-        
-        let heartRateQuery = HKAnchoredObjectQuery(type: hrType, predicate: predicate, anchor: nil, limit: Int(HKObjectQueryNoLimit)) { (query, sampleObjects, deletedObjects, newAnchor, error) -> Void in
-            //Do nothing
-        }
-        
-        heartRateQuery.updateHandler = {(query, samples, deleteObjects, newAnchor, error) -> Void in
-            guard let samples = samples as? [HKQuantitySample] else {return}
-            DispatchQueue.main.async {
-                guard let sample = samples.first else { return }
-                
-                // after extraction of bpm value conversion to double
-                let value = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-                
-                //print("Type of value is +\(type(of:value))")
-                
-                let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addall.php")! as URL)
-                request.httpMethod = "POST"
-                //print(self.movement)
-                //let randomStr = 42.0
-                let postString = "gps_x=\(self.manualLat)&gps_y=\(self.manualLong)&a=\(self.movement)&hr=\(value)"
-                //print(postString)
-                request.httpBody = postString.data(using: .utf8)
-                
-                let task = URLSession.shared.dataTask(with: request as URLRequest) {
-                    data, response, error in
-                    
-                    if error != nil {
-                        //print("error=\(error)")
-                        return
-                    }
-                    
-                    //print("response = \(response)")
-                    
-                    let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                    //print("responseString = \(responseString)")
-                }
-                
-                task.resume()
-                
-                //print("This line is executed!")
-                //print(String(UInt16(value)))
-            }
-            
-        }
-        
-        return heartRateQuery
-    }
-    
 
-}
-
-class HealthDataService {
-    internal let healthKitStore:HKHealthStore = HKHealthStore()
-    
-    init() {}
-    
-    func authorizeHealthKitAccess(_ completion: ((_ success:Bool, _ error:Error?) -> Void)!) {
-        let typesToShare = Set([hrType])
-        let typesToSave = Set([hrType])
-        healthKitStore.requestAuthorization(toShare: typesToShare, read: typesToSave) { (success, error) in
-            completion(success, error)
-        }
-    }
-}
 
 

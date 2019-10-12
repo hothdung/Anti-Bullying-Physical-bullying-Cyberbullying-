@@ -10,6 +10,9 @@
 		3B05D2BD234C162600A55450 /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B05D2BC234C162600A55450 /* WatchKit.framework */; };
 		3B087B5D234EEDB30021193B /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B087B5C234EEDB30021193B /* MovementManager.swift */; };
 		3BA037C1234E39E7000C0245 /* LocationOutsideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA037C0234E39E7000C0245 /* LocationOutsideManager.swift */; };
+		3BF3B2EC23521D80004A9E01 /* HealthDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3B2EB23521D80004A9E01 /* HealthDataService.swift */; };
+		3BF3B2EE2352212A004A9E01 /* HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3B2ED2352212A004A9E01 /* HeartRate.swift */; };
+		3BF3B2F023527087004A9E01 /* HeartRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3B2EF23527087004A9E01 /* HeartRateManager.swift */; };
 		AF2AA90C227830EC001F093A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2AA90B227830EC001F093A /* HealthKit.framework */; };
 		AF31D9C0227714A0008D1EC4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31D9BF227714A0008D1EC4 /* MapKit.framework */; };
 		AF31D9C322772E79008D1EC4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31D9C222772E79008D1EC4 /* HealthKit.framework */; };
@@ -75,6 +78,9 @@
 		3B05D2BC234C162600A55450 /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS6.0.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
 		3B087B5C234EEDB30021193B /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
 		3BA037C0234E39E7000C0245 /* LocationOutsideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOutsideManager.swift; sourceTree = "<group>"; };
+		3BF3B2EB23521D80004A9E01 /* HealthDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataService.swift; sourceTree = "<group>"; };
+		3BF3B2ED2352212A004A9E01 /* HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRate.swift; sourceTree = "<group>"; };
+		3BF3B2EF23527087004A9E01 /* HeartRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateManager.swift; sourceTree = "<group>"; };
 		AF2AA90B227830EC001F093A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		AF31D9BF227714A0008D1EC4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS5.2.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		AF31D9C122772E79008D1EC4 /* BullyingDetection WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BullyingDetection WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -194,6 +200,9 @@
 				AF8B69822274E066008B75F9 /* Info.plist */,
 				3BA037C0234E39E7000C0245 /* LocationOutsideManager.swift */,
 				3B087B5C234EEDB30021193B /* MovementManager.swift */,
+				3BF3B2EB23521D80004A9E01 /* HealthDataService.swift */,
+				3BF3B2ED2352212A004A9E01 /* HeartRate.swift */,
+				3BF3B2EF23527087004A9E01 /* HeartRateManager.swift */,
 			);
 			path = "BullyingDetection WatchKit Extension";
 			sourceTree = "<group>";
@@ -369,7 +378,10 @@
 				3BA037C1234E39E7000C0245 /* LocationOutsideManager.swift in Sources */,
 				AF8B697F2274E065008B75F9 /* ExtensionDelegate.swift in Sources */,
 				3B087B5D234EEDB30021193B /* MovementManager.swift in Sources */,
+				3BF3B2EE2352212A004A9E01 /* HeartRate.swift in Sources */,
+				3BF3B2F023527087004A9E01 /* HeartRateManager.swift in Sources */,
 				AF8B697D2274E065008B75F9 /* InterfaceController.swift in Sources */,
+				3BF3B2EC23521D80004A9E01 /* HealthDataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
