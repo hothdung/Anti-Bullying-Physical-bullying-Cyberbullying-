@@ -11,79 +11,79 @@ import Foundation
 import CoreLocation
 
 protocol LocationOutsideDelegate {
+   
     func processNewLocation(newLocation:CLLocation)
     func processLocationFailure(error:NSError)
 }
 
-class LocationOutsideManager: NSObject,CLLocationManagerDelegate{
+class LocationOutsideManager: NSObject {
+
     let locationManager = CLLocationManager()
     var delegate: LocationOutsideDelegate
+    let authorizationStatus = CLLocationManager.authorizationStatus()
     
-    // setting up the delegate 
+    // setting up the delegate
     init(delegate:LocationOutsideDelegate){
         self.delegate = delegate
         super.init()
-        
+
         // location service is "on" on users device
-        if CLLocationManager.locationServicesEnabled(){
-        locationManager.delegate = self
-        // fast, but lower accuracy
-        locationManager.desiredAccuracy =  kCLLocationAccuracyBest
-        checkLocationAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            // fast, but lower accuracy
+            locationManager.desiredAccuracy =  kCLLocationAccuracyBest
+            checkLocationAuthorization(status: authorizationStatus)
         }
     }
     
-    func checkLocationAuthorization(){
-        switch CLLocationManager.authorizationStatus(){
-        case .authorizedWhenInUse:
-            print("allow app to retrieve location when app active")
-            locationManager.startUpdatingLocation()
-            break
-        case .denied:
-            print("disallowed selected cannot query location data of user")
-            break
+    func checkLocationAuthorization(status: CLAuthorizationStatus){
+        
+        switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-            break
-        case .restricted:
-            print("constrained control of querying location data")
-            break
-        case .authorizedAlways:
-            print("give permission for app to get location data when app active or in background")
-            break
+        case .restricted, .denied:
+            print("Location data is not available")
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
         default:
-            print("default value")
+            break
         }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // just interested in last and recent location in loc array
-        guard let location = locations.last else{return}
-        // pass location data in delegate
-        delegate.processNewLocation(newLocation: location)
-       }
-       
-    // whenever authorization changes we want to check for state
-       func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-           checkLocationAuthorization()
-       }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        if let clErr = error as? CLError {
-            switch clErr {
-            case CLError.locationUnknown:
-                delegate.processLocationFailure(error: clErr as NSError)
-                print("location unknown")
-            case CLError.denied:
-                delegate.processLocationFailure(error: clErr as NSError)
-                print("denied")
-            default:
-                delegate.processLocationFailure(error: clErr as NSError)
-                print("other Core Location error")
-            }
-        } else {
-            print("other error:", error.localizedDescription)
-        }
-        delegate.processLocationFailure(error: error as NSError)
     }
 }
+
+extension LocationOutsideManager: CLLocationManagerDelegate {
+
+    // whenever authorization changes we want to check for state
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization(status: status)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // just interested in last and recent location in loc array
+        guard let location = locations.last else{ return }
+        // pass location data in delegate
+        delegate.processNewLocation(newLocation: location)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        guard let locationError = error as? CLError else {
+            print("other error: ", error.localizedDescription)
+            return
+        }
+
+        switch locationError {
+        case CLError.locationUnknown:
+            delegate.processLocationFailure(error: locationError as NSError)
+            print("location unknown")
+        case CLError.denied:
+            delegate.processLocationFailure(error: locationError as NSError)
+            print("denied")
+        default:
+            delegate.processLocationFailure(error: locationError as NSError)
+            print("other Core Location error")
+        }
+        
+        delegate.processLocationFailure(error: locationError as NSError)
+    }
+}
+
