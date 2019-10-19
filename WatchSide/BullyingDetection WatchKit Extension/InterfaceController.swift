@@ -87,6 +87,39 @@ class InterfaceController: WKInterfaceController {
         super.didDeactivate()
         motionManager.stopUpdatingMotions()
     }
+    
+    func sendToServer(params : Dictionary<String, String>){
+        guard let url = URL(string:"http://13.125.244.168:80") else
+        { print("URL could not be created")
+            return
+        }
+        let requestBody = try? JSONSerialization.data(withJSONObject: params,  options: [])
+       
+        var urlRequest = URLRequest(url: url)
+        //urlRequest.timeoutInterval = 240
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.httpBody = requestBody
+        
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("error:", error)
+                return
+            }
+
+            do {
+                guard let data = data else { return }
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else { return }
+                print("json:", json)
+            } catch {
+                print("error:", error)
+            }
+        }
+        task.resume()
+    }
 
     @IBAction func manualBtnPressed() {
         // manual reporting functionality
@@ -154,6 +187,11 @@ extension InterfaceController: LocationOutsideDelegate {
         let longitude = newLocation.coordinate.longitude
         print("Latitude \(latitude)")
         print("Longitude \(longitude)")
+        
+        let stringFrLat = "\(latitude)"
+        let stringFrLong = "\(longitude)"
+        var locationData = ["latitude": stringFrLat, "longitude":stringFrLong] as Dictionary<String,String>
+        sendToServer(params: locationData)
     }
 
     func processLocationFailure(error: NSError) {
