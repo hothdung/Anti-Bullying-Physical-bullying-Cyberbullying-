@@ -126,39 +126,19 @@ class InterfaceController: WKInterfaceController {
         // generating 6 character long unique id
 
         let uniqueId = ShortCodeGenerator.getCode(length: 6)
-        let txtMsg = "I am student \(uniqueId). I need help!"
+        let txtMsg = "I am student \(uniqueId) (manually). I need help!"
         print(txtMsg)
-
-        if manualLat != 0.0 && manualLong != 0.0 {
-            var latStr = String(format:"%.2f",manualLat)
-            var longStr = String(format:"%.2f",manualLong)
-            let request = NSMutableURLRequest(url: NSURL(string: "http://147.46.242.219/addmanual.php")! as URL)
-            request.httpMethod = "POST"
-            let postString = "a=\(manualLat)&b=\(manualLong)&c=\(txtMsg)"
-            print(postString)
-            request.httpBody = postString.data(using: .utf8)
-
-            let task = URLSession.shared.dataTask(with: request as URLRequest) {
-                data, response, error in
-
-                if error != nil {
-                    //print("error=\(error)")
-                    return
-                }
-
-                //print("response = \(response)")
-
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                //print("responseString = \(responseString)")
-            }
-
-            task.resume()
-        }
+        
+        // sending lat and long (manualLat & manualLong)
+        
     }
 
     // when button clicked label is shown
     @IBAction func btnPressed() {
-
+        let uniqueId = ShortCodeGenerator.getCode(length: 6)
+        let txtMsg = "I am student \(uniqueId) (automatically). I need help!"
+        print(txtMsg)
+        
         if(!isRecording){
             let stopTitle = NSMutableAttributedString(string: "Stop Recording")
             stopTitle.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.red], range: NSMakeRange(0, stopTitle.length))
@@ -185,12 +165,14 @@ extension InterfaceController: LocationOutsideDelegate {
     func processNewLocation(newLocation: CLLocation) {
         let latitude = newLocation.coordinate.latitude
         let longitude = newLocation.coordinate.longitude
+        manualLat = latitude
+        manualLong = longitude
         print("Latitude \(latitude)")
         print("Longitude \(longitude)")
         
         let stringFrLat = "\(latitude)"
         let stringFrLong = "\(longitude)"
-        var locationData = ["latitude": stringFrLat, "longitude":stringFrLong] as Dictionary<String,String>
+        let locationData = ["latitude": stringFrLat, "longitude":stringFrLong] as Dictionary<String,String>
         sendToServer(params: locationData)
     }
 

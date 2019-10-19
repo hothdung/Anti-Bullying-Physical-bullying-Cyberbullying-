@@ -10,7 +10,6 @@ import Foundation
 import HealthKit
 
 protocol HeartRateManagerDelegate {
-    
     func handleNewHeartRate(newHeartRate:Double)
 }
 
@@ -37,13 +36,15 @@ class HeartRateManager: NSObject{
         workoutConfiguration.locationType = .outdoor
 
         do {
-            session = try HKWorkoutSession(configuration: workoutConfiguration)
+            //session = try HKWorkoutSession(configuration: workoutConfiguration)
+            session = try HKWorkoutSession(healthStore: heartRateManager, configuration: workoutConfiguration)
             session?.delegate = self
         } catch {
             fatalError("Unable to create workout session")
         }
 
-        heartRateManager.start(self.session!)
+        //heartRateManager.start(self.session!)
+        session?.startActivity(with: Date())
 
     }
     
