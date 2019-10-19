@@ -35,7 +35,6 @@ class InterfaceController: WKInterfaceController {
 
     // instance of locationOutside exist already at runtime
     var locationManager: LocationOutsideManager!
-    let healthService: HealthDataService = HealthDataService()
     var heartRateManager: HeartRateManager!
 
     // Outlets for testing
@@ -59,6 +58,7 @@ class InterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
+        let healthService:HealthDataService = HealthDataService()
         healthService.authorizeHealthKitAccess { (success, error) in
             if success {
                 print("HealthKit authorization received.")
@@ -78,7 +78,7 @@ class InterfaceController: WKInterfaceController {
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
+        super.willActivate()          
         motionManager.startUpdatingMotions()
     }
 

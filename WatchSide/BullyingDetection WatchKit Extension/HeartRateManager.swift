@@ -15,6 +15,7 @@ protocol HeartRateManagerDelegate {
 }
 
 class HeartRateManager: NSObject{
+    let healthService: HealthDataService = HealthDataService()
     let heartRateManager = HKHealthStore()
     var delegate: HeartRateManagerDelegate
     var session: HKWorkoutSession?
