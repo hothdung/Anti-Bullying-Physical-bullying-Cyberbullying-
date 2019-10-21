@@ -7,6 +7,7 @@ Server side documentation
     - public ip: 13.125.244.168
     - Access with [putty](https://www.puttygen.com/download-putty)
     - [Access key](https://drive.google.com/drive/folders/1Zve1Th82OmGuSycDF1C17D3cwQ6-ETcQ?usp=sharing)
+    - id: ubuntu
 ## Features
 - Mysql
     - 13.125.244.168
