@@ -62,12 +62,15 @@ extension LocationOutsideManager: CLLocationManagerDelegate {
         // just interested in last and recent location in loc array
         guard let location = locations.last else{ return }
         
+        /**
         if location.horizontalAccuracy > 0{
             // when receiving valid location stop --> draining battery otherwise
             self.locationManager.stopUpdatingLocation()
         // pass location data in delegate
         delegate.processNewLocation(newLocation: location)
         }
+ */
+        delegate.processNewLocation(newLocation: location)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

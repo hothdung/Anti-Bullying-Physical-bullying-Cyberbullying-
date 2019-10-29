@@ -89,6 +89,7 @@ class InterfaceController: WKInterfaceController {
     }
     
     func sendToServer(params : Dictionary<String, String>){
+        print(params)
         guard let url = URL(string:"http://13.125.244.168:80") else
         { print("URL could not be created")
             return
@@ -96,28 +97,16 @@ class InterfaceController: WKInterfaceController {
         let requestBody = try? JSONSerialization.data(withJSONObject: params,  options: [])
        
         var urlRequest = URLRequest(url: url)
-        //urlRequest.timeoutInterval = 240
+        urlRequest.timeoutInterval = 240
         urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "test")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         urlRequest.httpBody = requestBody
+        //print("Location:\(params)")
         
         let session = URLSession.shared
         
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print("error:", error)
-                return
-            }
-
-            do {
-                guard let data = data else { return }
-                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else { return }
-                print("json:", json)
-            } catch {
-                print("error:", error)
-            }
-        }
+        let task = session.dataTask(with: urlRequest)
         task.resume()
     }
 
@@ -169,11 +158,13 @@ extension InterfaceController: LocationOutsideDelegate {
         manualLong = longitude
         print("Latitude \(latitude)")
         print("Longitude \(longitude)")
-        
+    
         let stringFrLat = "\(latitude)"
         let stringFrLong = "\(longitude)"
-        let locationData = ["latitude": stringFrLat, "longitude":stringFrLong] as Dictionary<String,String>
+        let locationData = ["test": stringFrLat]
+        let locationData2=["test": stringFrLong]
         sendToServer(params: locationData)
+        sendToServer(params: locationData2)
     }
 
     func processLocationFailure(error: NSError) {
