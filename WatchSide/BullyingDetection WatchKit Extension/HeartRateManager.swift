@@ -74,7 +74,6 @@ class HeartRateManager: NSObject{
                 
                 // after extraction of bpm value conversion to double
                 let value = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-                print("Here is hv\(value)")
                 self.delegate.handleNewHeartRate(newHeartRate: value)
             }
             
