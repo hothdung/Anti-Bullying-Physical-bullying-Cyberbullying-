@@ -17,7 +17,7 @@ protocol LocationOutsideDelegate {
 }
 
 class LocationOutsideManager: NSObject {
-
+    
     let locationManager = CLLocationManager()
     var delegate: LocationOutsideDelegate
     let authorizationStatus = CLLocationManager.authorizationStatus()
@@ -61,17 +61,9 @@ extension LocationOutsideManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // just interested in last and recent location in loc array
         guard let location = locations.last else{ return }
-        
-        /**
-        if location.horizontalAccuracy > 0{
-            // when receiving valid location stop --> draining battery otherwise
-            self.locationManager.stopUpdatingLocation()
-        // pass location data in delegate
-        delegate.processNewLocation(newLocation: location)
-        }
- */
         delegate.processNewLocation(newLocation: location)
     }
+    
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         guard let locationError = error as? CLError else {

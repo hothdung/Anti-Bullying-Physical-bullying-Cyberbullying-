@@ -35,6 +35,9 @@ class InterfaceController: WKInterfaceController {
 
     // instance of locationOutside exist already at runtime
     var locationManager: LocationOutsideManager!
+    // 5 m change --> significant change
+    //let distanceChange: Double = 5
+    //var lastCurrentLocation: CLLocation?
     var heartRateManager: HeartRateManager!
 
     // Outlets for testing
@@ -74,6 +77,11 @@ class InterfaceController: WKInterfaceController {
         // initialize locationManager
         locationManager = LocationOutsideManager(delegate: self)
         motionManager = MovementManager(delegate: self)
+        /**
+        if let lastCurrentLocation = lastCurrentLocation{
+            processNewLocation(newLocation: lastCurrentLocation)
+        }
+ */
     }
 
     override func willActivate() {
@@ -152,6 +160,14 @@ class InterfaceController: WKInterfaceController {
 extension InterfaceController: LocationOutsideDelegate {
 
     func processNewLocation(newLocation: CLLocation) {
+        /**
+        let isSignificantChange = significantLocationChange(updatedLoc: newLocation)
+         if isSignificantChange == false {
+            print("No significant change in location data")
+            return
+        }
+ */
+        
         let latitude = newLocation.coordinate.latitude
         let longitude = newLocation.coordinate.longitude
         manualLat = latitude
@@ -163,9 +179,18 @@ extension InterfaceController: LocationOutsideDelegate {
         let stringFrLong = "\(longitude)"
         let locationData = ["test": stringFrLat]
         let locationData2=["test": stringFrLong]
-        sendToServer(params: locationData)
-        sendToServer(params: locationData2)
+        //sendToServer(params: locationData)
+        //sendToServer(params: locationData2)
     }
+    
+    /**
+    func significantLocationChange(updatedLoc updatedLocation: CLLocation) -> Bool{
+            guard let lastCurrentLocation = lastCurrentLocation else { return true}
+            let distance = lastCurrentLocation.distance(from: updatedLocation)
+            return distance > CLLocationDistance(distanceChange)
+            
+        }
+ */
 
     func processLocationFailure(error: NSError) {
         print(error)
