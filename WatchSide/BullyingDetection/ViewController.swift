@@ -11,6 +11,7 @@ import CoreLocation
 class ViewController: UIViewController {
     
     let locationManager = CLLocationManager()
+    var lastFoundLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
     func locationManagerConfig(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.allowsBackgroundLocationUpdates = true
     }
     
     func checkLocationServices(){
@@ -35,20 +37,57 @@ class ViewController: UIViewController {
     func checkLocationAuthorization(){
         switch CLLocationManager.authorizationStatus(){
         case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
             break
-        case .denied:
+        case .restricted, .denied:
+            let title = "Location services are disabled!"
+            let message = "Please enable locations for this app via settings on your phone"
+            
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            // cancelling the action
+            let cancelAction = UIAlertAction(title:"Cancel", style:.cancel, handler:nil)
+            alertController.addAction(cancelAction)
+            present(alertController,animated:true,completion:nil)
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-        case .restricted:
             break
         case .authorizedAlways:
-            locationManager.startUpdatingLocation()
+            locationManager.requestAlwaysAuthorization()
             break
         default:
             print("This case is not available")
         }
+    }
+    
+    private func locationDistanceChange(updatedLocation: CLLocation)-> Bool{
+        guard let lastQueriedLocation = lastFoundLocation else{
+            return true
+        }
+        let distance = lastQueriedLocation.distance(from: updatedLocation)
+        // more than ... meters --> distinct new location
+        return distance > 100
+    }
+    
+    private func updateBullyingLocation(location:CLLocation){
+        // user location changed significantly? compare with last time queried one
+        if locationDistanceChange(updatedLocation: location) == false {
+            return
+        }
+        // significant change in location
+        print("current location changed and will be stored!")
+        self.lastFoundLocation = location
+    }
+    
+    override func viewWillAppear(_ animated:Bool){
+        super.viewWillAppear(animated)
+        locationManager.startUpdatingLocation()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        locationManager.stopUpdatingLocation()
     }
     
 }
