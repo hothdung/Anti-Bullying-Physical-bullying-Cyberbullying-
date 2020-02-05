@@ -94,12 +94,21 @@ class ViewController: UIViewController {
 
 extension ViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else{ return }
-        
+        guard let recentlocation = locations.last else{ return }
+        // taking the user's last location and check whether distinct change & further proceed with it
+        updateBullyingLocation(location: recentlocation)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()
+    }
+    
+    // facing issue when fetching location information
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError){
+        if error.code == CLError.locationUnknown.rawValue{
+            return
+        }
+        print("Failing to fetch valid location information: \(error)")
     }
 }
 
