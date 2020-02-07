@@ -7,16 +7,19 @@
 //
 import UIKit
 import CoreLocation
+import WatchConnectivity
 
 class ViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var lastFoundLocation: CLLocation?
+    var session: WCSession?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
         checkLocationServices()
+        startSession()
     }
     
     func locationManagerConfig(){
@@ -80,6 +83,34 @@ class ViewController: UIViewController {
         self.lastFoundLocation = location
     }
     
+    private func startSession(){
+        if(WCSession.isSupported()){
+            session?.delegate = self
+            session?.activate()
+        }
+    }
+    
+    func updateSessionLocationInfo(location: CLLocation){
+        guard let session = session else {return}
+        print("Set application context in iPhone: (applicationContext)")
+        do{
+            // encoding location coordinates
+            let data = try NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
+            // dictionary object to store location data
+            let context = ["lastFoundlocation": data]
+            
+            do{
+                // update session object's application context & prepare to send context to watchKit extension
+                try session.updateApplicationContext(context)
+            }catch{
+                print("Update application context failed.")
+            }
+            
+        }catch{
+            print("Could not write file")
+        }
+    }
+    
     override func viewWillAppear(_ animated:Bool){
         super.viewWillAppear(animated)
         locationManager.startUpdatingLocation()
@@ -95,6 +126,8 @@ class ViewController: UIViewController {
 extension ViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let recentlocation = locations.last else{ return }
+        // pass location coordinates for session object
+        updateSessionLocationInfo(location: recentlocation)
         // taking the user's last location and check whether distinct change & further proceed with it
         updateBullyingLocation(location: recentlocation)
     }
@@ -110,6 +143,22 @@ extension ViewController: CLLocationManagerDelegate{
         }
         print("Failing to fetch valid location information: \(error)")
     }
+}
+
+extension ViewController: WCSessionDelegate{
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        <#code#>
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        <#code#>
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        <#code#>
+    }
+    
+   
 }
 
 

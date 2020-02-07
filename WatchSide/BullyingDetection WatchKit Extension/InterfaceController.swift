@@ -183,15 +183,6 @@ extension InterfaceController: LocationOutsideDelegate {
         //sendToServer(params: locationData2)
     }
     
-    /**
-    func significantLocationChange(updatedLoc updatedLocation: CLLocation) -> Bool{
-            guard let lastCurrentLocation = lastCurrentLocation else { return true}
-            let distance = lastCurrentLocation.distance(from: updatedLocation)
-            return distance > CLLocationDistance(distanceChange)
-            
-        }
- */
-
     func processLocationFailure(error: NSError) {
         print(error)
     }

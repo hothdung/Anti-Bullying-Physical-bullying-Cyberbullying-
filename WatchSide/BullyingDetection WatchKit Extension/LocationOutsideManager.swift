@@ -9,6 +9,7 @@
 import WatchKit
 import Foundation
 import CoreLocation
+import WatchConnectivity
 
 protocol LocationOutsideDelegate {
    
@@ -21,6 +22,9 @@ class LocationOutsideManager: NSObject {
     let locationManager = CLLocationManager()
     var delegate: LocationOutsideDelegate
     let authorizationStatus = CLLocationManager.authorizationStatus()
+    private var session: WCSession?
+    private var lastFoundLocation: CLLocation?
+    
     
     // setting up the delegate
     init(delegate:LocationOutsideDelegate){
@@ -34,6 +38,32 @@ class LocationOutsideManager: NSObject {
             locationManager.desiredAccuracy =  kCLLocationAccuracyBest
             checkLocationAuthorization(status: authorizationStatus)
         }
+        
+        if let lastUpdatedLocation = lastFoundLocation{
+            queryWatchLocation(location: lastUpdatedLocation)
+        }
+        startSession()
+    }
+    
+    func locationDistanceChanged(updatedLocation: CLLocation)-> Bool{
+        guard let lastUpdatedLocation = lastFoundLocation else{
+            return true
+        }
+        let distance = lastUpdatedLocation.distance(from: updatedLocation)
+        return distance > 100
+    }
+    
+    private func queryWatchLocation(location: CLLocation){
+        // distance has changed?
+        if locationDistanceChanged(updatedLocation: location)==false{
+            return
+        }
+        // Store current location for next time
+        print("WatchKit: Current location has been changed.")
+        
+        lastFoundLocation = location
+        // get changed location
+        delegate.processNewLocation(newLocation: location)
     }
     
     func checkLocationAuthorization(status: CLAuthorizationStatus){
@@ -42,12 +72,27 @@ class LocationOutsideManager: NSObject {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
-            print("Location data is not available")
+            print("Location disabled \n\n Enable locations for this app via settings in your phone.")
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
         default:
             break
         }
+    }
+    
+    private func startSession(){
+        if(WCSession.isSupported()){
+            // getting current session object for device
+            session = WCSession.default
+            session?.delegate = self
+            session?.activate()
+            
+        }
+    }
+    
+    func session(session: WCSession,didReceiveApplicationContext applicationContext:[String: AnyObject]){
+        print("WatchKit: Received application context: (applicationContext)")
+        guard let data = applicationContext["lastFoundLocation"] as? NSData else { return }
     }
 }
 
@@ -60,8 +105,8 @@ extension LocationOutsideManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // just interested in last and recent location in loc array
-        guard let location = locations.last else{ return }
-        delegate.processNewLocation(newLocation: location)
+        guard let mostRecentLocation = locations.last else{ return }
+        queryWatchLocation(location: mostRecentLocation)
     }
     
 
@@ -85,5 +130,12 @@ extension LocationOutsideManager: CLLocationManagerDelegate {
         
         delegate.processLocationFailure(error: locationError as NSError)
     }
+}
+
+extension LocationOutsideManager: WCSessionDelegate{
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        <#code#>
+    }
+    
 }
 
