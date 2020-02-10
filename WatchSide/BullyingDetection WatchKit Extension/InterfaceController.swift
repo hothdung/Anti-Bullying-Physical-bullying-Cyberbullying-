@@ -57,6 +57,9 @@ class InterfaceController: WKInterfaceController {
     
     var manualLat: Double = 0.0
     var manualLong: Double = 0.0
+    var recordSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
+    var audioSettings = [String : Int]()
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -74,14 +77,35 @@ class InterfaceController: WKInterfaceController {
         }
         heartRateManager = HeartRateManager(delegate: self)
         
+        // setting audio recording component
+        recordSession = AVAudioSession.sharedInstance()
+        
+       if(recordSession.responds(to:#selector(AVAudioSession.requestRecordPermission(_:)))){
+           // configure audio settings
+           AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool) -> Void in
+               if granted{
+                   print("Recording granted!")
+                   
+                   do{
+                       try self.recordSession.setCategory(.playAndRecord,mode: .default, options: [])
+                       try self.recordSession.setActive(true)
+                   }catch{
+                       print("Audio session could not be set!")
+                   }
+               }else{
+                   print("Recording not granted!")
+               }
+           })
+       }
+        
+        settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                    AVSampleRateKey: 12000,
+                    AVNumberOfChannelsKey: 1,
+                    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
+        
         // initialize locationManager
         locationManager = LocationOutsideManager(delegate: self)
         motionManager = MovementManager(delegate: self)
-        /**
-        if let lastCurrentLocation = lastCurrentLocation{
-            processNewLocation(newLocation: lastCurrentLocation)
-        }
- */
     }
 
     override func willActivate() {
@@ -151,6 +175,15 @@ class InterfaceController: WKInterfaceController {
             //healthStore.end(session!)
 
         }
+        
+        print("Audio component on!")
+        if audioRecorder == nil{
+            self.startRecording()
+        }else{
+            //self.finishRecording(success: true)
+            audioRecorder.stop()
+            showUrls()
+        }
 
     }
 
@@ -211,7 +244,66 @@ extension InterfaceController: MovementDelegate {
             print(movement)
         }
     }
-
+}
+extension InterfaceController: AVAudioRecorderDelegate{
+    
+    func getDocumentsDirectory()-> URL{
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = paths[0]
+        return documentDirectory
+    }
+    
+    func getAudioURL() -> URL{
+        let fileName = NSUUID().uuidString+".m4a"
+        return getDocumentsDirectory().appendingPathComponent(fileName)
+    }
+    
+    func startRecording(){
+        do{
+            var counter = 0
+            
+            while counter < 20 {
+            audioRecorder = try AVAudioRecorder(url:self.getAudioURL(), settings: settings)
+            audioRecorder.delegate = self
+            audioRecorder.record(forDuration:5)
+            counter += 1
+            }
+        }catch let error{
+            //finishRecording(success: false)
+            print(error)
+        }
+    }
+    
+    func finishRecording(success: Bool){
+        audioRecorder.stop()
+        if success{
+            print("Recorded successfully")
+        }else{
+            audioRecorder = nil
+            print("Recording failed")
+        }
+    }
+    
+    /*
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag{
+            finishRecording(success: false)
+        }
+        print(recorder.url)
+    }
+ */
+    
+    
+    func showUrls(){
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{return}
+        
+        do{
+            let contentOfDirectory = try FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
+            print(contentOfDirectory)
+        }catch{
+            print("Could not list urls of files in documents directory: \(error)")
+        }
+    }
 }
 
 

@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         }
         let distance = lastQueriedLocation.distance(from: updatedLocation)
         // more than ... meters --> distinct new location
-        return distance > 100
+        return distance > 25
     }
     
     private func updateBullyingLocation(location:CLLocation){
@@ -147,15 +147,15 @@ extension ViewController: CLLocationManagerDelegate{
 
 extension ViewController: WCSessionDelegate{
     func sessionDidBecomeInactive(_ session: WCSession) {
-        <#code#>
+        
     }
     
     func sessionDidDeactivate(_ session: WCSession) {
-        <#code#>
+      
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        <#code#>
+    
     }
     
    
