@@ -50,7 +50,7 @@ class LocationOutsideManager: NSObject {
             return true
         }
         let distance = lastUpdatedLocation.distance(from: updatedLocation)
-        return distance > CLLocationDistance(5)
+        return distance > 25
     }
     
     private func queryWatchLocation(location: CLLocation){
@@ -71,16 +71,10 @@ class LocationOutsideManager: NSObject {
         switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-            break
         case .restricted, .denied:
             print("Location disabled \n\n Enable locations for this app via settings in your phone.")
-            break
-        case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            break
-        case .authorizedAlways:
-            locationManager.startUpdatingLocation()
-            break
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.requestLocation()
         default:
             break
         }

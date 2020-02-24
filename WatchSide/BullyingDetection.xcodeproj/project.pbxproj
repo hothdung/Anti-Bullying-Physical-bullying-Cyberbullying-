@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B004C042E7402BEDAFD8A72 /* Pods_BullyingDetection_WatchKit_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 563202737B261AE545B28784 /* Pods_BullyingDetection_WatchKit_Extension.framework */; };
 		3B05D2BD234C162600A55450 /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B05D2BC234C162600A55450 /* WatchKit.framework */; };
 		3B087B5D234EEDB30021193B /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B087B5C234EEDB30021193B /* MovementManager.swift */; };
 		3BA037C1234E39E7000C0245 /* LocationOutsideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA037C0234E39E7000C0245 /* LocationOutsideManager.swift */; };
 		3BF3B2EC23521D80004A9E01 /* HealthDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3B2EB23521D80004A9E01 /* HealthDataService.swift */; };
 		3BF3B2EE2352212A004A9E01 /* HeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3B2ED2352212A004A9E01 /* HeartRate.swift */; };
 		3BF3B2F023527087004A9E01 /* HeartRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3B2EF23527087004A9E01 /* HeartRateManager.swift */; };
-		95B005E186BF43F35EE82B37 /* Pods_BullyingDetection_WatchKit_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2A221D69BA723EEEAE3B36 /* Pods_BullyingDetection_WatchKit_App.framework */; };
 		AF2AA90C227830EC001F093A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2AA90B227830EC001F093A /* HealthKit.framework */; };
 		AF31D9C0227714A0008D1EC4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31D9BF227714A0008D1EC4 /* MapKit.framework */; };
 		AF31D9C322772E79008D1EC4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31D9C222772E79008D1EC4 /* HealthKit.framework */; };
@@ -32,7 +30,6 @@
 		AF8B69812274E066008B75F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF8B69802274E066008B75F9 /* Assets.xcassets */; };
 		AFC35391227AA9A100FE775B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC35390227AA9A100FE775B /* CoreLocation.framework */; };
 		AFC35393227AA9AF00FE775B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC35392227AA9AF00FE775B /* CoreLocation.framework */; };
-		C3D41E1702BA517069CAB5F3 /* Pods_BullyingDetection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFFE6DF27071C0D5CEB25A1E /* Pods_BullyingDetection.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,18 +75,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C567DAD7CF594372F78A977 /* Pods-BullyingDetection WatchKit App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BullyingDetection WatchKit App.release.xcconfig"; path = "Target Support Files/Pods-BullyingDetection WatchKit App/Pods-BullyingDetection WatchKit App.release.xcconfig"; sourceTree = "<group>"; };
 		3B05D2BC234C162600A55450 /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS6.0.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
 		3B087B5C234EEDB30021193B /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
 		3BA037C0234E39E7000C0245 /* LocationOutsideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOutsideManager.swift; sourceTree = "<group>"; };
 		3BF3B2EB23521D80004A9E01 /* HealthDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataService.swift; sourceTree = "<group>"; };
 		3BF3B2ED2352212A004A9E01 /* HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRate.swift; sourceTree = "<group>"; };
 		3BF3B2EF23527087004A9E01 /* HeartRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateManager.swift; sourceTree = "<group>"; };
-		4D2A221D69BA723EEEAE3B36 /* Pods_BullyingDetection_WatchKit_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BullyingDetection_WatchKit_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		563202737B261AE545B28784 /* Pods_BullyingDetection_WatchKit_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BullyingDetection_WatchKit_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		60C41765A0C0843776437D43 /* Pods-BullyingDetection WatchKit Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BullyingDetection WatchKit Extension.release.xcconfig"; path = "Target Support Files/Pods-BullyingDetection WatchKit Extension/Pods-BullyingDetection WatchKit Extension.release.xcconfig"; sourceTree = "<group>"; };
-		6C1BA082E037B9A9D6E71EB2 /* Pods-BullyingDetection WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BullyingDetection WatchKit Extension.debug.xcconfig"; path = "Target Support Files/Pods-BullyingDetection WatchKit Extension/Pods-BullyingDetection WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		9E4FE6C1010652308CFD570C /* Pods-BullyingDetection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BullyingDetection.release.xcconfig"; path = "Target Support Files/Pods-BullyingDetection/Pods-BullyingDetection.release.xcconfig"; sourceTree = "<group>"; };
 		AF2AA90B227830EC001F093A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		AF31D9BF227714A0008D1EC4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS5.2.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		AF31D9C122772E79008D1EC4 /* BullyingDetection WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BullyingDetection WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -114,9 +105,6 @@
 		AFC35390227AA9A100FE775B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AFC35392227AA9AF00FE775B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS5.2.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		AFE679D0227D6D1C0028BBFA /* BullyingDetection WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BullyingDetection WatchKit App.entitlements"; sourceTree = "<group>"; };
-		E066A8EBB97B76EAA3308647 /* Pods-BullyingDetection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BullyingDetection.debug.xcconfig"; path = "Target Support Files/Pods-BullyingDetection/Pods-BullyingDetection.debug.xcconfig"; sourceTree = "<group>"; };
-		E2EC3A8ADC4D844047259B12 /* Pods-BullyingDetection WatchKit App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BullyingDetection WatchKit App.debug.xcconfig"; path = "Target Support Files/Pods-BullyingDetection WatchKit App/Pods-BullyingDetection WatchKit App.debug.xcconfig"; sourceTree = "<group>"; };
-		EFFE6DF27071C0D5CEB25A1E /* Pods_BullyingDetection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BullyingDetection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +114,6 @@
 			files = (
 				AFC35391227AA9A100FE775B /* CoreLocation.framework in Frameworks */,
 				AF2AA90C227830EC001F093A /* HealthKit.framework in Frameworks */,
-				C3D41E1702BA517069CAB5F3 /* Pods_BullyingDetection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,35 +125,12 @@
 				AFC35393227AA9AF00FE775B /* CoreLocation.framework in Frameworks */,
 				AF31D9C0227714A0008D1EC4 /* MapKit.framework in Frameworks */,
 				AF31D9C322772E79008D1EC4 /* HealthKit.framework in Frameworks */,
-				1B004C042E7402BEDAFD8A72 /* Pods_BullyingDetection_WatchKit_Extension.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CCE7F1CFFF3BD682A3E21FFB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				95B005E186BF43F35EE82B37 /* Pods_BullyingDetection_WatchKit_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6AC31E99F0061A0CF0B6BB3F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E066A8EBB97B76EAA3308647 /* Pods-BullyingDetection.debug.xcconfig */,
-				9E4FE6C1010652308CFD570C /* Pods-BullyingDetection.release.xcconfig */,
-				E2EC3A8ADC4D844047259B12 /* Pods-BullyingDetection WatchKit App.debug.xcconfig */,
-				2C567DAD7CF594372F78A977 /* Pods-BullyingDetection WatchKit App.release.xcconfig */,
-				6C1BA082E037B9A9D6E71EB2 /* Pods-BullyingDetection WatchKit Extension.debug.xcconfig */,
-				60C41765A0C0843776437D43 /* Pods-BullyingDetection WatchKit Extension.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		AF7506CC2275F92700A868A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,9 +140,6 @@
 				AF2AA90B227830EC001F093A /* HealthKit.framework */,
 				AF31D9C222772E79008D1EC4 /* HealthKit.framework */,
 				AF31D9BF227714A0008D1EC4 /* MapKit.framework */,
-				EFFE6DF27071C0D5CEB25A1E /* Pods_BullyingDetection.framework */,
-				4D2A221D69BA723EEEAE3B36 /* Pods_BullyingDetection_WatchKit_App.framework */,
-				563202737B261AE545B28784 /* Pods_BullyingDetection_WatchKit_Extension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -191,7 +152,6 @@
 				AF8B697B2274E065008B75F9 /* BullyingDetection WatchKit Extension */,
 				AF8B69572274E062008B75F9 /* Products */,
 				AF7506CC2275F92700A868A1 /* Frameworks */,
-				6AC31E99F0061A0CF0B6BB3F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -254,12 +214,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF8B698D2274E066008B75F9 /* Build configuration list for PBXNativeTarget "BullyingDetection" */;
 			buildPhases = (
-				BAC28F2B08885BF9716DC089 /* [CP] Check Pods Manifest.lock */,
 				AF8B69522274E062008B75F9 /* Sources */,
 				AF8B69532274E062008B75F9 /* Frameworks */,
 				AF8B69542274E062008B75F9 /* Resources */,
 				AF8B698C2274E066008B75F9 /* Embed Watch Content */,
-				1DDBD9854570C1889BC2E518 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -275,10 +233,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF8B69892274E066008B75F9 /* Build configuration list for PBXNativeTarget "BullyingDetection WatchKit App" */;
 			buildPhases = (
-				0147F501A1DDC25EEBBF8BC5 /* [CP] Check Pods Manifest.lock */,
 				AF8B69662274E064008B75F9 /* Resources */,
 				AF8B69882274E066008B75F9 /* Embed App Extensions */,
-				CCE7F1CFFF3BD682A3E21FFB /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -294,11 +250,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF8B69852274E066008B75F9 /* Build configuration list for PBXNativeTarget "BullyingDetection WatchKit Extension" */;
 			buildPhases = (
-				0DD973FE8DF276E628C730ED /* [CP] Check Pods Manifest.lock */,
 				AF8B69732274E065008B75F9 /* Sources */,
 				AF8B69742274E065008B75F9 /* Frameworks */,
 				AF8B69752274E065008B75F9 /* Resources */,
-				9506ED8A481CD2FAB5CA5938 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -406,109 +360,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0147F501A1DDC25EEBBF8BC5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BullyingDetection WatchKit App-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0DD973FE8DF276E628C730ED /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BullyingDetection WatchKit Extension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1DDBD9854570C1889BC2E518 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BullyingDetection/Pods-BullyingDetection-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BullyingDetection/Pods-BullyingDetection-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BullyingDetection/Pods-BullyingDetection-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9506ED8A481CD2FAB5CA5938 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BullyingDetection WatchKit Extension/Pods-BullyingDetection WatchKit Extension-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BullyingDetection WatchKit Extension/Pods-BullyingDetection WatchKit Extension-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BullyingDetection WatchKit Extension/Pods-BullyingDetection WatchKit Extension-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BAC28F2B08885BF9716DC089 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BullyingDetection-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF8B69522274E062008B75F9 /* Sources */ = {
@@ -695,7 +546,6 @@
 		};
 		AF8B69862274E066008B75F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C1BA082E037B9A9D6E71EB2 /* Pods-BullyingDetection WatchKit Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "BullyingDetection WatchKit Extension/BullyingDetection WatchKit Extension.entitlements";
@@ -719,7 +569,6 @@
 		};
 		AF8B69872274E066008B75F9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60C41765A0C0843776437D43 /* Pods-BullyingDetection WatchKit Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "BullyingDetection WatchKit Extension/BullyingDetection WatchKit Extension.entitlements";
@@ -743,7 +592,6 @@
 		};
 		AF8B698A2274E066008B75F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2EC3A8ADC4D844047259B12 /* Pods-BullyingDetection WatchKit App.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -764,7 +612,6 @@
 		};
 		AF8B698B2274E066008B75F9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C567DAD7CF594372F78A977 /* Pods-BullyingDetection WatchKit App.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -785,7 +632,6 @@
 		};
 		AF8B698E2274E066008B75F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E066A8EBB97B76EAA3308647 /* Pods-BullyingDetection.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BullyingDetection/BullyingDetection.entitlements;
@@ -807,7 +653,6 @@
 		};
 		AF8B698F2274E066008B75F9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9E4FE6C1010652308CFD570C /* Pods-BullyingDetection.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BullyingDetection/BullyingDetection.entitlements;

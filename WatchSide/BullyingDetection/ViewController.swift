@@ -9,7 +9,6 @@ import UIKit
 import CoreLocation
 import WatchConnectivity
 
-
 class ViewController: UIViewController {
     
     let locationManager = CLLocationManager()
@@ -41,7 +40,7 @@ class ViewController: UIViewController {
     func checkLocationAuthorization(){
         switch CLLocationManager.authorizationStatus(){
         case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
             break
         case .restricted, .denied:
             let title = "Location services are disabled!"
@@ -58,7 +57,7 @@ class ViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
             break
         case .authorizedAlways:
-            locationManager.startUpdatingLocation()
+            locationManager.requestAlwaysAuthorization()
             break
         default:
             print("This case is not available")
@@ -71,7 +70,7 @@ class ViewController: UIViewController {
         }
         let distance = lastQueriedLocation.distance(from: updatedLocation)
         // more than ... meters --> distinct new location
-        return distance > CLLocationDistance(5)
+        return distance > 25
     }
     
     private func updateBullyingLocation(location:CLLocation){
@@ -114,11 +113,12 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated:Bool){
         super.viewWillAppear(animated)
-        
+        locationManager.startUpdatingLocation()
     }
     
     override func viewWillDisappear(_ animated: Bool){
         super.viewWillAppear(animated)
+        locationManager.stopUpdatingLocation()
     }
     
 }
