@@ -1,0 +1,152 @@
+[
+    {
+        "id": 1,
+        "name": "seokwonchoi",
+        "label": "Seokwon Choi",
+        "color": "#660000"
+    },
+    {
+        "id": 2,
+        "name": "kevinhuh",
+        "label": "Kevin Huh",
+        "color": "#9f2525"
+    },
+    {
+        "id": 3,
+        "name": "dorotheaschaan",
+        "label": "Dorothea Schaan",
+        "color": "#990000"
+    },
+    {
+        "id": 4,
+        "name": "minheeseo",
+        "label": "Minhee Seo",
+        "color": "#cc0000"
+    },
+    {
+        "id": 5,
+        "name": "jiwonyoon",
+        "label": "Jiwon Yoon",
+        "color": "#ee0000"
+    },
+    {
+        "id": 6,
+        "name": "vanho",
+        "label": "Van Ho",
+        "color": "#f5624d"
+    },
+    {
+        "id": 7,
+        "name": "jihwankim",
+        "label": "Jihwan Kim",
+        "color": "#eb5a46"
+    },
+    {
+        "id": 8,
+        "name": "dungho",
+        "label": "Dung Ho",
+        "color": "#ef7564"
+    },
+    {
+        "id": 9,
+        "name": "jaeyoungkim",
+        "label": "Jaeyoung Kim",
+        "color": "#ff4d00"
+    },
+    {
+        "id": 10,
+        "name": "donho",
+        "label": "Don Ho",
+        "color": "#ff7400"
+    },
+    {
+        "id": 11,
+        "name": "franzischaedel",
+        "label": "Franziska Schädel",
+        "color": "#ff9a00"
+    },
+    {
+        "id": 12,
+        "name": "kiroongchoe",
+        "label": "Kiroong Choe",
+        "color": "#ffa500"
+    },
+    {
+        "id": 13,
+        "name": "minwookcha",
+        "label": "Minwook Cha",
+        "color": "#ffc100"
+    },
+    {
+        "id": 14,
+        "name": "maiho",
+        "label": "Mai Ho",
+        "color": "#CCCC00"
+    },
+    {
+        "id": 15,
+        "name": "adamgiemza",
+        "label": "Adam Giemza",
+        "color": "#FFFF00"
+    },
+    {
+        "id": 16,
+        "name": "lenarichter",
+        "label": "Lena Richter",
+        "color": "#FFFF33"
+    },
+    {
+        "id": 17,
+        "name": "camillabas",
+        "label": "Camilla Bas",
+        "color": "#FFFF66"
+    },
+    {
+        "id": 18,
+        "name": "juttahassler",
+        "label": "Jutta Hassler",
+        "color": "#006400"
+    },
+    {
+        "id": 19,
+        "name": "isabelmueller",
+        "label": "Isabel Mueller",
+        "color": "#008000"
+    },
+    {
+        "id": 20,
+        "name": "thanhtunguyen",
+        "label": "Thanh Tu Nguyen",
+        "color": "#228B22"
+    },
+    {
+        "id": 21,
+        "name": "thomasmuster",
+        "label": "Thomas Muster",
+        "color": "#00FF00"
+    },
+    {
+        "id": 22,
+        "name": "codyconnolly",
+        "label": "Cody Conolly",
+        "color": "#00FF00"
+    },
+    {
+        "id": 23,
+        "name": "eunmicho",
+        "label": "Eunmi Cho",
+        "color": "#00FF00"
+    },
+    {
+        "id": 24,
+        "name": "seoyeonkim",
+        "label": "Seoyeon Kim",
+        "color": "#32CD32"
+    },
+    {
+        "id": 25,
+        "name": "jongbinbaek",
+        "label": "Jongbin Baek",
+        "color": "#7FFF00"
+    }
+]
