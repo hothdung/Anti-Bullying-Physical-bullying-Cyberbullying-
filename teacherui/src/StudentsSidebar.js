@@ -9,14 +9,18 @@ function StudentsSidebar(props) {
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                {StudentData.map((student) => (
-                    <ListItem key={student.id} button style={{ backgroundColor: student.color, borderRadius:4,marginTop:2}}>
-                        <ListItemText>{student.label}</ListItemText>
-                    </ListItem>
-                )
+                {StudentData.map((student, index) => {
+                    if (index == 0) { return <h1>Class {student.studentsClassname}</h1> }
+                    else {
+                        return <ListItem key={student.id} button style={{ backgroundColor: student.color, borderRadius: 4, marginTop: 2}}>
+                            <ListItemText>{student.label}</ListItemText>
+                        </ListItem>
+                    }
+
+                }
                 )}
             </List>
-        </div>
+        </div >
     )
 }
 
