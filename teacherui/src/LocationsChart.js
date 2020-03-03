@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import LocationData from './data/locations.json'
 import * as d3 from 'd3'
 
 class LocationsChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [{ location: "Toilet", frequency: 70 }, { location: "Schoolyard", frequency: 60 }, { location: "Classroom", frequency: 55 }, { location: "Hallway", frequency: 45 }, { location: "Way to school", frequency: 20 }, { location: "At home", frequency: 17 }],
+            data: LocationData,
             yAxisAttribute: "location",
             xAxisAttribute: "frequency",
             width: 450,
