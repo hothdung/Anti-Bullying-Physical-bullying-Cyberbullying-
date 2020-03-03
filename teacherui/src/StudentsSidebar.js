@@ -12,15 +12,10 @@ function StudentsSidebar(props) {
                 {StudentData.map((student, index) => {
                     if (index == 0) { return <h1>Class {student.studentsClassname}</h1> }
                     else {
-<<<<<<< HEAD
-                        return <ListItem key={student.id} button style={{ backgroundColor: student.color, borderRadius: 4, marginTop: 2 }}>
-=======
-                        return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert), borderRadius: 4, marginTop: 2}}>
->>>>>>> jihwan
+                        return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert), borderRadius: 4, marginTop: 2 }}>
                             <ListItemText>{student.label}</ListItemText>
                         </ListItem>
                     }
-
                 }
                 )}
             </List>
@@ -30,7 +25,7 @@ function StudentsSidebar(props) {
 
 function getMax(arr, prop) {
     var max;
-    for (var i=1 ; i<arr.length ; i++) {
+    for (var i = 1; i < arr.length; i++) {
         if (max == null || parseInt(arr[i][prop]) > parseInt(max[prop]))
             max = arr[i];
     }
@@ -39,7 +34,7 @@ function getMax(arr, prop) {
 
 function getMin(arr, prop) {
     var min;
-    for (var i=1 ; i<arr.length ; i++) {
+    for (var i = 1; i < arr.length; i++) {
         if (min == null || parseInt(arr[i][prop]) < parseInt(min[prop]))
             min = arr[i];
     }
@@ -51,9 +46,9 @@ function getColor(props) {
     console.log(max)
     var min = getMin(StudentData, "alert")
     console.log(min)
-    var grad = ((props/(max.alert-min.alert))*120).toString(10)  
+    var grad = ((props / (max.alert - min.alert)) * 120).toString(10)
 
-    return ["hsl(",grad,",100%,50%)"].join("");
+    return ["hsl(", grad, ",100%,50%)"].join("");
 }
 
 export default StudentsSidebar;
