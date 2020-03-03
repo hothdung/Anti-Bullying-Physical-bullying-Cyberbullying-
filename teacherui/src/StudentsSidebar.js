@@ -1,5 +1,6 @@
 import React from 'react'
 import StudentData from './data/schoolClass.json'
+import LocationsChart from './LocationsChart'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
