@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import LocationData from './data/locations.json'
-import * as d3 from 'd3'
+import React, { Component } from 'react';
+import LocationData from './data/locations.json';
+import * as d3 from 'd3';
 
 class LocationsChart extends Component {
     constructor(props) {

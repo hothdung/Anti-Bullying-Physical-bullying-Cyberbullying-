@@ -6,14 +6,15 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 function StudentsSidebar(props) {
 
+    StudentData.sort((a,b)=>a.alert - b.alert);
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
                 {StudentData.map((student, index) => {
-                    if (index === 0) { return <h1>Class {student.studentsClassname}</h1> }
+                    if (index === 0) { return <h1 key={index}>Class {student.studentsClassname}</h1> }
                     else {
                         return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert), borderRadius: 4, marginTop: 2 }}>
-                            <ListItemText>{student.label}</ListItemText>
+                            <ListItemText key={index}>{student.label}</ListItemText>
                         </ListItem>
                     }
                 }
@@ -45,7 +46,6 @@ function getColor(props) {
     var max = getMax(StudentData, "alert")
     console.log(max)
     var min = getMin(StudentData, "alert")
-    console.log(min)
     var grad = ((props / (max.alert - min.alert)) * 120).toString(10)
 
     return ["hsl(", grad, ",100%,50%)"].join("");
