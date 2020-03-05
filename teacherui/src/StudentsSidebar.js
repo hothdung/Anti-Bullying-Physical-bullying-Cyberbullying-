@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 function StudentsSidebar(props) {
 
-    StudentData.sort((a, b) => a.alert - b.alert);
+    StudentData.sort((a, b) => b.alert - a.alert);
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
@@ -46,7 +46,7 @@ function getColor(props) {
     var max = getMax(StudentData, "alert")
     console.log(max)
     var min = getMin(StudentData, "alert")
-    var grad = ((props / (max.alert - min.alert)) * 120).toString(10)
+    var grad = ((1-(props/(max.alert - min.alert))) * 120 ).toString(10)
 
     console.log("Value is" + grad);
 
