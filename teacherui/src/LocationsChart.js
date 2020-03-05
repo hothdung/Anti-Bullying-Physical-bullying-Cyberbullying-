@@ -32,10 +32,10 @@ class LocationsChart extends Component {
                 "translate(" + margin.left + "," + margin.top + ")");
 
         svg.append("text")
-            .attr("x", (width / 2))
-            .attr("y", 0 - (margin.top / 2))
-            .attr("text-anchor", "middle")
-            .style("font-size", "20px")
+            .attr("x", margin.left-15)
+            .attr("y", 0-(margin.top -45))
+            .attr("text-anchor", "end")
+            .style("font-size", "15px")
             .style("font-weight", "bold")
             .text("Locations")
 
