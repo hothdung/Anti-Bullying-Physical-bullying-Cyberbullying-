@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import WordCloud from 'react-d3-cloud';
+import WordCloud from './references/WordCloud.js';
 
 const fontSizeMapper = word => Math.log2(word.value) * 8;
 const rotate = word => word.value % 2 === 1 ? 0 : 90;
