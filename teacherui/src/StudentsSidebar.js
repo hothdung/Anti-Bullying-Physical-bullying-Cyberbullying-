@@ -11,7 +11,7 @@ function StudentsSidebar(props) {
         <div className="studentsSidebar">
             <List disablePadding dense>
                 {StudentData.map((student, index) => {
-                    if (index === 0) { return <h1 key={index}>Class {student.studentsClassname}</h1> }
+                    if (index === 0) { return <h2 key={index}>Class {student.studentsClassname}</h2> }
                     else {
                         return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert), borderRadius: 4, marginTop: 2 }}>
                             <ListItemText key={index}>{student.label}</ListItemText>

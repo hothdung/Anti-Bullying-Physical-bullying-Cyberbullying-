@@ -7,7 +7,7 @@ import FeelingsCloud from './FeelingsCloud';
 
 
 class RowTempComponent extends Component {
-    
+
     render() {
         return (
             <div className="teacherUiRow">
