@@ -1,33 +1,54 @@
 import React, { Component } from 'react';
-import WordCloud from './references/WordCloud.js';
+import ReactWordcloud from 'react-wordcloud';
+import 'd3-transition';
+import { select } from 'd3-selection';
 
-const fontSizeMapper = word => Math.log2(word.value) * 8;
-const rotate = word => word.value % 2 === 1 ? 0 : 90;
+
+const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#F3CE00"],
+    fontFamily: "impact",
+    deterministic: true,
+    fontSizes: [25, 40],
+    fontWeight: "normal",
+    fontStyle: "normal",
+    rotationAngles: [0, 90],
+    rotations: 3,
+    padding: 1,
+    transitionDuration: 1000,
+
+};
+
+function getCallbacks(callback) {
+
+    return function (word, event) {
+        const isActive = callback !== "onWordMouseOut";
+        const element = event.target;
+        const text = select(element);
+
+        text.transition()
+            .attr('font-size', isActive ? "300%" : '100%')
+            .attr('text-decoration', isActive ? 'underline' : 'none');
+    }
+}
+
+
+
+const callbacks = {
+    getWordTooltip: word =>
+        `The emotion "${word.text}" appeared in class ${word.value} times.`,
+    onWordMouseOut: getCallbacks('onWordMouseOut'),
+    onWordMouseOver: getCallbacks('onWordMouseOver')
+};
+
 
 class FeelingsCloud extends Component {
-
-    componentDidMount() {
-        setInterval(() => {
-            this.forceUpdate();
-        }, 3000);
-    }
 
     render() {
 
         return (
-            <div className='tag-cloud'>
+            <div className='tag-cloud' style={{ width: '100%', height: '100%' }}>
                 <h4 style={{ 'textAlign': 'start' }}>Feelings</h4>
-                <WordCloud
-                    data={this.props.cloudTags}
-                    width={400}
-                    height={300}
-                    fontSizeMapper={fontSizeMapper}
-                    rotate={rotate}
-                    font='serif'
-                    onWordMouseOver={(word) => {
-                        console.log(word.value);
-                    }}
-                />
+                <ReactWordcloud callbacks={callbacks} options={options} words={this.props.cloudTags} />
             </div>
         )
     }

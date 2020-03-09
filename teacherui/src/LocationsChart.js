@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import LocationData from './data/locations.json';
 import * as d3 from 'd3';
 
 class LocationsChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: LocationData,
+            data: this.props.locations,
             yAxisAttribute: "location",
             xAxisAttribute: "frequency",
             width: 450,
@@ -32,8 +31,8 @@ class LocationsChart extends Component {
                 "translate(" + margin.left + "," + margin.top + ")");
 
         svg.append("text")
-            .attr("x", margin.left-15)
-            .attr("y", 0-(margin.top -45))
+            .attr("x", margin.left - 15)
+            .attr("y", 0 - (margin.top - 45))
             .attr("text-anchor", "end")
             .style("font-size", "15px")
             .style("font-weight", "bold")

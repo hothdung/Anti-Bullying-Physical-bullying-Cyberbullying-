@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FrequencyData from './data/warningSample.json';
 import * as d3 from 'd3';
 
 class WarningFrequency extends Component {
@@ -7,7 +6,7 @@ class WarningFrequency extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: FrequencyData,
+            data: this.props.warningVal,
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
             width: 850,

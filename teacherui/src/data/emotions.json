@@ -123,5 +123,10 @@
         "index": 25,
         "text": "Bitterness",
         "value": 10
+    },
+    {
+        "index": 27,
+        "text": "Uneasy",
+        "value": 21
     }
 ]
