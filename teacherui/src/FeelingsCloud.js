@@ -46,7 +46,7 @@ class FeelingsCloud extends Component {
     render() {
 
         return (
-            <div className='tag-cloud' style={{ width: '100%', height: '100%' }}>
+            <div className='tag-cloud' style={{ width: '450px', height: '300px' }}>
                 <h4 style={{ 'textAlign': 'start' }}>Feelings</h4>
                 <ReactWordcloud callbacks={callbacks} options={options} words={this.props.cloudTags} />
             </div>

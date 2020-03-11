@@ -1,10 +1,10 @@
 import React from 'react';
-import RowTempComponent from './RowTempComponent';
+import Area from './Area';
 
 const App = () => {
   return (
     <div>
-      <RowTempComponent />
+      <Area />
     </div>
   )
 }
