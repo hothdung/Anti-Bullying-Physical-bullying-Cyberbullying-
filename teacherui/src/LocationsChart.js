@@ -33,7 +33,7 @@ class LocationsChart extends Component {
         svg.append("text")
             .attr("x", margin.left - 15)
             .attr("y", 0 - (margin.top - 45))
-            .attr("text-anchor", "end")
+            .attr("text-anchor", "start")
             .style("font-size", "15px")
             .style("font-weight", "bold")
             .text("Locations")
@@ -80,7 +80,7 @@ class LocationsChart extends Component {
             .attr("width", 0)
             .attr("height", y.bandwidth() - 10)
             .attr("fill", "#614ad3")
-            .transition(d3.transition().duration(1000))
+            .transition(d3.transition().duration(4000))
             .attr("width", (d) => x(d[this.state.xAxisAttribute]))
 
     }

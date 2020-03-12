@@ -71,7 +71,7 @@ class WarningFrequency extends Component {
         const transitionOption = d3.transition()
             .transition()
             .ease(d3.easeSin)
-            .duration(4000);
+            .duration(8000);
 
         // getting total length of svg path
         const pathLength = path.node().getTotalLength();
