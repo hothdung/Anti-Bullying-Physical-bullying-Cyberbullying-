@@ -22,3 +22,13 @@ code {
   display: flex;
   flex-direction: row;
 }
+
+.yaxis path, .yaxis line {
+  fill: none;
+  stroke: none;
+}
+
+.yaxis text {
+  font-weight: bold;
+  font-size: 13px;
+}
