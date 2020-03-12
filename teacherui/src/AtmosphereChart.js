@@ -13,7 +13,7 @@ class AtmosphereChart extends Component {
             xAxisAttribute: "percentage",
             xAxisAttribute2: "total",
             width: 400,
-            height: 400
+            height: 350
         }
         this.chartRef = React.createRef();
         this.drawChart = this.drawChart.bind(this);
@@ -57,14 +57,14 @@ class AtmosphereChart extends Component {
             .style("font-weight", "bold")
             .text("Class atmosphere")
 
-
+        // creating overlapping bar chart to create filling a static bar with certain percentage
         svg.selectAll("totalBar")
             .data(this.state.data)
             .enter().append('rect')
             .attr('x', 0)
             .attr('y', (d) => y(d[this.state.yAxisAttribute]))
             .attr('width', (d) => x(d[this.state.xAxisAttribute2]))
-            .attr('height', y.bandwidth()-10)
+            .attr('height', y.bandwidth() - 10)
             .attr('fill', '#f4eeff')
             .style('stroke', 'black')
             .style('stroke-width', .5)
@@ -76,18 +76,34 @@ class AtmosphereChart extends Component {
             .attr('opacity', '0')
             .attr('x', x(0))
             .attr('y', (d) => y(d[this.state.yAxisAttribute]))
-            .attr('height', y.bandwidth()-10)
+            .attr('height', y.bandwidth() - 10)
             .attr('fill', function (d, i) {
                 return color(i);
             })
-            .transition().delay((d,i) =>{return i*2000})
+            .transition().delay((d, i) => { return i * 2000 })
             .duration(2000)
             .attr('width', (d) => x(d[this.state.xAxisAttribute]))
             .attr('opacity', 1)
 
 
+        // attaching circle to percentag bars
+        svg.selectAll('circle')
+            .data(this.state.data)
+            .enter()
+            .append('circle')
+            .attr('opacity', '0')
+            .attr('cx', x(0.5))
+            .attr('cy', (d) => y(d[this.state.yAxisAttribute]) + 15)
+            .attr('r', 22)
+            .transition().delay((d, i) => {
+                return i * 2000;
+            })
+            .duration(2000)
+            .attr("cx", (d) => x(d[this.state.xAxisAttribute]))
+            .attr('opacity', 1)
 
     }
+
 
 
     componentDidMount() {

@@ -9,7 +9,7 @@ class LocationsChart extends Component {
             yAxisAttribute: "location",
             xAxisAttribute: "frequency",
             width: 450,
-            height: 350,
+            height: 300,
         }
         this.chartRef = React.createRef();
         this.drawChart = this.drawChart.bind(this);
@@ -80,7 +80,7 @@ class LocationsChart extends Component {
             .attr("width", 0)
             .attr("height", y.bandwidth() - 10)
             .attr("fill", "#614ad3")
-            .transition(d3.transition().duration(4000))
+            .transition(d3.transition().duration(5000))
             .attr("width", (d) => x(d[this.state.xAxisAttribute]))
 
     }
