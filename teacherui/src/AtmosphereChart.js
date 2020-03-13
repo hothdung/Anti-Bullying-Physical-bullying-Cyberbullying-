@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import EmotionsData from './data/classAtmosphere.json';
 
 
 class AtmosphereChart extends Component {
@@ -8,7 +7,7 @@ class AtmosphereChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: EmotionsData,
+            data: this.props.emotionsVal,
             yAxisAttribute: "nameEmotion",
             xAxisAttribute: "percentage",
             xAxisAttribute2: "total",
@@ -21,10 +20,6 @@ class AtmosphereChart extends Component {
     }
 
     drawChart() {
-
-        var config = {
-            "emoji_size": 10
-        }
 
         var colors = ['#FF0000', '#5588ff', '#993299', '#A3A319', '#19D219'];
 
@@ -76,9 +71,9 @@ class AtmosphereChart extends Component {
             .attr('y', (d) => y(d[this.state.yAxisAttribute]))
             .attr('width', (d) => x(d[this.state.xAxisAttribute2]))
             .attr('height', y.bandwidth() - 10)
-            .attr('fill', '#f4eeff')
+            .attr('fill', '#F6F4FF')
             .style('stroke', 'black')
-            .style('stroke-width', .5)
+            .style('stroke-width', 1)
 
         svg.selectAll("percentageBar")
             .data(this.state.data)
@@ -101,15 +96,12 @@ class AtmosphereChart extends Component {
             .data(this.state.data)
             .enter()
             .append('pattern')
-            .attr('id', function (d) {
-                return d.nameEmotion;
-            })
+            .attr('id', (d) => d[this.state.yAxisAttribute])
             .attr('width', 70)
             .attr('height', 90)
             .append('image')
-            .attr("xlink:href", function (d) {
-                return d.image;
-            })
+            .attr("xlink:href", (d) => d[this.state.img]
+            )
             .attr('width', 40)
             .attr('height', 40)
             .attr("x", 0)
@@ -117,7 +109,7 @@ class AtmosphereChart extends Component {
 
 
         // attaching circle to percentage bars
-        var circle = svg.selectAll('circle')
+        svg.selectAll('circle')
             .data(this.state.data)
             .enter()
             .append('circle')
@@ -129,9 +121,7 @@ class AtmosphereChart extends Component {
                 return color(i);
             })
             .style("stroke-width", 4.5)
-            .attr('fill', function (d) {
-                return "url(#" + d.nameEmotion + ")";
-            })
+            .attr('fill', (d) => "url(#" + d[this.state.yAxisAttribute] + ")")
             .transition().delay((d, i) => {
                 return i * 2000;
             })
