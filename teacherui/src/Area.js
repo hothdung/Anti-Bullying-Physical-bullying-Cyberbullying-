@@ -9,6 +9,7 @@ import LocationData from './data/locations.json';
 import FeelingsCloud from './FeelingsCloud';
 import AtmosphereChart from './AtmosphereChart';
 import EmotionData from './data/classAtmosphere.json';
+import ReportingChart from './ReportingChart';
 
 class Area extends Component {
 
@@ -22,11 +23,12 @@ class Area extends Component {
                     </Col>
                     <Col lg='7'>
                         <WarningFrequency warningVal={FrequencyData} />
-                        <FeelingsCloud cloudTags={FeelingsTag} />
+                        <ReportingChart />
                     </Col>
                     <Col lg='3'>
-                        <LocationsChart locations={LocationData} />
                         <AtmosphereChart emotionsVal={EmotionData} />
+                        <LocationsChart locations={LocationData} />
+                        <FeelingsCloud cloudTags={FeelingsTag} />
                     </Col>
                 </Row>
             </Container>

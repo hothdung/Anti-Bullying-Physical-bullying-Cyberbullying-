@@ -13,7 +13,9 @@ class AtmosphereChart extends Component {
             xAxisAttribute2: "total",
             img: "image",
             width: 400,
-            height: 350
+            height: 350,
+            legendWidth: 250,
+            legendHeight: 25,
         }
         this.chartRef = React.createRef();
         this.drawChart = this.drawChart.bind(this);
@@ -128,6 +130,7 @@ class AtmosphereChart extends Component {
             .duration(2000)
             .attr("cx", (d) => x(d[this.state.xAxisAttribute]))
             .attr('opacity', 1)
+
     }
 
 
@@ -138,7 +141,7 @@ class AtmosphereChart extends Component {
 
     render() {
         return (
-            <div ref="canvas">
+            <div id='classAtmosphere' ref="canvas">
             </div>
         )
     }

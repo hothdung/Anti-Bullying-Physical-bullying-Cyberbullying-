@@ -100,7 +100,7 @@ class WarningFrequency extends Component {
         bounds.append("g")
             .append("text")
             .attr("x", dimensions.margin.left + 20)
-            .attr("y", 0-(dimensions.margin.top-20))
+            .attr("y", 0 - (dimensions.margin.top - 20))
             .style("text-anchor", "middle")
             .style("font-size", "15px")
             .style("font-weight", "bold")
