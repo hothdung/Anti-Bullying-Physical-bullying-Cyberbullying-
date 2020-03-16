@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import ReportingData from './data/reportMethods.json';
+import { stackOrderAscending } from 'd3';
 
 class ReportingChart extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            data: this.props.reportingMethods,
             width: 700,
             height: 300,
         }
@@ -16,7 +17,9 @@ class ReportingChart extends Component {
     }
 
     drawChart() {
-        var colors = d3.scaleOrdinal().range(["#00008E", "#FF6666", "#FFFF00"]);
+        var colors = d3.scaleOrdinal().range(["#AD1457", "#F57C00", "#8E24AA"]);
+
+        var keys = ["auto", "classmate", "self"]
 
         let dimensions = {
             margin: {
@@ -35,93 +38,74 @@ class ReportingChart extends Component {
             .attr('width', this.state.width)
             .attr('height', this.state.height)
 
+        const bounds = wrapper.append("g")
+            .style("transform", `translate(${dimensions.margin.left}px,${dimensions.margin.top}px)`)
+
         // x scale 
 
         var x = d3.scaleBand()
-            .rangeRound([0, dimensions.width])
-            .paddingInner(0.05)
-            .align(0.1);
+            .range([0, dimensions.boundedWidth])
+            .padding(0.15);
 
-        // y scale
 
-        var y = d3.scaleLinear()
-            .rangeRound([dimensions.height, 0])
+        x.domain(this.state.data.map(function (d) {
+            return d.month;
+        }));
 
-        const bounds = wrapper.append("g")
-            .style("transform", `translate(${dimensions.margin.left}px,${dimensions.margin.top}px)`)
-        d3.json(ReportingData).then(function (d, i, t, cols) {
-            for (i = 1, t = 0; i < cols.length; ++i)
-                t += d[cols[i]] = +d[cols[i]];
-            d.total = t;
+        // drawing x-axis
+        bounds.append('g')
+            .attr("class", 'x-axis')
+            .attr("transform", "translate(0," + dimensions.boundedHeight + ")")
+            .call(d3.axisBottom(x));
 
-            return d;
+        // configure stacking
+        
+        // layer with lowest some comes first
+        const stackGenerator = d3.stack().keys(keys)
+                            .order(stackOrderAscending);
 
-        }, function (error, data) {
-            if (error) throw error;
-            var keys = data.cols.slice(1);
+        // creating layers
+        const layers = stackGenerator(this.state.data);
+        const extent = [0, d3.max(layers, layer => d3.max(layer, sequence => sequence[1]))];
 
-            data.sort(function (a, b) { return b.total - a.total; });
+        const y = d3.scaleLinear()
+            .domain(extent)
+            .range([dimensions.boundedHeight, 0]);
 
-            // setting domain
+        bounds.append('g')
+            .attr("class", 'y-axis')
+            .call(d3.axisLeft(y));
 
-            x.domain(data.map(function (d) {
-                return d.month;
-            }));
-            y.domain([0, d3.max(data, function (d) {
-                return d.total;
-            })]).nice();
-            colors.domain(keys);
+        bounds.selectAll(".layer")
+            .data(layers)
+            .join("g")
+            .attr("class", "layer")
+            .attr("fill", layer => {
+                return colors(layer);
+            })
+            .selectAll("rect")
+            .data(layer => layer)
+            .join("rect")
+            .attr("x", sequence => {
+                console.log(sequence);
+                return x(sequence.data.month);
+            })
+            .attr("width", x.bandwidth())
+            .attr("y", sequence => y(sequence[1]))
+            .attr("height", sequence => y(sequence[0]) - y(sequence[1]))
+            .attr("stroke", "#464646")
+            .attr("stroke-width", 0.6);
 
-            // drawing the chart
-
-            bounds.append('g')
-                .selectAll('g')
-                .data(d3.stack().keys(keys)(data))
-                .enter()
-                .append('g')
-                .attr('fill', function (d) { return colors(d.key) })
-                .selectAll("rect")
-                .data(function (d) {
-                    return d;
-                })
-                .enter()
-                .append('rect')
-                .attr('x', function (d) {
-                    return x(d.data.month);
-                })
-                .attr('y', function (d) {
-                    return y(d[0]) - y(d[1]);
-                })
-                .attr('width', x.bandwidth())
-
-            bounds.append('g')
-                .attr("class", 'xaxis')
-                .attr("transform", "translate(0," + dimensions.height + ")")
-                .call(d3.axisBottom(x));
-
-            bounds.append("g")
-                .attr("class", 'yaxis')
-                .call(d3.axisLeft(y).ticks(null, 's'))
-                .append('text')
-                .attr('x', 2)
-                .attr('y', y(y.ticks().pop()) + 0.5)
-                .attr('dy', '0.32em')
-                .attr("fill", "#000")
-                .attr("font-weight", "bold")
-                .attr("text-anchror", 'start');
-        });
 
     }
-
-
-
+    
     componentDidMount() {
         this.drawChart();
     }
 
     render() {
         return (
-            <div id='reportingMethods' ref="canvas">
+            <div id='reportingMethods' ref="canvas" >
             </div>
         )
     }
