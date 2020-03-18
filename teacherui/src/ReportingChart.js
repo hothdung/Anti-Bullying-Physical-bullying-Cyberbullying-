@@ -59,10 +59,10 @@ class ReportingChart extends Component {
             .call(d3.axisBottom(x));
 
         // configure stacking
-        
+
         // layer with lowest some comes first
         const stackGenerator = d3.stack().keys(keys)
-                            .order(stackOrderAscending);
+            .order(stackOrderAscending);
 
         // creating layers
         const layers = stackGenerator(this.state.data);
@@ -86,19 +86,45 @@ class ReportingChart extends Component {
             .selectAll("rect")
             .data(layer => layer)
             .join("rect")
+            .style("opacity", 0)
             .attr("x", sequence => {
-                console.log(sequence);
                 return x(sequence.data.month);
             })
             .attr("width", x.bandwidth())
             .attr("y", sequence => y(sequence[1]))
             .attr("height", sequence => y(sequence[0]) - y(sequence[1]))
+            .transition().delay(function (d, i) { return i * 1000; })
+            .duration(1000)
             .attr("stroke", "#464646")
-            .attr("stroke-width", 0.6);
+            .attr("stroke-width", 0.6)
+            .style("opacity", 1);
+
+        var legend = bounds.append("g")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keys)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(0," + i * 20 + ")";
+            });
+
+        legend.append("rect")
+            .attr("x", dimensions.boundedWidth - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", colors)
+
+        legend.append("text")
+            .attr("x", dimensions.boundedWidth - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .style("font-weight", "bold")
+            .text(function (d) { return d; })
 
 
     }
-    
+
     componentDidMount() {
         this.drawChart();
     }

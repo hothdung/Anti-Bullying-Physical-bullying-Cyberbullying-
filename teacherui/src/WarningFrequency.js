@@ -106,6 +106,7 @@ class WarningFrequency extends Component {
             .style("font-weight", "bold")
             .text("Warning frequency")
 
+        /** 
         const legend = bounds.append("g")
             .attr("class", "legend")
             .attr("font-size", 15)
@@ -146,6 +147,31 @@ class WarningFrequency extends Component {
                 var text = d.method;
                 return text;
             });
+
+            */
+
+        var legend = bounds.append("g")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keys)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(0," + i * 20 + ")";
+            });
+
+        legend.append("rect")
+            .attr("x", dimensions.boundedWidth - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", colors)
+
+        legend.append("text")
+            .attr("x", dimensions.boundedWidth - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .style("font-weight", "bold")
+            .text(function (d) { return d; })
 
     }
     componentDidMount() {
