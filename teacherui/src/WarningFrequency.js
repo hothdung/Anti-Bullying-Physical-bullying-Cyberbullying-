@@ -19,8 +19,8 @@ class WarningFrequency extends Component {
     drawLineChart() {
 
         var keys = [
-            { "method": "Interventions" },
-            { "method": "Consultations" }
+            "Interventions",
+            "Consultations"
         ]
 
         var colors = d3.scaleOrdinal(["#4CE3CE", "#16AFE8"])
@@ -105,50 +105,6 @@ class WarningFrequency extends Component {
             .style("font-size", "15px")
             .style("font-weight", "bold")
             .text("Warning frequency")
-
-        /** 
-        const legend = bounds.append("g")
-            .attr("class", "legend")
-            .attr("font-size", 15)
-            .attr("text-anchor", "start")
-            .style("font-weight", "bold")
-            .selectAll("g")
-            .data(keys)
-            .enter()
-            .append("g")
-            .attr("width", 50)
-            .attr("height", 50)
-            .attr('transform', 'translate(-10,10)');
-
-        legend.selectAll("rect")
-            .data(keys)
-            .enter()
-            .append("rect")
-            .attr("x", dimensions.boundedWidth - 100)
-            .attr("y", function (d, i) {
-                return i * 20;
-            })
-            .attr("width", 10)
-            .attr("height", 10)
-            .style("fill", function (d) {
-                var color = colors(d.method);
-                return color;
-            });
-
-        legend.selectAll("text")
-            .data(keys)
-            .enter()
-            .append("text")
-            .attr("x", dimensions.boundedWidth - 80)
-            .attr("y", function (d, i) {
-                return i * 20 + 10;
-            })
-            .text(function (d) {
-                var text = d.method;
-                return text;
-            });
-
-            */
 
         var legend = bounds.append("g")
             .attr("font-size", 10)
