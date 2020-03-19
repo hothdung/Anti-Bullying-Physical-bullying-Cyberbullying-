@@ -32,3 +32,8 @@ code {
   font-weight: bold;
   font-size: 13px;
 }
+
+.reportingTable {
+  padding: 50px;
+  overflow: hidden;
+}
