@@ -37,3 +37,11 @@ code {
   padding: 50px;
   overflow: hidden;
 }
+
+.addRow {
+  padding-bottom: 20px;
+}
+
+#rowBtn {
+  font-weight: bold;
+}

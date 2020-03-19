@@ -20,7 +20,7 @@ class Area extends Component {
         return (
             <Container fluid={true}>
                 <Row noGutters={true}>
-                    <Col lg='1.5'>
+                    <Col lg='1'>
                         <StudentsSidebar />
                     </Col>
                     <Col lg='7'>

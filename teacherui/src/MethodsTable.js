@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,53 +12,66 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-    { id: 'name', label: 'Intervention type', minWidth: 170 },
-    { id: 'code', label: 'Place', minWidth: 100 },
     {
-        id: 'population',
+        id: 'name',
+        label: 'Intervention type',
+        minWidth: 100
+    },
+    {
+        id: 'code',
+        label: 'Place',
+        minWidth: 100,
+
+    },
+    {
+        id: 'students',
         label: 'Involved Students',
-        minWidth: 170,
-        align: 'right',
-        format: value => value.toLocaleString(),
+        minWidth: 100,
+
     },
     {
-        id: 'dateTime',
-        label: 'Date/Time',
-        minWidth: 170,
-        align: 'right',
-        format: value => value.toLocaleString(),
+        id: 'date',
+        label: 'Date',
+        minWidth: 100,
+
     },
     {
-        id: 'density',
+        id: 'time',
+        label: 'Time',
+        minWidth: 100,
+
+    },
+    {
+        id: 'severity',
         label: 'Severity',
-        minWidth: 170,
-        align: 'right',
-        format: value => value.toFixed(2),
+        minWidth: 100,
+
     },
-    { id: 'name', label: 'Teacher(s)', minWidth: 170 }
+    {
+        id: 'teacher',
+        label: 'Teacher(s)',
+
+
+    }
 ];
 
-function createData(name, code, population, size) {
-    const density = population / size;
-    return { name, code, population, size, density };
+
+function createData(name, code, students, date, time, severity, teacher) {
+
+    // date formatter
+    let inter_date = new Date(date);
+    date = inter_date.toDateString();
+    return { name, code, students, date, time, severity, teacher };
 }
-    // call createData method 
+// call createData method 
+
+
+// incoming data
 const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
+    createData('Intervention', 'Hallway', "Seokwon, Van, Jihwan", '2019-04-09', "1:15 PM", "High", "Son"),
+    createData('Consultation', 'Office', "Kiroong, Dung, Adam", '2019-04-15', "2:30 PM", "Medium", "Lee"),
+    createData('Consultation', 'Classroom', "Jutta, Mai, Adam", '2019-06-09', "9:15 AM", "Medium", "Baek"),
+
 ];
 
 const useStyles = makeStyles({
@@ -71,7 +86,7 @@ const useStyles = makeStyles({
 export default function MethodsTable() {
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -84,6 +99,16 @@ export default function MethodsTable() {
 
     return (
         <div className="reportingTable">
+            <div className="addRow">
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<AddBoxIcon />}
+                    id="rowBtn">
+                    Add Row
+                </Button>
+            </div>
             <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
@@ -119,7 +144,7 @@ export default function MethodsTable() {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
+                    rowsPerPageOptions={[5, 10, 25]}
                     component="div"
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
