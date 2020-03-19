@@ -58,16 +58,19 @@ const columns = [
 
 function createData(name, code, students, date, time, severity, teacher) {
 
-    // date formatter
-    let inter_date = new Date(date);
-    date = inter_date.toDateString();
+    if (!(date === "")) {
+        // date formatter
+        let inter_date = new Date(date);
+        date = inter_date.toDateString();
+    }
+
     return { name, code, students, date, time, severity, teacher };
 }
 // call createData method 
 
 
 // incoming data
-const rows = [
+var rowsInitial = [
     createData('Intervention', 'Hallway', "Seokwon, Van, Jihwan", '2019-04-09', "1:15 PM", "High", "Son"),
     createData('Consultation', 'Office', "Kiroong, Dung, Adam", '2019-04-15', "2:30 PM", "Medium", "Lee"),
     createData('Consultation', 'Classroom', "Jutta, Mai, Adam", '2019-06-09', "9:15 AM", "Medium", "Baek"),
@@ -87,6 +90,7 @@ export default function MethodsTable() {
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rows, setRows] = useState(rowsInitial);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -97,6 +101,11 @@ export default function MethodsTable() {
         setPage(0);
     };
 
+    const addRow = () => {
+        const dataItem = createData("", "", "", "", "", "", "");
+        setRows([...rows, dataItem])
+    }
+
     return (
         <div className="reportingTable">
             <div className="addRow">
@@ -105,7 +114,8 @@ export default function MethodsTable() {
                     color="secondary"
                     className={classes.button}
                     startIcon={<AddBoxIcon />}
-                    id="rowBtn">
+                    id="rowBtn"
+                    onClick={addRow}>
                     Add Row
                 </Button>
             </div>
