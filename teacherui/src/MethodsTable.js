@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -101,14 +102,23 @@ export default function MethodsTable() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
+    // adding row 
     const addRow = () => {
         const dataItem = createData("", "", "", "", "", "", "");
         setRows([...rows, dataItem])
     }
 
+    // delete last row
     const deleteRow = () => {
         setRows(rows.slice(0, -1));
+    }
+
+    // delete specific row
+    const deleteCertainRow = (index) => {
+
+        let items = rows.filter((row, i) => i !== index);
+        setRows(items);
+
     }
 
     return (
@@ -148,12 +158,14 @@ export default function MethodsTable() {
                                         {column.label}
                                     </TableCell>
                                 ))}
+                                <TableCell />
+                                <TableCell />
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code} id={index}>
                                         {columns.map(column => {
                                             const value = row[column.id];
                                             return (
@@ -162,6 +174,8 @@ export default function MethodsTable() {
                                                 </TableCell>
                                             );
                                         })}
+                                        <TableCell><EditIcon /></TableCell>
+                                        <TableCell><DeleteIcon onClick={function () { return deleteCertainRow(index) }} /></TableCell>
                                     </TableRow>
                                 );
                             })}
