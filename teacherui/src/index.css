@@ -42,6 +42,10 @@ code {
   padding-bottom: 15px;
 }
 
-#rowBtn {
+#deleteBtn {
+  margin-left: 15px;
+}
+
+#addBtn, #deleteBtn {
   font-weight: bold;
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -106,6 +107,10 @@ export default function MethodsTable() {
         setRows([...rows, dataItem])
     }
 
+    const deleteRow = () => {
+        setRows(rows.slice(0, -1));
+    }
+
     return (
         <div className="reportingTable">
             <div className="addRow">
@@ -114,10 +119,20 @@ export default function MethodsTable() {
                     color="secondary"
                     className={classes.button}
                     startIcon={<AddBoxIcon />}
-                    id="rowBtn"
+                    id="addBtn"
                     onClick={addRow}>
                     Add Row
                 </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                    id="deleteBtn"
+                    onClick={deleteRow}
+                >
+                    Delete
+      </Button>
             </div>
             <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
