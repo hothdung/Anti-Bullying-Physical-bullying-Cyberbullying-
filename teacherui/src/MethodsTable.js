@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import DoneIcon from '@material-ui/icons/Done';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,6 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 
 const columns = [
     {
@@ -93,6 +95,7 @@ export default function MethodsTable() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [rows, setRows] = useState(rowsInitial);
+    const [editIdx, setEditIdx] = useState(-1);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -119,6 +122,24 @@ export default function MethodsTable() {
         let items = rows.filter((row, i) => i !== index);
         setRows(items);
 
+    }
+
+    const handleEdit = (i) => {
+        console.log(i);
+        setEditIdx(i);
+
+    }
+
+    const stopEdit = () => {
+        setEditIdx(-1);
+    }
+
+    // eventlistener
+    const handleChange = (e, name, index) => {
+        // get value of textfield
+        const { value } = e.target;
+        let items = rows.map((row, i) => (i === index ? { ...row, [name]: value } : row));
+        setRows(items);
     }
 
     return (
@@ -164,17 +185,23 @@ export default function MethodsTable() {
                         </TableHead>
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+
+                                // current on that index editing on specific row
+                                const currentEditing = editIdx === index;
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code} id={index}>
                                         {columns.map(column => {
                                             const value = row[column.id];
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                                    {currentEditing ? <TextField name={`field` + index} onChange={e => handleChange(e, value, index)} value={value} /> : value}
                                                 </TableCell>
                                             );
                                         })}
-                                        <TableCell><EditIcon /></TableCell>
+                                        <TableCell>
+                                            {console.log("Here" + currentEditing)}
+                                            {currentEditing ? <DoneIcon onClick={() => stopEdit} /> : <EditIcon onClick={function () { return handleEdit(index) }} />}
+                                        </TableCell>
                                         <TableCell><DeleteIcon onClick={function () { return deleteCertainRow(index) }} /></TableCell>
                                     </TableRow>
                                 );
