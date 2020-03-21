@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Intervention",
+        "place": "Hallway",
+        "students": "Seokwon, Van, Jihwan",
+        "date": "2019-04-09",
+        "time": "1:15 PM",
+        "severity": "High",
+        "teacher": "Son"
+    },
+    {
+        "name": "Consultation",
+        "place": "Office",
+        "students": "Kiroong, Dung, Adam",
+        "date": "2019-04-15",
+        "time": "2:30 PM",
+        "severity": "Medium",
+        "teacher": "Lee"
+    },
+    {
+        "name": "Consultation",
+        "place": "Classroom",
+        "students": "Jutta, Mai, Adam",
+        "date": "2019-06-09",
+        "time": "9:15 AM",
+        "severity": "Medium",
+        "teacher": "Baek"
+    }
+]

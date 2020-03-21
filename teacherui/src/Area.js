@@ -11,6 +11,7 @@ import AtmosphereChart from './AtmosphereChart';
 import EmotionData from './data/classAtmosphere.json';
 import ReportingChart from './ReportingChart';
 import ReportingData from './data/reportMethods.json';
+import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
 
 class Area extends Component {
@@ -26,7 +27,7 @@ class Area extends Component {
                     <Col lg='7'>
                         <WarningFrequency warningVal={FrequencyData} />
                         <ReportingChart reportingMethods={ReportingData} />
-                        <MethodsTable />
+                        <MethodsTable methods={InterventionsData} />
                     </Col>
                     <Col lg='3'>
                         <AtmosphereChart emotionsVal={EmotionData} />

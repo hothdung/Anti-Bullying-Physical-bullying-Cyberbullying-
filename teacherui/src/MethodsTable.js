@@ -22,45 +22,46 @@ const columns = [
         minWidth: 100
     },
     {
-        id: 'code',
+        id: 'place',
         label: 'Place',
-        minWidth: 100,
+        minWidth: 100
 
     },
     {
         id: 'students',
         label: 'Involved Students',
-        minWidth: 100,
+        minWidth: 100
 
     },
     {
         id: 'date',
         label: 'Date',
-        minWidth: 100,
+        minWidth: 100
 
     },
     {
         id: 'time',
         label: 'Time',
-        minWidth: 100,
+        minWidth: 100
 
     },
     {
         id: 'severity',
         label: 'Severity',
-        minWidth: 100,
+        minWidth: 100
 
     },
     {
         id: 'teacher',
         label: 'Teacher(s)',
+        minWidth: 100
 
 
     }
 ];
 
 
-function createData(name, code, students, date, time, severity, teacher) {
+function createData(name, place, students, date, time, severity, teacher) {
 
     if (!(date === "")) {
         // date formatter
@@ -68,18 +69,13 @@ function createData(name, code, students, date, time, severity, teacher) {
         date = inter_date.toDateString();
     }
 
-    return { name, code, students, date, time, severity, teacher };
+    return { name, place, students, date, time, severity, teacher };
 }
 // call createData method 
 
 
-// incoming data
-var rowsInitial = [
-    createData('Intervention', 'Hallway', "Seokwon, Van, Jihwan", '2019-04-09', "1:15 PM", "High", "Son"),
-    createData('Consultation', 'Office', "Kiroong, Dung, Adam", '2019-04-15', "2:30 PM", "Medium", "Lee"),
-    createData('Consultation', 'Classroom', "Jutta, Mai, Adam", '2019-06-09', "9:15 AM", "Medium", "Baek"),
-
-];
+// array for incoming data
+var rowsInitial = [];
 
 const useStyles = makeStyles({
     root: {
@@ -90,7 +86,12 @@ const useStyles = makeStyles({
     },
 });
 
-export default function MethodsTable() {
+function MethodsTable(props) {
+
+    props.methods.map((method) => (
+        rowsInitial.push(createData(method.name, method.place, method.students, method.date, method.time, method.severity, method.teacher))
+
+    ));
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -135,10 +136,10 @@ export default function MethodsTable() {
     }
 
     // eventlistener
-    const handleChange = (e, name, index) => {
+    const handleChange = (e, nameVal, i) => {
         // get value of textfield
         const { value } = e.target;
-        let items = rows.map((row, i) => (i === index ? { ...row, [name]: value } : row));
+        let items = rows.map((row, j) => (j === i ? { ...row, [nameVal]: value } : row));
         setRows(items);
     }
 
@@ -189,18 +190,18 @@ export default function MethodsTable() {
                                 // current on that index editing on specific row
                                 const currentEditing = editIdx === index;
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code} id={index}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={index} id={index}>
                                         {columns.map(column => {
-                                            const value = row[column.id];
+                                            const val = row[column.id];
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
-                                                    {currentEditing ? <TextField name={`field` + index} onChange={e => handleChange(e, value, index)} value={value} /> : value}
+                                                    {currentEditing ? <TextField name={column.id} onChange={(e) => handleChange(e, column.id, index)} value={val} /> : val}
                                                 </TableCell>
                                             );
                                         })}
                                         <TableCell>
                                             {console.log("Here" + currentEditing)}
-                                            {currentEditing ? <DoneIcon onClick={() => stopEdit} /> : <EditIcon onClick={function () { return handleEdit(index) }} />}
+                                            {currentEditing ? <DoneIcon onClick={() => stopEdit()} /> : <EditIcon onClick={function () { return handleEdit(index) }} />}
                                         </TableCell>
                                         <TableCell><DeleteIcon onClick={function () { return deleteCertainRow(index) }} /></TableCell>
                                     </TableRow>
@@ -222,3 +223,4 @@ export default function MethodsTable() {
         </div>
     );
 }
+export default MethodsTable;
