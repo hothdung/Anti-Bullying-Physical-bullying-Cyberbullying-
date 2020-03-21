@@ -71,7 +71,6 @@ function createData(name, place, students, date, time, severity, teacher) {
 
     return { name, place, students, date, time, severity, teacher };
 }
-// call createData method 
 
 
 // array for incoming data
@@ -148,7 +147,7 @@ function MethodsTable(props) {
             <div className="addRow">
                 <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     className={classes.button}
                     startIcon={<AddBoxIcon />}
                     id="addBtn"
@@ -157,7 +156,7 @@ function MethodsTable(props) {
                 </Button>
                 <Button
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.button}
                     startIcon={<DeleteIcon />}
                     id="deleteBtn"
