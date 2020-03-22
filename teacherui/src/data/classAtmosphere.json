@@ -3,30 +3,30 @@
         "nameEmotion": "Anger",
         "total": 100,
         "percentage": 30,
-        "image": "http://147.46.215.219/home/luna/Anti-Bullying-Physical-bullying-Cyberbullying-/teacherui/src/images/Anger.jpg"
+        "image": "/images/Anger.jpg"
     },
     {
         "nameEmotion": "Sadness",
         "total": 100,
         "percentage": 21,
-        "image": "http://147.46.215.219/home/luna/Anti-Bullying-Physical-bullying-Cyberbullying-/teacherui/src/images/Sadness.jpg"
+        "image": "/images/Sadness.jpg"
     },
     {
         "nameEmotion": "Fear",
         "total": 100,
         "percentage": 35,
-        "image": "http://147.46.215.219/home/luna/Anti-Bullying-Physical-bullying-Cyberbullying-/teacherui/src/images/Fear.jpg"
+        "image": "/images/Fear.jpg"
     },
     {
         "nameEmotion": "Disgust",
         "total": 100,
         "percentage": 41,
-        "image": "http://147.46.215.219/home/luna/Anti-Bullying-Physical-bullying-Cyberbullying-/teacherui/src/images/Disgust.jpg"
+        "image": "images/Disgust.jpg"
     },
     {
         "nameEmotion": "Enjoyment",
         "total": 100,
         "percentage": 55,
-        "image": "http://147.46.215.219/home/luna/Anti-Bullying-Physical-bullying-Cyberbullying-/teacherui/src/images/Enjoyment.jpg"
+        "image": "images/Enjoyment.jpg"
     }
 ]
