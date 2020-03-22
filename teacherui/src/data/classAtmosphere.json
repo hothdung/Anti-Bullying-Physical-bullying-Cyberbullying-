@@ -3,30 +3,30 @@
         "nameEmotion": "Anger",
         "total": 100,
         "percentage": 30,
-        "image": "http://127.0.0.1:8080/src/images/Anger.jpg"
+        "image": "http://147.46.215.219:3000/src/images/Anger.jpg"
     },
     {
         "nameEmotion": "Sadness",
         "total": 100,
         "percentage": 21,
-        "image": "http://127.0.0.1:8080/src/images/Sadness.jpg"
+        "image": "http://147.46.215.219:3000/src/images/Sadness.jpg"
     },
     {
         "nameEmotion": "Fear",
         "total": 100,
         "percentage": 35,
-        "image": "http://127.0.0.1:8080/src/images/Fear.jpg"
+        "image": "http://147.46.215.219:3000/src/images/Fear.jpg"
     },
     {
         "nameEmotion": "Disgust",
         "total": 100,
         "percentage": 41,
-        "image": "http://127.0.0.1:8080/src/images/Disgust.jpg"
+        "image": "http://147.46.215.219:3000/src/images/Disgust.jpg"
     },
     {
         "nameEmotion": "Enjoyment",
         "total": 100,
         "percentage": 55,
-        "image": "http://127.0.0.1:8080/src/images/Enjoyment.jpg"
+        "image": "http://147.46.215.219:3000/src/images/Enjoyment.jpg"
     }
 ]
