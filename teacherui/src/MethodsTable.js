@@ -73,6 +73,7 @@ function createData(name, place, students, date, time, severity, teacher) {
 }
 
 
+
 // array for incoming data
 var rowsInitial = [];
 
@@ -87,10 +88,12 @@ const useStyles = makeStyles({
 
 function MethodsTable(props) {
 
-    props.methods.map((method) => (
-        rowsInitial.push(createData(method.name, method.place, method.students, method.date, method.time, method.severity, method.teacher))
+    for (var i = 0; i < props.methods.length; i++) {
+        var obj = props.methods[i];
+        var item = (createData(obj.name, obj.place, obj.students, obj.date, obj.time, obj.severity, obj.teacher));
+        rowsInitial[i] = item;
+    }
 
-    ));
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -125,7 +128,6 @@ function MethodsTable(props) {
     }
 
     const handleEdit = (i) => {
-        console.log(i);
         setEditIdx(i);
 
     }
@@ -199,8 +201,7 @@ function MethodsTable(props) {
                                             );
                                         })}
                                         <TableCell>
-                                            {console.log("Here" + currentEditing)}
-                                            {currentEditing ? <DoneIcon onClick={() => stopEdit()} /> : <EditIcon onClick={function () { return handleEdit(index) }} />}
+                                            {currentEditing ? <DoneIcon onClick={() => stopEdit()} /> : <EditIcon onClick={() => handleEdit(index)} />}
                                         </TableCell>
                                         <TableCell><DeleteIcon onClick={function () { return deleteCertainRow(index) }} /></TableCell>
                                     </TableRow>
