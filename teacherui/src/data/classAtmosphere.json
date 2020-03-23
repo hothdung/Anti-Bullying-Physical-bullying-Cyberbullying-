@@ -21,12 +21,12 @@
         "nameEmotion": "Disgust",
         "total": 100,
         "percentage": 41,
-        "image": "images/Disgust.jpg"
+        "image": "/images/Disgust.jpg"
     },
     {
         "nameEmotion": "Enjoyment",
         "total": 100,
         "percentage": 55,
-        "image": "images/Enjoyment.jpg"
+        "image": "/images/Enjoyment.jpg"
     }
 ]
