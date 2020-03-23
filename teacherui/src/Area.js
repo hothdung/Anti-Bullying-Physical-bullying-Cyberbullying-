@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import StudentData from './data/schoolClass.json'
 import StudentsSidebar from './StudentsSidebar';
 import LocationsChart from './LocationsChart';
 import WarningFrequency from './WarningFrequency';
@@ -22,7 +23,7 @@ class Area extends Component {
             <Container fluid={true}>
                 <Row noGutters={true}>
                     <Col lg='1'>
-                        <StudentsSidebar />
+                        <StudentsSidebar students={StudentData} />
                     </Col>
                     <Col lg='7'>
                         <WarningFrequency warningVal={FrequencyData} />

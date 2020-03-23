@@ -1,19 +1,18 @@
 import React from 'react'
-import StudentData from './data/schoolClass.json'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
 function StudentsSidebar(props) {
 
-    StudentData.sort((a, b) => b.alert - a.alert);
+    props.students.sort((a, b) => b.alert - a.alert);
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                {StudentData.map((student, index) => {
+                {props.students.map((student, index) => {
                     if (index === 0) { return <h2 key={index}>Class {student.studentsClassname}</h2> }
                     else {
-                        return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert), borderRadius: 4, marginTop: 2 }}>
+                        return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert, props.students), borderRadius: 4, marginTop: 2 }}>
                             <ListItemText key={index}>{student.label}</ListItemText>
                         </ListItem>
                     }
@@ -42,11 +41,11 @@ function getMin(arr, prop) {
     return min;
 }
 
-function getColor(props) {
-    var max = getMax(StudentData, "alert")
+function getColor(props, students) {
+    var max = getMax(students, "alert")
     console.log(max)
-    var min = getMin(StudentData, "alert")
-    var grad = ((1-(props/(max.alert - min.alert))) * 120 ).toString(10)
+    var min = getMin(students, "alert")
+    var grad = ((1 - (props / (max.alert - min.alert))) * 120).toString(10)
 
     console.log("Value is" + grad);
 

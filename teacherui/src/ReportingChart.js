@@ -4,6 +4,7 @@ import { stackOrderAscending } from 'd3';
 
 class ReportingChart extends Component {
 
+
     constructor(props) {
         super(props);
         this.state = {
@@ -76,6 +77,11 @@ class ReportingChart extends Component {
             .attr("class", 'y-axis')
             .call(d3.axisLeft(y));
 
+        var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+
         bounds.selectAll(".layer")
             .data(layers)
             .join("g")
@@ -86,18 +92,30 @@ class ReportingChart extends Component {
             .selectAll("rect")
             .data(layer => layer)
             .join("rect")
-            .style("opacity", 0)
+            .style('opacity', 0)
             .attr("x", sequence => {
                 return x(sequence.data.month);
             })
             .attr("width", x.bandwidth())
             .attr("y", sequence => y(sequence[1]))
             .attr("height", sequence => y(sequence[0]) - y(sequence[1]))
-            .transition().delay(function (d, i) { return i * 1000; })
-            .duration(1000)
-            .attr("stroke", "#464646")
-            .attr("stroke-width", 0.6)
-            .style("opacity", 1);
+            .on("mouseover", function (d) {
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                div.html(d[1] - d[0])
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px")
+                    .style('font-weight', 'bold');
+            })
+            .on("mouseout", function (d) {
+                div.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
+            .transition().delay(function (d, i) { return i * 850; })
+            .duration(850)
+            .style('opacity', 1);
 
         var legend = bounds.append("g")
             .attr("font-size", 10)
@@ -123,6 +141,7 @@ class ReportingChart extends Component {
             .text(function (d) { return d; })
 
 
+
     }
 
     componentDidMount() {
@@ -133,6 +152,7 @@ class ReportingChart extends Component {
         return (
             <div id='reportingMethods' ref="canvas" >
             </div>
+
         )
     }
 }
