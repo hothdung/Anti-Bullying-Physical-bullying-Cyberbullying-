@@ -45,6 +45,9 @@ class App extends Component {
             <div class="preloader">
               <h1>Anti-Bullying Dashboard</h1>
               <Lottie options={defaultOptions} height={200} width={200} />
+              <div className="creators">
+                <img className="hci-icon" src={`${process.env.PUBLIC_URL}/images/hcilogo.png`} width="70px" height="40px"/>
+                <p>Creators: Jaeyoung Kim, Thanh Dung Ho, Jihwan Kim (SNU HCI Lab)</p></div>
             </div>
           </FadeIn>
         ) : (
