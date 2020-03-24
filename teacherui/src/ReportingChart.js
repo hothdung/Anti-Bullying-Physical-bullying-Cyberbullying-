@@ -101,10 +101,12 @@ class ReportingChart extends Component {
             .attr("y", sequence => y(sequence[1]))
             .attr("height", sequence => y(sequence[0]) - y(sequence[1]))
             .on("mouseover", function (d) {
+                var methodName = d3.select(this.parentNode).datum().key;
+                //console.log(methodName);
                 div.transition()
                     .duration(200)
                     .style("opacity", .7);
-                div.html(d[1] - d[0])
+                div.html(methodName + ": " + (d[1] - d[0]))
                     .style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");
             })
