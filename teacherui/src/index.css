@@ -57,9 +57,9 @@ code {
   height: 25px;
   padding-left: 15px;
   font: 12px sans-serif;
-  background: #BEBEBE;
+  background: #4d4d4d;
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
-  font-weight: bold;
+  color: white;
 }

@@ -82,14 +82,15 @@ class ReportingChart extends Component {
             .style("opacity", 0);
 
 
-        bounds.selectAll(".layer")
+        const bar = bounds.selectAll(".layer")
             .data(layers)
             .join("g")
             .attr("class", "layer")
             .attr("fill", layer => {
                 return colors(layer);
             })
-            .selectAll("rect")
+
+        bar.selectAll("rect")
             .data(layer => layer)
             .join("rect")
             .style('opacity', 0)
@@ -102,16 +103,16 @@ class ReportingChart extends Component {
             .on("mouseover", function (d) {
                 div.transition()
                     .duration(200)
-                    .style("opacity", .9);
+                    .style("opacity", .7);
                 div.html(d[1] - d[0])
                     .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px")
-                    .style('font-weight', 'bold');
+                    .style("top", (d3.event.pageY - 28) + "px");
             })
             .on("mouseout", function (d) {
                 div.transition()
                     .duration(500)
                     .style("opacity", 0);
+
             })
             .transition().delay(function (d, i) { return i * 850; })
             .duration(850)
@@ -139,9 +140,6 @@ class ReportingChart extends Component {
             .attr("dy", "0.32em")
             .style("font-weight", "bold")
             .text(function (d) { return d; })
-
-
-
     }
 
     componentDidMount() {
