@@ -12,7 +12,7 @@ class DepressionComponent extends Component {
             xAxisAttribute: "days",
             statusInfo: "status",
             width: 500,
-            height: 300
+            height: 200
         }
         this.chartRef = React.createRef();
         this.drawChart = this.drawChart.bind(this);
@@ -43,7 +43,7 @@ class DepressionComponent extends Component {
         var states = ["normal", "mild", "help needed", "depressive"],
             segmentWidth = 80;
 
-        var colors = ['#4CDC4C', '#FFFF00', '#ffae19', '#ff0000'];
+        var colors = ['#39ff14', '#FFFF00', '#ffae19', '#ff0000'];
         var color = d3.scaleOrdinal()
             .domain(states)
             .range(colors);
@@ -69,21 +69,25 @@ class DepressionComponent extends Component {
             .attr('ry', 10)
             .attr('x', 0);
 
-        var text = bounds.append('g')
+        bounds.selectAll("statusText")
+            .data(this.state.data)
+            .enter()
             .append("text")
+            .attr("class", "statusT")
             .attr("fill", "black")
-            .attr("x", 100)
-            .attr("y", 100)
+            .attr("x", function () {
+                return (segmentWidth * states.length) - 90;
+            })
+            .attr("y", 35)
             .attr("text-anchor", "start")
-            .style("font-size", "15px")
+            .style("font-size", "13px")
             .style("font-weight", "bold")
             .text(function (d) {
-                console.log("here" + d.yAxisAttribute);
-                return d.statusInfo;
+                return d.status;
             })
 
         progressBar.transition()
-            .duration(2000)
+            .duration(1500)
             .attr("fill", function (d) {
                 return color(d.status);
             })

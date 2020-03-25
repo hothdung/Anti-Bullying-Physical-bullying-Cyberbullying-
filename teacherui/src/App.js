@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Area from './Area';
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
-import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
 import * as Loading from "./data/monitoring.json";
 
@@ -40,7 +39,19 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Area />
+        {!this.state.done ? (
+          <FadeIn>
+            <div className="preloader">
+              <h1>Anti-Bullying Dashboard</h1>
+              <Lottie options={defaultOptions} height={200} width={200} />
+              <div className="creators">
+                <img className="hci-icon" src={`${process.env.PUBLIC_URL}/images/hcilogo.png`} width="55px" height="40px" alt="hci-logo" />
+                <p>Creators: Jaeyoung Kim, Thanh Dung Ho, Jihwan Kim (SNU HCI Lab)</p></div>
+            </div>
+          </FadeIn>
+        ) : (
+            <Area />
+          )}
       </div>
     )
   }
