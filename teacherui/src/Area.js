@@ -14,6 +14,8 @@ import ReportingChart from './ReportingChart';
 import ReportingData from './data/reportMethods.json';
 import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
+import DepressiveInfo from './data/depressionDuration.json';
+import DepressionComponent from './DepressionComponent';
 
 class Area extends Component {
 
@@ -34,6 +36,11 @@ class Area extends Component {
                         <AtmosphereChart emotionsVal={EmotionData} />
                         <LocationsChart locations={LocationData} />
                         <FeelingsCloud cloudTags={FeelingsTag} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <DepressionComponent depressiveInfo={DepressiveInfo} />
                     </Col>
                 </Row>
             </Container>
