@@ -8,9 +8,6 @@ class DepressionComponent extends Component {
         super(props);
         this.state = {
             data: this.props.depressiveInfo,
-            yAxisAttribute: "name",
-            xAxisAttribute: "days",
-            statusInfo: "status",
             width: 500,
             height: 200
         }
@@ -48,6 +45,9 @@ class DepressionComponent extends Component {
             .domain(states)
             .range(colors);
 
+        var startVal = 1;
+
+        // appending the text with depressive state duration
         bounds.append('g')
             .selectAll("durationinf")
             .data(this.state.data)
@@ -55,14 +55,50 @@ class DepressionComponent extends Component {
             .append("text")
             .attr("class", "statusD")
             .attr("fill", "black")
-            .attr("x", 100)
-            .attr("y", 100)
+            .attr("x", 0)
+            .attr("y", 50)
             .attr("text-anchor", "start")
-            .style("font-size", "13px")
+            .style("font-size", "18px")
             .style("font-weight", "bold")
-            .text('Test')
+            .text(function (d) {
+                return d.name + "' s depressive state lasts for";
+            })
 
+        var text = bounds.append('g')
+            .selectAll("durationinf2")
+            .data(this.state.data)
+            .enter()
+            .append("text")
+            .attr("class", "duration")
+            .attr("fill", "black")
+            .attr("x", 0)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "158x")
+            .style("font-weight", "bold")
+            .text(startVal);
 
+        text.transition()
+            .tween('text', function (d) {
+                var selection = d3.select(this);
+                var end = d.days;
+                var interpolator = d3.interpolateNumber(startVal, end);
+
+                return function (k) {
+                    selection.text(Math.round(interpolator(k)));
+                }
+            }).duration(5000);
+
+        var daysText = bounds.append('g')
+            .append("text")
+            .attr("class", "duration")
+            .attr("fill", "black")
+            .attr("x", 30)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "18px")
+            .style("font-weight", "bold")
+            .text(" days.");
 
         bounds.append('rect')
             .attr("class", "initialRect")
@@ -73,7 +109,9 @@ class DepressionComponent extends Component {
             .attr("width", function () {
                 return segmentWidth * states.length;
             })
-            .attr("x", 0);
+            .attr("x", 0)
+            .attr("y", 100);
+
 
         var progressBar = bounds.selectAll("progressB")
             .data(this.state.data)
@@ -83,7 +121,8 @@ class DepressionComponent extends Component {
             .attr('height', 15)
             .attr('rx', 10)
             .attr('ry', 10)
-            .attr('x', 0);
+            .attr('x', 0)
+            .attr("y", 100);
 
         bounds.selectAll("statusText")
             .data(this.state.data)
@@ -92,9 +131,9 @@ class DepressionComponent extends Component {
             .attr("class", "statusT")
             .attr("fill", "black")
             .attr("x", function () {
-                return (segmentWidth * states.length) - 90;
+                return (segmentWidth * states.length) - 100;
             })
-            .attr("y", 35)
+            .attr("y", 135)
             .attr("text-anchor", "start")
             .style("font-size", "13px")
             .style("font-weight", "bold")
@@ -114,6 +153,7 @@ class DepressionComponent extends Component {
             })
 
     }
+
 
     componentDidMount() {
         this.drawChart();
