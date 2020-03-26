@@ -48,6 +48,22 @@ class DepressionComponent extends Component {
             .domain(states)
             .range(colors);
 
+        bounds.append('g')
+            .selectAll("durationinf")
+            .data(this.state.data)
+            .enter()
+            .append("text")
+            .attr("class", "statusD")
+            .attr("fill", "black")
+            .attr("x", 100)
+            .attr("y", 100)
+            .attr("text-anchor", "start")
+            .style("font-size", "13px")
+            .style("font-weight", "bold")
+            .text('Test')
+
+
+
         bounds.append('rect')
             .attr("class", "initialRect")
             .attr("rx", 10)
