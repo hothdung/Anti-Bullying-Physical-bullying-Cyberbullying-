@@ -16,6 +16,8 @@ import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
 import DepressiveInfo from './data/depressionDuration.json';
 import DepressionComponent from './DepressionComponent';
+import EmotionVals from "./data/posNegEmotionValues.json";
+import PosNegChart from "./PosNegChart";
 
 class Area extends Component {
 
