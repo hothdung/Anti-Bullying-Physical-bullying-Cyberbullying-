@@ -41,8 +41,11 @@ class Area extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col lg='6'>
                         <DepressionComponent depressiveInfo={DepressiveInfo} />
+                    </Col>
+                    <Col lg='6'>
+                        <PosNegChart posNegEmotionVal={EmotionVals} />
                     </Col>
                 </Row>
             </Container>
