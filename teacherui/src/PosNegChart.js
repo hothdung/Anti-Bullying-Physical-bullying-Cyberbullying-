@@ -19,15 +19,16 @@ class PosNegChart extends Component {
 
         let dimensions = {
             margin: {
-                top: 15,
+                top: 5,
                 right: 15,
-                bottom: 40,
+                bottom: 10,
                 left: 60,
             }
         }
 
         dimensions.boundedWidth = this.state.width - dimensions.margin.left - dimensions.margin.right;
         dimensions.boundedHeight = this.state.height - dimensions.margin.top - dimensions.margin.bottom;
+        var colors = d3.scaleOrdinal().range(["#0000A3", "#E50000"]);
 
         const wrapper = d3.select(this.refs.canvas)
             .append('svg')
