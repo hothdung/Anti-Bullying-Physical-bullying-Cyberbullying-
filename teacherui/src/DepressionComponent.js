@@ -89,7 +89,7 @@ class DepressionComponent extends Component {
                 }
             }).duration(5000);
 
-        var daysText = bounds.append('g')
+        bounds.append('g')
             .append("text")
             .attr("class", "duration")
             .attr("fill", "black")

@@ -44,12 +44,10 @@ class PosNegChart extends Component {
             .offset(d3.stackOffsetDiverging)
             (this.state.data);
 
-        var keys = Object.keys(this.state.data);
-
         const x = d3.scaleBand()
             .domain(this.state.data.map(function (d) { return d.date; }))
             .rangeRound([dimensions.margin.left, dimensions.boundedWidth - dimensions.margin.right])
-            .padding(0.1)
+            .padding(0.2)
 
 
         // y axis
@@ -57,21 +55,72 @@ class PosNegChart extends Component {
             .domain([d3.min(series, this.stackMin), d3.max(series, this.stackMax)])
             .rangeRound([dimensions.boundedHeight - dimensions.margin.bottom, dimensions.margin.top])
 
+        bounds.append("g")
+            .attr("transform", "translate(" + dimensions.margin.left + ",0)")
+            .call(d3.axisLeft(y))
+
+        // storing data in tmp, for access
+        var tmpData = this.state.data;
+
+        var stackData = ["pos", "neg"].map(function (val) {
+            return tmpData.map(function (d) {
+                return { y: d[val] };
+            });
+        });
+
+        this.barStack(stackData);
+
+        bounds.selectAll(".series").data(stackData)
+            .enter().append("g").classed("series", true)
+            .style("fill", function (d, i) {
+                return colors(i);
+            }).selectAll("rect")
+            .data(Object)
+            .enter().append("rect")
+            .style("opacity", 0)
+            .attr("x", function (d, i) { return x(x.domain()[i]) })
+            .attr("y", function (d) { return y(d.y0) })
+            .attr("height", function (d) {
+                return y(0) - y(d.size)
+            })
+            .attr("width", x.bandwidth())
+            .transition().delay(function (d, i) { return i * 400; })
+            .duration(400)
+            .style('opacity', 1);
+
+
+        var firstVal = this.state.data[0].date,
+            lastVal = Object.values(this.state.data)[Object.values(this.state.data).length - 1].date;
+
         var xAxis = d3.axisBottom(x)
-            .tickValues(["2019-04-01", "2019-04-30"])
+            .tickValues([firstVal, lastVal])
 
         bounds.append("g")
             .attr("class", "posNegXAxis")
             .attr("transform", "translate(0," + y(0) + ")")
             .call(xAxis)
-
-        bounds.append("g")
-            .attr("transform", "translate(" + dimensions.margin.left + ",0)")
-            .call(d3.axisLeft(y))
-
     }
     componentDidMount() {
         this.drawChart();
+    }
+
+    barStack(d) {
+        var l = d[0].length
+        while (l--) {
+            var posBase = 0, negBase = 0;
+            d.forEach(function (d) {
+                d = d[l]
+                d.size = Math.abs(d.y)
+                if (d.y < 0) {
+                    d.y0 = negBase
+                    negBase -= d.size
+                } else {
+                    d.y0 = posBase = posBase + d.size
+                }
+            })
+        }
+        d.extent = d3.extent(d3.merge(d3.merge(d.map(function (e) { return e.map(function (f) { return [f.y0, f.y0 - f.size] }) }))))
+        return d
     }
 
     stackMin(layer) {
