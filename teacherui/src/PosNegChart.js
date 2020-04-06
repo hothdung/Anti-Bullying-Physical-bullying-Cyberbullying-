@@ -19,7 +19,7 @@ class PosNegChart extends Component {
 
         let dimensions = {
             margin: {
-                top: 5,
+                top: 20,
                 right: 15,
                 bottom: 10,
                 left: 60,
@@ -28,7 +28,10 @@ class PosNegChart extends Component {
 
         dimensions.boundedWidth = this.state.width - dimensions.margin.left - dimensions.margin.right;
         dimensions.boundedHeight = this.state.height - dimensions.margin.top - dimensions.margin.bottom;
-        var colors = d3.scaleOrdinal().range(["#0000A3", "#E50000"]);
+        var colors = d3.scaleOrdinal().range(["#FF3333", "#3333FF"]);
+        var firstVal = this.state.data[0].date,
+            lastVal = Object.values(this.state.data)[Object.values(this.state.data).length - 1].date;
+        var keyVal = ["pos", "neg"]
 
         const wrapper = d3.select(this.refs.canvas)
             .append('svg')
@@ -38,9 +41,17 @@ class PosNegChart extends Component {
         const bounds = wrapper.append("g")
             .style("transform", `translate(${dimensions.margin.left}px,${dimensions.margin.top}px)`)
 
+        bounds.append("text")
+            .attr("x", (dimensions.boundedWidth / 2))
+            .attr("y", 0 - (dimensions.margin.top / 2) + 10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "15px")
+            .style("font-weight", "bold")
+            .text(firstVal + " - " + lastVal)
+
         // data contains positive and negative values
         var series = d3.stack()
-            .keys(["pos", "neg"])
+            .keys(keyVal)
             .offset(d3.stackOffsetDiverging)
             (this.state.data);
 
@@ -62,13 +73,17 @@ class PosNegChart extends Component {
         // storing data in tmp, for access
         var tmpData = this.state.data;
 
-        var stackData = ["pos", "neg"].map(function (val) {
+        var stackData = keyVal.map(function (val) {
             return tmpData.map(function (d) {
                 return { y: d[val] };
             });
         });
+        var stackVal = this.barStack(stackData);
 
-        this.barStack(stackData);
+
+        var div = d3.select("body").append("div")
+            .attr("class", "posNegtooltip")
+            .style("opacity", 0);
 
         bounds.selectAll(".series").data(stackData)
             .enter().append("g").classed("series", true)
@@ -84,13 +99,24 @@ class PosNegChart extends Component {
                 return y(0) - y(d.size)
             })
             .attr("width", x.bandwidth())
+            .on("mouseover", function (d) {
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                div.html(d.y)
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function (d) {
+                div.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+
+            })
             .transition().delay(function (d, i) { return i * 400; })
             .duration(400)
             .style('opacity', 1);
 
-
-        var firstVal = this.state.data[0].date,
-            lastVal = Object.values(this.state.data)[Object.values(this.state.data).length - 1].date;
 
         var xAxis = d3.axisBottom(x)
             .tickValues([firstVal, lastVal])
@@ -99,6 +125,33 @@ class PosNegChart extends Component {
             .attr("class", "posNegXAxis")
             .attr("transform", "translate(0," + y(0) + ")")
             .call(xAxis)
+
+        // adding legend
+
+        var legend = bounds.append("g")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keyVal)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(0," + i * 20 + ")";
+            });
+
+        legend.append("rect")
+            .attr("x", dimensions.boundedWidth - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", colors)
+
+        legend.append("text")
+            .attr("x", dimensions.boundedWidth - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .style("font-weight", "bold")
+            .text(function (d) { return d; })
+
+
     }
     componentDidMount() {
         this.drawChart();

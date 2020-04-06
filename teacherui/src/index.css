@@ -64,6 +64,20 @@ code {
   color: white;
 }
 
+.posNegtooltip {
+  position: absolute;
+  width: 60px;
+  height: 25px;
+  text-align: center;
+  padding-top: 5px;
+  font: 12px sans-serif;
+  background: #282828;
+  border: 0px;
+  border-radius: 5px;
+  pointer-events: none;
+  color: white;
+}
+
 .preloader {
   position: relative;
   height: 100vh;
