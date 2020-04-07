@@ -77,6 +77,15 @@ class ReportingChart extends Component {
             .attr("class", 'y-axis')
             .call(d3.axisLeft(y));
 
+        bounds.append("g")
+            .append("text")
+            .attr("x", dimensions.margin.left + 20)
+            .attr("y", 0 - (dimensions.margin.top - 20))
+            .style("text-anchor", "middle")
+            .style("font-size", "15px")
+            .style("font-weight", "bold")
+            .text("Reporting methods")
+
         var div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);

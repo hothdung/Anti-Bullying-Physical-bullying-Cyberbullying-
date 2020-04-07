@@ -8,7 +8,7 @@ const options = {
     colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#F3CE00"],
     fontFamily: "impact",
     deterministic: true,
-    fontSizes: [25, 40],
+    fontSizes: [22, 50],
     fontWeight: "normal",
     fontStyle: "normal",
     rotationAngles: [0, 90],
@@ -46,8 +46,8 @@ class FeelingsCloud extends Component {
     render() {
 
         return (
-            <div className='tag-cloud' style={{ width: '450px', height: '250px' }}>
-                <p style={{ 'textAlign': 'center', 'fontWeight':'bold'}}>Feelings</p>
+            <div className='tag-cloud' style={{ width: '550px', height: '250px' }}>
+                <p style={{ 'textAlign': 'center', 'fontWeight': 'bold' }}>Feelings</p>
                 <ReactWordcloud callbacks={callbacks} options={options} words={this.props.cloudTags} />
             </div>
         )
