@@ -28,7 +28,7 @@ class PosNegChart extends Component {
 
         dimensions.boundedWidth = this.state.width - dimensions.margin.left - dimensions.margin.right;
         dimensions.boundedHeight = this.state.height - dimensions.margin.top - dimensions.margin.bottom;
-        var colors = d3.scaleOrdinal().range(["#FF3333", "#3333FF"]);
+        var colors = d3.scaleOrdinal().range(["#3333FF", "#FF3333"]);
         var firstVal = this.state.data[0].date,
             lastVal = Object.values(this.state.data)[Object.values(this.state.data).length - 1].date;
         var keyVal = ["pos", "neg"]
@@ -78,7 +78,7 @@ class PosNegChart extends Component {
                 return { y: d[val] };
             });
         });
-        var stackVal = this.barStack(stackData);
+        this.barStack(stackData);
 
 
         var div = d3.select("body").append("div")
@@ -136,13 +136,30 @@ class PosNegChart extends Component {
             .enter().append("g")
             .attr("transform", function (d, i) {
                 return "translate(0," + i * 20 + ")";
-            });
+            })
 
         legend.append("rect")
             .attr("x", dimensions.boundedWidth - 19)
             .attr("width", 19)
             .attr("height", 19)
+            .attr("id", function (d, i) {
+                console.log("legend" + i);
+                return "legend" + i;
+            })
             .attr("fill", colors)
+            .on("click", function () {
+                console.log("selectThis " + d3.select(this).attr("id"));
+                d3.select(this).attr("fill", function (d, i) {
+                    if (d3.select(this).attr("fill") === "#BDBDBD" && d3.select(this).attr("id") === "legend0") {
+                        return colors(i);
+                    } else if (d3.select(this).attr("fill") === "#BDBDBD" && d3.select(this).attr("id") === "legend1") {
+                        return colors(i + 1);
+                    }
+                    else {
+                        return "#BDBDBD";
+                    }
+                })
+            })
 
         legend.append("text")
             .attr("x", dimensions.boundedWidth - 24)
