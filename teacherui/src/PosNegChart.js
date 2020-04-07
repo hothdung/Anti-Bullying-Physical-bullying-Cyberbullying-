@@ -8,7 +8,7 @@ class PosNegChart extends Component {
         super(props);
         this.state = {
             data: this.props.posNegEmotionVal,
-            width: 650,
+            width: 600,
             height: 400
         }
         this.chartRef = React.createRef();
@@ -86,7 +86,9 @@ class PosNegChart extends Component {
             .style("opacity", 0);
 
         bounds.selectAll(".series").data(stackData)
-            .enter().append("g").classed("series", true)
+            .enter().append("g").attr("class", function (d, i) {
+                return "rects" + i;
+            })
             .style("fill", function (d, i) {
                 return colors(i);
             }).selectAll("rect")
@@ -149,10 +151,8 @@ class PosNegChart extends Component {
             .attr("value", 0)
             .attr("fill", colors)
             .on("click", function () {
-                console.log("selectThis " + d3.select(this).attr("id"));
                 d3.select(this).attr("value", function (d, i) {
                     counter += 1;
-                    console.log("i-value " + counter);
                     return counter;
                 })
                 d3.select(this).attr("fill", function (d, i) {
@@ -163,11 +163,13 @@ class PosNegChart extends Component {
                         result = colors(i);
                         d3.select('#legend0').style("stroke", "none");
                         d3.select('#legend1').style("stroke", "none");
+                        d3.selectAll(".rects0").attr("visibility", "visible");
                         counter = 0;
                     } else if (d3.select(this).attr("fill") === "#BDBDBD" && d3.select(this).attr("id") === "legend1") {
                         result = colors(i + 1);
                         d3.select('#legend0').style("stroke", "none");
                         d3.select('#legend1').style("stroke", "none");
+                        d3.selectAll(".rects1").attr("visibility", "visible");
                         counter = 0;
                     }
                     else {
@@ -175,10 +177,12 @@ class PosNegChart extends Component {
                             d3.select('#legend1').style("stroke", "none");
                             d3.select(this).style("stroke", "black")
                                 .style("stroke-width", "2px");
+                            d3.selectAll(".rects1").attr("visibility", "hidden");
                             if (d3.select(this).attr("value") === "1") {
                                 d3.select('#legend1').attr("fill", "#BDBDBD")
                                 result = colors(i);
                             } else {
+                                d3.selectAll(".rects1").attr("visibility", "visible");
                                 d3.select('#legend1').attr("fill", colors(i + 1))
                                 counter = 0;
                                 result = colors(i);
@@ -188,10 +192,12 @@ class PosNegChart extends Component {
                             d3.select('#legend0').style("stroke", "none");
                             d3.select(this).style("stroke", "black")
                                 .style("stroke-width", "2px");
+                            d3.selectAll(".rects0").attr("visibility", "hidden");
                             if (d3.select(this).attr("value") === "1") {
                                 d3.select('#legend0').attr("fill", "#BDBDBD")
                                 result = colors(i + 1);
                             } else {
+                                d3.selectAll(".rects0").attr("visibility", "visible");
                                 d3.select('#legend0').attr("fill", colors(i))
                                 counter = 0;
                                 result = colors(i + 1);
