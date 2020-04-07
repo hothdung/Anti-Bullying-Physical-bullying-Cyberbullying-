@@ -137,7 +137,7 @@ class PosNegChart extends Component {
             .attr("transform", function (d, i) {
                 return "translate(0," + i * 20 + ")";
             })
-
+        var counter = 0;
         legend.append("rect")
             .attr("x", dimensions.boundedWidth - 19)
             .attr("width", 19)
@@ -146,18 +146,61 @@ class PosNegChart extends Component {
                 console.log("legend" + i);
                 return "legend" + i;
             })
+            .attr("value", 0)
             .attr("fill", colors)
             .on("click", function () {
                 console.log("selectThis " + d3.select(this).attr("id"));
+                d3.select(this).attr("value", function (d, i) {
+                    counter += 1;
+                    console.log("i-value " + counter);
+                    return counter;
+                })
                 d3.select(this).attr("fill", function (d, i) {
+                    // highlight the chosen legend item
+                    // retrieve color state of legend item
+                    var result;
                     if (d3.select(this).attr("fill") === "#BDBDBD" && d3.select(this).attr("id") === "legend0") {
-                        return colors(i);
+                        result = colors(i);
+                        d3.select('#legend0').style("stroke", "none");
+                        d3.select('#legend1').style("stroke", "none");
+                        counter = 0;
                     } else if (d3.select(this).attr("fill") === "#BDBDBD" && d3.select(this).attr("id") === "legend1") {
-                        return colors(i + 1);
+                        result = colors(i + 1);
+                        d3.select('#legend0').style("stroke", "none");
+                        d3.select('#legend1').style("stroke", "none");
+                        counter = 0;
                     }
                     else {
-                        return "#BDBDBD";
+                        if (d3.select(this).attr("id") === "legend0") {
+                            d3.select('#legend1').style("stroke", "none");
+                            d3.select(this).style("stroke", "black")
+                                .style("stroke-width", "2px");
+                            if (d3.select(this).attr("value") === "1") {
+                                d3.select('#legend1').attr("fill", "#BDBDBD")
+                                result = colors(i);
+                            } else {
+                                d3.select('#legend1').attr("fill", colors(i + 1))
+                                counter = 0;
+                                result = colors(i);
+                            }
+
+                        } else {
+                            d3.select('#legend0').style("stroke", "none");
+                            d3.select(this).style("stroke", "black")
+                                .style("stroke-width", "2px");
+                            if (d3.select(this).attr("value") === "1") {
+                                d3.select('#legend0').attr("fill", "#BDBDBD")
+                                result = colors(i + 1);
+                            } else {
+                                d3.select('#legend0').attr("fill", colors(i))
+                                counter = 0;
+                                result = colors(i + 1);
+                            }
+                        }
+
+
                     }
+                    return result;
                 })
             })
 

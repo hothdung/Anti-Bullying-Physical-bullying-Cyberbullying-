@@ -104,7 +104,7 @@ class ReportingChart extends Component {
                 var methodName = d3.select(this.parentNode).datum().key;
                 div.transition()
                     .duration(200)
-                    .style("opacity", .7);
+                    .style("opacity", .8);
                 div.html(methodName + ": " + (d[1] - d[0]))
                     .style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");
