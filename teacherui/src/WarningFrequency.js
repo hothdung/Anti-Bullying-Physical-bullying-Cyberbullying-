@@ -99,7 +99,7 @@ class WarningFrequency extends Component {
             .attr("x2", dimensions.boundedWidth)
             .style("stroke", "#000058")
             .style("stroke-dasharray", ("3, 3"))
-            .style("stroke-width", "2px")
+            .style("stroke-width", "1.5px")
 
         bounds.append("g")
             .call(xAxisGenerator)
