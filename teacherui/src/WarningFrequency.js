@@ -94,6 +94,14 @@ class WarningFrequency extends Component {
             .scale(xScale)
 
         bounds.append("g")
+            .attr("transform", "translate(0, " + yScale(22) + ")")
+            .append("line")
+            .attr("x2", dimensions.boundedWidth)
+            .style("stroke", "#000058")
+            .style("stroke-dasharray", ("3, 3"))
+            .style("stroke-width", "2px")
+
+        bounds.append("g")
             .call(xAxisGenerator)
             .style("transform", `translateY(${dimensions.boundedHeight}px)`)
 
@@ -105,6 +113,7 @@ class WarningFrequency extends Component {
             .style("font-size", "15px")
             .style("font-weight", "bold")
             .text("Warning frequency")
+
 
         var legend = bounds.append("g")
             .attr("font-size", 10)
