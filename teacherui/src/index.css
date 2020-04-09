@@ -102,3 +102,10 @@ code {
   margin-right: 10px;
   padding-bottom: 18px;
 }
+
+#navText {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 100;
+  margin-right: 100;
+}

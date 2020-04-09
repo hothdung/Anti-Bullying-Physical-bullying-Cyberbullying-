@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import { Navbar, Nav, NavbarText } from "reactstrap";
+import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import StudentData from './data/schoolClass.json'
 import StudentsSidebar from './StudentsSidebar';
 import LocationsChart from './LocationsChart';
@@ -25,6 +27,21 @@ class Area extends Component {
     render() {
         return (
             <Container fluid={true}>
+                <Row>
+                    <Col lg="12">
+                        <Navbar color="dark" style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}>
+                            <Nav className="navBar">
+                                <NavbarText style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>
+                                    <VisibilityRoundedIcon />  Anti-Bullying Monitoring Dashboard Overview
+                                    </NavbarText>
+                            </Nav>
+                        </Navbar>
+                    </Col>
+                </Row>
                 <Row noGutters={true}>
                     <Col lg='1'>
                         <StudentsSidebar students={StudentData} />
@@ -36,8 +53,8 @@ class Area extends Component {
                     </Col>
                     <Col lg='3'>
                         <AtmosphereChart emotionsVal={EmotionData} />
-                        <LocationsChart locations={LocationData} />
                         <FeelingsCloud cloudTags={FeelingsTag} />
+                        <LocationsChart locations={LocationData} />
                     </Col>
                 </Row>
                 <Row>
