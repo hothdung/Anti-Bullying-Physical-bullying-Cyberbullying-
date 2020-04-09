@@ -103,9 +103,6 @@ code {
   padding-bottom: 18px;
 }
 
-#navText {
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 100;
-  margin-right: 100;
+#navCol {
+  margin-bottom: 30px;
 }

@@ -28,7 +28,7 @@ class Area extends Component {
         return (
             <Container fluid={true}>
                 <Row>
-                    <Col lg="12">
+                    <Col lg="12" id="navCol">
                         <Navbar color="dark" style={{
                             display: "flex",
                             justifyContent: "center",
