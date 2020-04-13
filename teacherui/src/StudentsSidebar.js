@@ -1,23 +1,47 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
 function StudentsSidebar(props) {
 
+    const [query, setQuery] = useState("");
+    const [searchRes, setSearchRes] = useState([]);
+    const handleChange = event => {
+        setQuery((event.target.value).toLowerCase());
+    };
+
+    useEffect(() => {
+        var tmpSrc = props.students.filter((student, index) => {
+            if (index == 0) {
+                return false;
+            }
+            return true;
+        }
+        )
+        const results = tmpSrc.filter(student =>
+            student.label.toLowerCase().includes(query));
+        setSearchRes(results);
+    }, [query]);
+
     props.students.sort((a, b) => b.alert - a.alert);
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                {props.students.map((student, index) => {
-                    if (index === 0) { return <h2 key={index}>Class {student.studentsClassname}</h2> }
-                    else {
-                        return <ListItem key={student.id} button style={{ backgroundColor: getColor(student.alert, props.students), borderRadius: 4, marginTop: 2 }}>
-                            <ListItemText key={index}>{student.label}</ListItemText>
-                        </ListItem>
-                    }
-                }
-                )}
+                <div><h2 key={0}>Class {props.students[0].studentsClassname}</h2></div>
+                <input
+                    className="search-students"
+                    type="text"
+                    placeholder="Search Student ..."
+                    style={{ width: "175px" }}
+                    value={query}
+                    onChange={handleChange}
+                />
+                {searchRes.map((searchItem, index) => (
+                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }}>
+                        <ListItemText key={index}>{searchItem.label}</ListItemText>
+                    </ListItem>
+                ))}
             </List>
         </div >
     )
