@@ -23,7 +23,6 @@ class AtmosphereChart extends Component {
 
     drawChart() {
 
-        var overviewPercentages = [20, 40, 10, 10, 20];
         var colors = ['#FF0000', '#5588ff', '#993299', '#A3A319', '#19D219'];
 
         var color = d3.scaleOrdinal().range(colors);
@@ -84,7 +83,7 @@ class AtmosphereChart extends Component {
 
         var curr_percentage = 0;
         svg.selectAll(".bar1")
-            .data(overviewPercentages)
+            .data(this.state.data[0].ePercentage)
             .enter()
             .append('rect')
             .attr("x", function (d) {

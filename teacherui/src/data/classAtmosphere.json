@@ -2,7 +2,14 @@
     {
         "id": 0,
         "nameEmotion": "Overview",
-        "total": 100
+        "total": 100,
+        "ePercentage": [
+            20,
+            40,
+            10,
+            10,
+            20
+        ]
     },
     {
         "id": 1,
