@@ -23,6 +23,7 @@ class AtmosphereChart extends Component {
 
     drawChart() {
 
+        var overviewPercentages = [20, 40, 10, 10, 20];
         var colors = ['#FF0000', '#5588ff', '#993299', '#A3A319', '#19D219'];
 
         var color = d3.scaleOrdinal().range(colors);
@@ -42,8 +43,6 @@ class AtmosphereChart extends Component {
             .domain(this.state.data.map((d) =>
                 d[this.state.yAxisAttribute]))
             .padding(0.1)
-
-
 
         let svg = d3.select(this.refs.canvas)
             .append("svg")
@@ -69,6 +68,9 @@ class AtmosphereChart extends Component {
         svg.selectAll("totalBar")
             .data(this.state.data)
             .enter().append('rect')
+            .attr("id", function (d, i) {
+                return "total" + i;
+            })
             .attr('x', 0)
             .attr('y', (d) => y(d[this.state.yAxisAttribute]))
             .attr('width', (d) => x(d[this.state.xAxisAttribute2]))
@@ -77,8 +79,39 @@ class AtmosphereChart extends Component {
             .style('stroke', 'black')
             .style('stroke-width', 1)
 
+
+        // creating the overview
+
+        var curr_percentage = 0;
+        svg.selectAll(".bar1")
+            .data(overviewPercentages)
+            .enter()
+            .append('rect')
+            .attr("x", function (d) {
+                var prev_percentage = curr_percentage;
+                var calc_percentage = x(d);
+                curr_percentage = curr_percentage + calc_percentage;
+                return prev_percentage;
+            })
+            .attr("y", 4)
+            .attr('width', (d) => x(d))
+            .attr("height", y.bandwidth() - 10)
+            .attr('fill', function (d, i) {
+                return color(i);
+            })
+            .style('stroke', 'black')
+            .style('stroke-width', 0.4);
+
+
+
+
+
+
+        // to skip first element of json --> to render percentages
+        var percentageData = this.state.data.slice(1);
+
         svg.selectAll("percentageBar")
-            .data(this.state.data)
+            .data(percentageData)
             .enter()
             .append('rect')
             .attr('opacity', '0')
@@ -95,7 +128,7 @@ class AtmosphereChart extends Component {
 
         svg.append('defs')
             .selectAll('pattern')
-            .data(this.state.data)
+            .data(percentageData)
             .enter()
             .append('pattern')
             .attr('id', (d) => d[this.state.yAxisAttribute])
@@ -112,7 +145,7 @@ class AtmosphereChart extends Component {
 
         // attaching circle to percentage bars
         svg.selectAll('circle')
-            .data(this.state.data)
+            .data(percentageData)
             .enter()
             .append('circle')
             .attr('opacity', '0')
