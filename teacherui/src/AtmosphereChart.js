@@ -79,15 +79,18 @@ class AtmosphereChart extends Component {
             .style('stroke-width', 1)
 
 
+
+
         // creating the overview
 
-        var curr_percentage = 0;
+        var curr_percentage = 0,
+            prev_percentage = 0;
         svg.selectAll(".bar1")
             .data(this.state.data[0].ePercentage)
             .enter()
             .append('rect')
             .attr("x", function (d) {
-                var prev_percentage = curr_percentage;
+                prev_percentage = curr_percentage;
                 var calc_percentage = x(d);
                 curr_percentage = curr_percentage + calc_percentage;
                 return prev_percentage;
@@ -101,8 +104,21 @@ class AtmosphereChart extends Component {
             .style('stroke', 'black')
             .style('stroke-width', 0.4);
 
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", 30)
+            .attr("dy", "1em")
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .text("0 %")
 
-
+        svg.append("text")
+            .attr("x", prev_percentage + 20)
+            .attr("y", 30)
+            .attr("dy", "1em")
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .text("100 %")
 
 
 
@@ -124,6 +140,8 @@ class AtmosphereChart extends Component {
             .duration(2000)
             .attr('width', (d) => x(d[this.state.xAxisAttribute]))
             .attr('opacity', 1)
+            .style('stroke', 'black')
+            .style('stroke-width', 0.1);
 
         svg.append('defs')
             .selectAll('pattern')
