@@ -4,6 +4,8 @@ import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import "bootstrap/dist/css/bootstrap.css";
 import * as Loading from "./data/monitoring.json";
+import Individual from "./IndividualScreen";
+import IndividualScreen from './IndividualScreen';
 
 
 var defaultOptions = {
@@ -21,7 +23,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      done: undefined
+      done: undefined,
+      screen: 'overview',
     };
   }
 
@@ -39,7 +42,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Area />
+        {this.state.screen === 'overview' && (
+          <Area
+            onNavigate={() => {
+              this.setState(() => ({
+                screen: 'individual',
+              }))
+            }}
+          />
+        )}
+        {this.state.screen === 'individual' && (
+          <IndividualScreen />
+        )}
       </div>
     )
   }

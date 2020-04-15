@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col,Navbar, Nav, NavbarText } from 'reactstrap';
+import { Container, Row, Col, Navbar, Nav, NavbarText } from 'reactstrap';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import StudentData from './data/schoolClass.json'
 import StudentsSidebar from './StudentsSidebar';
@@ -18,12 +18,12 @@ import MethodsTable from './MethodsTable';
 
 class Area extends Component {
 
-
     render() {
+
         return (
             <Container fluid={true}>
                 <Row>
-                    <Col lg="12" id="navCol">
+                    <Col lg="12" className="navCol">
                         <Navbar color="dark" style={{
                             display: "flex",
                             justifyContent: "center",
@@ -39,7 +39,8 @@ class Area extends Component {
                 </Row>
                 <Row noGutters={true}>
                     <Col lg='1'>
-                        <StudentsSidebar students={StudentData} />
+                        <StudentsSidebar students={StudentData}
+                            onNavigate={this.props.onNavigate} />
                     </Col>
                     <Col lg='7'>
                         <WarningFrequency warningVal={FrequencyData} />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Navbar, Nav, NavbarText } from 'reactstrap';
 import StudentData from './data/schoolClass.json'
 import StudentsSidebar from './StudentsSidebar';
 import WarningFrequency from './WarningFrequency';
@@ -12,10 +12,26 @@ import DepressiveInfo from './data/depressionDuration.json';
 import DepressionComponent from './DepressionComponent';
 import EmotionVals from "./data/posNegEmotionValues.json";
 import PosNegChart from "./PosNegChart";
+import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 
 function IndividualScreen(props) {
     return (
         <Container fluid={true}>
+            <Row noGutters={true}>
+                <Col lg='12' className="navCol">
+                    <Navbar color="dark" style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}>
+                        <Nav className="navBarIn">
+                            <NavbarText style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>
+                                <VisibilityRoundedIcon /> Anti-Bullying Monitoring Dashboard: 
+                            </NavbarText>
+                        </Nav>
+                    </Navbar>
+                </Col>
+            </Row>
             <Row noGutters={true}>
                 <Col lg='1'>
                     <StudentsSidebar students={StudentData} />

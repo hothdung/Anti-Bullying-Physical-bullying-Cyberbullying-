@@ -11,6 +11,8 @@ function StudentsSidebar(props) {
         setQuery((event.target.value).toLowerCase());
     };
 
+    const { onNavigate } = props
+
     useEffect(() => {
         var tmpSrc = props.students.filter((student, index) => {
             if (index == 0) {
@@ -38,7 +40,7 @@ function StudentsSidebar(props) {
                     onChange={handleChange}
                 />
                 {searchRes.map((searchItem, index) => (
-                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }}>
+                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={onNavigate}>
                         <ListItemText key={index}>{searchItem.label}</ListItemText>
                     </ListItem>
                 ))}
