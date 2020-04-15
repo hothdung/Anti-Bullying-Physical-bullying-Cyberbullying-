@@ -6,12 +6,17 @@ import ListItemText from '@material-ui/core/ListItemText'
 function StudentsSidebar(props) {
 
     const [query, setQuery] = useState("");
+    const [heading, setHeading] = useState("Class " + props.students[0].studentsClassname);
     const [searchRes, setSearchRes] = useState([]);
     const handleChange = event => {
         setQuery((event.target.value).toLowerCase());
     };
 
-    const { onNavigate } = props
+    const handleHeading = (headingElem) => {
+        setHeading(headingElem);
+    };
+
+    // const { onNavigate } =  props;
 
     useEffect(() => {
         var tmpSrc = props.students.filter((student, index) => {
@@ -30,7 +35,7 @@ function StudentsSidebar(props) {
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                <div><h2 key={0}>Class {props.students[0].studentsClassname}</h2></div>
+                <div><h3 key={0}>{heading}</h3></div>
                 <input
                     className="search-students"
                     type="text"
@@ -40,7 +45,10 @@ function StudentsSidebar(props) {
                     onChange={handleChange}
                 />
                 {searchRes.map((searchItem, index) => (
-                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={onNavigate}>
+                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={() => {
+                        handleHeading(searchItem.label);
+                        props.onNavigate(searchItem.label);
+                    }}>
                         <ListItemText key={index}>{searchItem.label}</ListItemText>
                     </ListItem>
                 ))}
@@ -48,6 +56,7 @@ function StudentsSidebar(props) {
         </div >
     )
 }
+
 
 function getMax(arr, prop) {
     var max;

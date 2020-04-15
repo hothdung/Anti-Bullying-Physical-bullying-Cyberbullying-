@@ -26,7 +26,7 @@ function IndividualScreen(props) {
                     }}>
                         <Nav className="navBarIn">
                             <NavbarText style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>
-                                <VisibilityRoundedIcon /> Anti-Bullying Monitoring Dashboard: 
+                                <VisibilityRoundedIcon /> Anti-Bullying Monitoring Dashboard: {props.studentVal}
                             </NavbarText>
                         </Nav>
                     </Navbar>

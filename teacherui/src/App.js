@@ -25,6 +25,7 @@ class App extends Component {
     this.state = {
       done: undefined,
       screen: 'overview',
+      studentName: ""
     };
   }
 
@@ -44,15 +45,16 @@ class App extends Component {
       <div>
         {this.state.screen === 'overview' && (
           <Area
-            onNavigate={() => {
+            onNavigate={(name) => {
               this.setState(() => ({
                 screen: 'individual',
+                studentName: name
               }))
             }}
           />
         )}
         {this.state.screen === 'individual' && (
-          <IndividualScreen />
+          <IndividualScreen studentVal={this.state.studentName} />
         )}
       </div>
     )
