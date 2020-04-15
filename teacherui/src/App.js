@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'react'
 import Area from './Area';
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
@@ -22,11 +23,13 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.setIndividualScreen = this.setIndividualScreen.bind(this);
     this.state = {
       done: undefined,
       screen: 'overview',
       studentName: ""
     };
+
   }
 
   componentDidMount() {
@@ -39,18 +42,20 @@ class App extends Component {
     }, 8100);
   }
 
+  setIndividualScreen(name) {
+    this.setState(() => ({
+      screen: 'individual',
+      studentName: name
+    }))
+  }
+
 
   render() {
     return (
       <div>
         {this.state.screen === 'overview' && (
           <Area
-            onNavigate={(name) => {
-              this.setState(() => ({
-                screen: 'individual',
-                studentName: name
-              }))
-            }}
+            onNavigate={this.setIndividualScreen}
           />
         )}
         {this.state.screen === 'individual' && (
