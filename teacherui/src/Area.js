@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import { Navbar, Nav, NavbarText } from "reactstrap";
+import { Container, Row, Col,Navbar, Nav, NavbarText } from 'reactstrap';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import StudentData from './data/schoolClass.json'
 import StudentsSidebar from './StudentsSidebar';
@@ -16,10 +15,6 @@ import ReportingChart from './ReportingChart';
 import ReportingData from './data/reportMethods.json';
 import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
-import DepressiveInfo from './data/depressionDuration.json';
-import DepressionComponent from './DepressionComponent';
-import EmotionVals from "./data/posNegEmotionValues.json";
-import PosNegChart from "./PosNegChart";
 
 class Area extends Component {
 
@@ -55,14 +50,6 @@ class Area extends Component {
                         <AtmosphereChart emotionsVal={EmotionData} />
                         <FeelingsCloud cloudTags={FeelingsTag} />
                         <LocationsChart locations={LocationData} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg='6'>
-                        <DepressionComponent depressiveInfo={DepressiveInfo} />
-                    </Col>
-                    <Col lg='6'>
-                        <PosNegChart posNegEmotionVal={EmotionVals} />
                     </Col>
                 </Row>
             </Container>
