@@ -34,7 +34,10 @@ function IndividualScreen(props) {
             </Row>
             <Row noGutters={true}>
                 <Col lg='1'>
-                    <StudentsSidebar students={StudentData} />
+                    <StudentsSidebar students={StudentData}
+                        onNavigate={props.onNavigate}
+                        stateScreen={props.stateScreen}
+                        studentVal ={props.studentVal} />
                 </Col>
                 <Col lg='7'>
                     <WarningFrequency warningVal={FrequencyData} />

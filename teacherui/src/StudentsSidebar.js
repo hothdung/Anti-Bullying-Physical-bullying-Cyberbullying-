@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { PropTypes } from 'react'
+import props from 'prop-types';
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -13,11 +13,8 @@ function StudentsSidebar(props) {
         setQuery((event.target.value).toLowerCase());
     };
 
-    const handleHeading = (headingElem) => {
-        setHeading(headingElem);
-    };
 
-    // const { onNavigate } =  props;
+    const { onNavigate } = props;
 
     useEffect(() => {
         var tmpSrc = props.students.filter((student, index) => {
@@ -32,11 +29,16 @@ function StudentsSidebar(props) {
         setSearchRes(results);
     }, [query]);
 
+    const handleClick = headingElem => event => {
+        setHeading(headingElem);
+        props.onNavigate(headingElem);
+    }
+
     props.students.sort((a, b) => b.alert - a.alert);
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                <div><h3 key={0}>{heading}</h3></div>
+                {props.stateScreen === 'individual' ? <div><h3 key={0}>{props.studentVal}</h3></div> : <div><h3 key={0}>{heading}</h3></div>}
                 <input
                     className="search-students"
                     type="text"
@@ -46,10 +48,7 @@ function StudentsSidebar(props) {
                     onChange={handleChange}
                 />
                 {searchRes.map((searchItem, index) => (
-                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={() => {
-                        handleHeading(searchItem.label);
-                        props.onNavigate(searchItem.label);
-                    }}>
+                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={handleClick(searchItem.label)}>
                         <ListItemText key={index}>{searchItem.label}</ListItemText>
                     </ListItem>
                 ))}

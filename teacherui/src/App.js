@@ -59,7 +59,9 @@ class App extends Component {
           />
         )}
         {this.state.screen === 'individual' && (
-          <IndividualScreen studentVal={this.state.studentName} />
+          <IndividualScreen studentVal={this.state.studentName}
+            onNavigate={this.setIndividualScreen}
+            stateScreen={this.state.screen} />
         )}
       </div>
     )
