@@ -38,12 +38,12 @@ function StudentsSidebar(props) {
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                {props.stateScreen === 'individual' ? <div><h3 key={0}>{props.studentVal}</h3></div> : <div><h3 key={0}>{heading}</h3></div>}
+                {props.stateScreen === 'individual' ? <div><h4 key={0}>{props.studentVal}</h4></div> : <div><h4 key={0}>{heading}</h4></div>}
                 <input
                     className="search-students"
                     type="text"
-                    placeholder="Search Student ..."
-                    style={{ width: "175px" }}
+                    placeholder="Search ..."
+                    style={{ width: "100%", fontSize: 12 }}
                     value={query}
                     onChange={handleChange}
                 />
