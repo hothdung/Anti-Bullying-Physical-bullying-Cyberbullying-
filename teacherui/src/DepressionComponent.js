@@ -8,6 +8,7 @@ class DepressionComponent extends Component {
         super(props);
         this.state = {
             data: this.props.depressiveInfo,
+            studentName: this.props.studentVal,
             width: 500,
             height: 200
         }
@@ -60,9 +61,8 @@ class DepressionComponent extends Component {
             .attr("text-anchor", "start")
             .style("font-size", "18px")
             .style("font-weight", "bold")
-            .text(function (d) {
-                return d.name + "' s depressive state lasts for";
-            })
+            .text(this.state.studentName + "' s depressive state lasts for"
+            )
 
         var text = bounds.append('g')
             .selectAll("durationinf2")

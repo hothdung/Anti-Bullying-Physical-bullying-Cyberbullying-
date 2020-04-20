@@ -48,7 +48,7 @@ function IndividualScreen(props) {
                 </Col>
                 <Col lg='3'>
                     <PosNegChart posNegEmotionVal={EmotionVals} />
-                    <DepressionComponent depressiveInfo={DepressiveInfo} />
+                    <DepressionComponent depressiveInfo={DepressiveInfo} studentVal={props.studentVal} />
                 </Col>
             </Row>
         </Container>
