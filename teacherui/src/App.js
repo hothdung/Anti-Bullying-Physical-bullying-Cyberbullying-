@@ -27,7 +27,8 @@ class App extends Component {
     this.state = {
       done: undefined,
       screen: 'overview',
-      studentName: ""
+      studentName: "",
+      color: ""
     };
 
   }
@@ -42,14 +43,15 @@ class App extends Component {
     }, 8100);
   }
 
-  setIndividualScreen(name) {
+  setIndividualScreen(name, color) {
     this.setState(() => ({
       screen: 'individual',
-      studentName: name
+      studentName: name,
+      color: color
     }))
   }
 
-
+  // back button functionality included
   render() {
     return (
       <div>
@@ -58,6 +60,7 @@ class App extends Component {
         />)} />
         <Route path='/individual' render={() => (
           <IndividualScreen studentVal={this.state.studentName}
+            colorVal={this.state.color}
             onNavigate={this.setIndividualScreen}
             stateScreen={this.state.screen} />)} />
       </div>

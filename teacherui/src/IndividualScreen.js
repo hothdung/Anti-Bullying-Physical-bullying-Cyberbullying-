@@ -2,7 +2,8 @@ import React from "react";
 import { Container, Row, Col, Navbar, Nav, NavbarText } from 'reactstrap';
 import StudentData from './data/schoolClass.json'
 import StudentsSidebar from './StudentsSidebar';
-import WarningFrequency from './WarningFrequency';
+import MultipleWarnings from './MultipleWarnings';
+import WarningDataIndividual1 from './data/warningSample_individual1.json';
 import FrequencyData from './data/warningSample.json';
 import ReportingChart from './ReportingChart';
 import ReportingData from './data/reportMethods.json';
@@ -37,10 +38,11 @@ function IndividualScreen(props) {
                     <StudentsSidebar students={StudentData}
                         onNavigate={props.onNavigate}
                         stateScreen={props.stateScreen}
-                        studentVal ={props.studentVal} />
+                        studentVal={props.studentVal} />
                 </Col>
                 <Col lg='7'>
-                    <WarningFrequency warningVal={FrequencyData} />
+                    <MultipleWarnings warningVal={FrequencyData} warningIndividual={WarningDataIndividual1}
+                        colorVal={props.colorVal} />
                     <ReportingChart reportingMethods={ReportingData} />
                     <MethodsTable methods={InterventionsData} />
                 </Col>
