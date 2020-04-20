@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import props from 'prop-types';
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import { Link } from "react-router-dom";
+
 
 function StudentsSidebar(props) {
 
@@ -14,11 +15,9 @@ function StudentsSidebar(props) {
     };
 
 
-    const { onNavigate } = props;
-
     useEffect(() => {
         var tmpSrc = props.students.filter((student, index) => {
-            if (index == 0) {
+            if (index === 0) {
                 return false;
             }
             return true;
@@ -48,9 +47,11 @@ function StudentsSidebar(props) {
                     onChange={handleChange}
                 />
                 {searchRes.map((searchItem, index) => (
-                    <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={handleClick(searchItem.label)}>
-                        <ListItemText key={index}>{searchItem.label}</ListItemText>
-                    </ListItem>
+                    <Link to='/individual' style={{ textDecoration: 'none' }}>
+                        <ListItem key={searchItem.id} button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={handleClick(searchItem.label)}>
+                            <ListItemText key={index} style={{ color: 'black' }}>{searchItem.label}</ListItemText>
+                        </ListItem>
+                    </Link>
                 ))}
             </List>
         </div >
@@ -73,6 +74,7 @@ function getMin(arr, prop) {
         if (min == null || parseInt(arr[i][prop]) < parseInt(min[prop]))
             min = arr[i];
     }
+
     return min;
 }
 

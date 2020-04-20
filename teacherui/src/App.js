@@ -5,8 +5,8 @@ import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import "bootstrap/dist/css/bootstrap.css";
 import * as Loading from "./data/monitoring.json";
-import Individual from "./IndividualScreen";
 import IndividualScreen from './IndividualScreen';
+import { Route } from 'react-router-dom'
 
 
 var defaultOptions = {
@@ -53,16 +53,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.screen === 'overview' && (
-          <Area
-            onNavigate={this.setIndividualScreen}
-          />
-        )}
-        {this.state.screen === 'individual' && (
+        <Route exact path='/' render={() => (<Area
+          onNavigate={this.setIndividualScreen}
+        />)} />
+        <Route path='/individual' render={() => (
           <IndividualScreen studentVal={this.state.studentName}
             onNavigate={this.setIndividualScreen}
-            stateScreen={this.state.screen} />
-        )}
+            stateScreen={this.state.screen} />)} />
       </div>
     )
   }
