@@ -28,7 +28,8 @@ class App extends Component {
       done: undefined,
       screen: 'overview',
       studentName: "",
-      color: ""
+      color: "",
+      dataIndex: 0
     };
 
   }
@@ -43,11 +44,12 @@ class App extends Component {
     }, 8100);
   }
 
-  setIndividualScreen(name, color) {
+  setIndividualScreen(name, index, color) {
     this.setState(() => ({
       screen: 'individual',
       studentName: name,
-      color: color
+      color: color,
+      dataIndex: index
     }))
   }
 
@@ -62,7 +64,8 @@ class App extends Component {
           <IndividualScreen studentVal={this.state.studentName}
             colorVal={this.state.color}
             onNavigate={this.setIndividualScreen}
-            stateScreen={this.state.screen} />)} />
+            stateScreen={this.state.screen}
+            index={this.state.dataIndex} />)} />
       </div>
     )
   }

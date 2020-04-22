@@ -13,11 +13,6 @@ code {
   max-width: 180px;
 }
 
-.student-btn {
-  border: 5px solid grey;
-  border-radius: 100px;
-}
-
 .teacherUiRow {
   display: flex;
   flex-direction: row;

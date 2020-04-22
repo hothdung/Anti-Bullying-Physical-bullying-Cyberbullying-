@@ -28,9 +28,9 @@ function StudentsSidebar(props) {
         setSearchRes(results);
     }, [query]);
 
-    const handleClick = (headingElem, color) => event => {
+    const handleClick = (headingElem, index, color) => event => {
         setHeading(headingElem);
-        props.onNavigate(headingElem, color);
+        props.onNavigate(headingElem, index, color);
     }
 
     props.students.sort((a, b) => b.alert - a.alert);
@@ -48,7 +48,7 @@ function StudentsSidebar(props) {
                 />
                 {searchRes.map((searchItem, index) => (
                     <Link key={searchItem.id} to='/individual' style={{ textDecoration: 'none' }}>
-                        <ListItem button style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={handleClick(searchItem.label, getColor(searchItem.alert, props.students))}>
+                        <ListItem button className="students" style={{ backgroundColor: getColor(searchItem.alert, props.students), borderRadius: 4, marginTop: 2 }} onClick={handleClick(searchItem.label, index, getColor(searchItem.alert, props.students))}>
                             <ListItemText key={index} style={{ color: 'black' }}>{searchItem.label}</ListItemText>
                         </ListItem>
                     </Link>

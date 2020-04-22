@@ -11,7 +11,7 @@ class MultipleWarnings extends Component {
             in_color: this.props.colorVal,
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
-            width: 700,
+            width: 1100,
             height: 300,
         }
         this.chartRef = React.createRef();
