@@ -140,7 +140,24 @@ function MethodsTable(props) {
             // add table entries to JSObject
             tableData[column.id] = row[column.id];
         })
-        console.log("Here is the table Data " + tableData.interventionType);
+
+        fetch('http://147.46.215.219:8080/interventions', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                interventionType: tableData.interventionType,
+                place: tableData.place,
+                students: tableData.students,
+                date: tableData.date,
+                time: tableData.time,
+                severity: tableData.severity,
+                teachers: tableData.teachers
+            }),
+        }).then(res => res.json()).then(data => console.log(data)).catch(error =>
+            console.log(error))
     }
 
     // eventlistener
