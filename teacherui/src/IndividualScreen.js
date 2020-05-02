@@ -23,16 +23,13 @@ function IndividualScreen(props) {
         <Container fluid={true}>
             <Row noGutters={true}>
                 <Col lg='12' className="navCol">
-                    <Navbar color="dark" style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}>
-                        <Nav className="navBarIn">
+                    <Navbar color="dark">
+                        <Nav className="ml-auto">
                             <NavbarText style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>
-                                <VisibilityRoundedIcon /> Anti-Bullying Monitoring Dashboard: {props.studentVal}
+                                <VisibilityRoundedIcon /> Anti-Bullying Monitoring Dashboard
                             </NavbarText>
                         </Nav>
+                        <Nav className="ml-auto"><span style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>{props.studentVal}</span></Nav>
                     </Navbar>
                 </Col>
             </Row>
