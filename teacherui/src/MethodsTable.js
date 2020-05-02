@@ -73,6 +73,26 @@ function createData(interventionType, place, students, date, time, severity, tea
 }
 
 
+function sendingData(dataObj) {
+    fetch('http://147.46.215.219:8080/interventions', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            interventionType: dataObj.interventionType,
+            place: dataObj.place,
+            students: dataObj.students,
+            date: dataObj.date,
+            time: dataObj.time,
+            severity: dataObj.severity,
+            teachers: dataObj.teachers
+        }),
+    }).then(res => res.json()).then(data => console.log(data)).catch(error =>
+        console.log(error))
+}
+
 
 // array for incoming data
 var rowsInitial = [];
@@ -138,26 +158,10 @@ function MethodsTable(props) {
         setEditIdx(-1);
         columns.map(column => {
             // add table entries to JSObject
-            tableData[column.id] = row[column.id];
+           return tableData[column.id] = row[column.id];
         })
-
-        fetch('http://147.46.215.219:8080/interventions', {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                interventionType: tableData.interventionType,
-                place: tableData.place,
-                students: tableData.students,
-                date: tableData.date,
-                time: tableData.time,
-                severity: tableData.severity,
-                teachers: tableData.teachers
-            }),
-        }).then(res => res.json()).then(data => console.log(data)).catch(error =>
-            console.log(error))
+        // posting data to server
+        sendingData(tableData);
     }
 
     // eventlistener
