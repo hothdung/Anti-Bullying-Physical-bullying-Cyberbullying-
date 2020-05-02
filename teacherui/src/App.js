@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'react'
-import Area from './Area';
+import StudentData from './data/schoolClass.json'
+import Overview from './Overview';
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import "bootstrap/dist/css/bootstrap.css";
@@ -57,7 +57,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Route exact path='/' render={() => (<Area
+        <Route exact path='/' render={() => (<Overview classNameVal={StudentData}
           onNavigate={this.setIndividualScreen}
         />)} />
         <Route path='/individual' render={() => (

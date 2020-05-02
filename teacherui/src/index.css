@@ -34,15 +34,17 @@ code {
 }
 
 .addRow {
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 #deleteBtn {
   margin-left: 15px;
 }
 
-#addBtn, #deleteBtn {
+#addBtn{
   font-weight: bold;
+  margin-bottom: 8px;
+  float:right;
 }
 
 .tooltip {

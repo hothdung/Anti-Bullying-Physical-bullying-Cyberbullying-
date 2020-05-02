@@ -99,7 +99,7 @@ var rowsInitial = [];
 
 const useStyles = makeStyles({
     root: {
-        width: '100%',
+        width: "100%",
     },
     container: {
         maxHeight: 440,
@@ -134,10 +134,6 @@ function MethodsTable(props) {
         setRows([...rows, dataItem])
     }
 
-    // delete last row
-    const deleteRow = () => {
-        setRows(rows.slice(0, -1));
-    }
 
     // delete specific row
     const deleteCertainRow = (index) => {
@@ -158,7 +154,7 @@ function MethodsTable(props) {
         setEditIdx(-1);
         columns.map(column => {
             // add table entries to JSObject
-           return tableData[column.id] = row[column.id];
+            return tableData[column.id] = row[column.id];
         })
         // posting data to server
         sendingData(tableData);
@@ -173,27 +169,17 @@ function MethodsTable(props) {
     }
 
     return (
-        <div className="reportingTable">
+        <div className="reportingTable" style={{ width: 1250, paddingTop: 5 }}>
             <div className="addRow">
                 <Button
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.button}
                     startIcon={<AddBoxIcon />}
                     id="addBtn"
                     onClick={addRow}>
                     Add Row
                 </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.button}
-                    startIcon={<DeleteIcon />}
-                    id="deleteBtn"
-                    onClick={deleteRow}
-                >
-                    Delete
-      </Button>
             </div>
             <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
