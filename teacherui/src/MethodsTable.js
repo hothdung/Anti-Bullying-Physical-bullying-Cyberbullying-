@@ -17,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 
 const columns = [
     {
-        id: 'name',
+        id: 'interventionType',
         label: 'Intervention type',
         minWidth: 100
     },
@@ -52,7 +52,7 @@ const columns = [
 
     },
     {
-        id: 'teacher',
+        id: 'teachers',
         label: 'Teacher(s)',
         minWidth: 100
 
@@ -61,7 +61,7 @@ const columns = [
 ];
 
 
-function createData(name, place, students, date, time, severity, teacher) {
+function createData(interventionType, place, students, date, time, severity, teachers) {
 
     if (!(date === "")) {
         // date formatter
@@ -69,7 +69,7 @@ function createData(name, place, students, date, time, severity, teacher) {
         date = inter_date.toDateString();
     }
 
-    return { name, place, students, date, time, severity, teacher };
+    return { interventionType, place, students, date, time, severity, teachers };
 }
 
 
@@ -90,7 +90,7 @@ function MethodsTable(props) {
 
     for (var i = 0; i < props.methods.length; i++) {
         var obj = props.methods[i];
-        var item = (createData(obj.name, obj.place, obj.students, obj.date, obj.time, obj.severity, obj.teacher));
+        var item = (createData(obj.interventionType, obj.place, obj.students, obj.date, obj.time, obj.severity, obj.teachers));
         rowsInitial[i] = item;
     }
 
@@ -132,8 +132,15 @@ function MethodsTable(props) {
 
     }
 
-    const stopEdit = () => {
+    const stopEdit = (row) => {
+        // create JSObject
+        let tableData = {};
         setEditIdx(-1);
+        columns.map(column => {
+            // add table entries to JSObject
+            tableData[column.id] = row[column.id];
+        })
+        console.log("Here is the table Data " + tableData.interventionType);
     }
 
     // eventlistener
@@ -201,7 +208,7 @@ function MethodsTable(props) {
                                             );
                                         })}
                                         <TableCell>
-                                            {currentEditing ? <DoneIcon onClick={() => stopEdit()} /> : <EditIcon onClick={() => handleEdit(index)} />}
+                                            {currentEditing ? <DoneIcon onClick={() => stopEdit(row)} /> : <EditIcon onClick={() => handleEdit(index)} />}
                                         </TableCell>
                                         <TableCell><DeleteIcon onClick={function () { return deleteCertainRow(index) }} /></TableCell>
                                     </TableRow>
