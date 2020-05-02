@@ -11,7 +11,6 @@ Database connected to methods table (interventions noted):
 database name: intervention_db
 table name: interventions
 Columns of table: interventionType, place, students, date, time, severity, teachers
-
 data to establish connection with database in .env file (not commited to github) → .env is in googledrive (.env.rar; password:our lab password)
 
 
