@@ -36,10 +36,11 @@ app.post('/interventions', function (req, res) {
 
 app.get('/posts', function (req, res) {
 
-    var q = "SELECT * interventions";
+    var q = "SELECT * FROM interventions;";
 
     connection.query(q, function (error, result) {
         if (error) throw error;
+        console.log(JSON.stringify(result));
         res.send(JSON.stringify(result));
     });
 })

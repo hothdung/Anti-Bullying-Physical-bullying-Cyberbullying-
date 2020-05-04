@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import { ThemeProvider } from '@material-ui/core';
+
 
 class WarningFrequency extends Component {
 
@@ -16,22 +18,7 @@ class WarningFrequency extends Component {
         this.chartRef = React.createRef();
         this.drawLineChart = this.drawLineChart.bind(this);
     }
-
     drawLineChart() {
-        fetch('http://147.46.215.219:8080/posts', {
-            method: 'GET'
-        }).then(function (response) {
-            if (response.status >= 400) {
-                throw new Error("Server bad response");
-            }
-
-            return response.json();
-        }).then(function (data) {
-            this.setState({ methods: data });
-        }).catch(error => console.log(error))
-        
-        console.log(methods);
-
         var keys = [
             "Interventions",
             "Consultations"
@@ -152,12 +139,73 @@ class WarningFrequency extends Component {
             .style("font-weight", "bold")
             .text(function (d) { return d; })
 
+        // var date = "Tue Apr 09 2019";
+        // var newDate = this.createDate(date);
+
+        // console.log("this is the date " + newDate);
+
+        let self = this;
+        let tempData = this.state.data;
+        fetch('http://147.46.215.219:8080/posts', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            if (response.status >= 400) {
+                throw new Error("Server bad response!");
+            }
+            return response.json();
+        }).then(function (data) {
+            self.setState({ methods: data });
+            // create JS object
+            var methodObj = {};
+            var warningFreq = [];
+            var i = 0, j = 0;
+            var length = Object.keys(tempData).length;
+            for (i = 0; i < data.length; i++) {
+                var datum = data[i].date;
+                var d = new Date(datum);
+                datum = [
+                    d.getFullYear(),
+                    ('0' + (d.getMonth() + 1)).slice(-2),
+                    ('0' + d.getDate()).slice(-2)
+                ].join('-');
+
+                for (j = 0; j < length; j++) {
+                    if (datum === tempData[j].date) {
+                        methodObj["date"] = tempData[j].date;
+                        methodObj["warningFrequency"] = tempData[j].warningMax;
+                        methodObj["interType"] = data[i].interventionType;
+                    }
+                }
+            }
+            console.log("This is methodsObj" + methodObj.date);
+            bounds.append("g")
+                .selectAll("circle")
+                .data(methodObj)
+                .enter().append("circle")
+                .attr("class", "circle-data")
+                .attr("r", 5)
+                .attr("cx", function (d) {
+                    return xScale(d.date);
+                })
+                .attr("cy", function (d) { return yScale(d.warningFrequency); })
+                .attr('fill', 'red');
+        }).catch(error => {
+            console.log(error);
+        })
+
     }
+
+
     componentDidMount() {
         this.drawLineChart();
     }
 
     render() {
+        console.log("here is the array " + this.state.methods);
         return <div className="warningG" ref="canvas"></div>
     }
 }
