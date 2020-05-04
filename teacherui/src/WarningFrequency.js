@@ -33,13 +33,6 @@ class WarningFrequency extends Component {
 
 
     drawLineChart() {
-        let jsonData;
-        this.fetchData().then((data) => {
-            jsonData = data;
-            console.log("This is the data " + data[1].interventionType);
-            console.log("This is date" + this.formatDate(data[1].date));
-        })
-
         var keys = [
             "Interventions",
             "Consultations"
@@ -115,6 +108,7 @@ class WarningFrequency extends Component {
         const xAxisGenerator = d3.axisBottom()
             .scale(xScale)
 
+        // append threshold line
         bounds.append("g")
             .attr("transform", "translate(0, " + yScale(22) + ")")
             .append("line")
@@ -135,7 +129,6 @@ class WarningFrequency extends Component {
             .style("font-size", "15px")
             .style("font-weight", "bold")
             .text("Warning frequency")
-
 
         var legend = bounds.append("g")
             .attr("font-size", 10)
@@ -160,10 +153,17 @@ class WarningFrequency extends Component {
             .style("font-weight", "bold")
             .text(function (d) { return d; })
 
-        // var date = "Tue Apr 09 2019";
-        // var newDate = this.createDate(date);
-
-        // console.log("this is the date " + newDate);
+        let jsonData;
+        this.fetchData().then((data) => {
+            jsonData = data;
+            bounds.append("g")
+                .append("circle")
+                .attr("class", "circle")
+                .attr("r", 7)
+                .attr("cx", xScale(dateParser("2019-04-15")))
+                .attr("cy", yScale(5.13))
+                .style("fill", "#16AFE8");
+        })
 
     }
 
@@ -192,7 +192,6 @@ class WarningFrequency extends Component {
     }
 
     render() {
-        //console.log("here is the array " + this.state.methods);
         return <div className="warningG" ref="canvas"></div>
     }
 }
