@@ -34,6 +34,17 @@ app.post('/interventions', function (req, res) {
     console.log("POST Request SENT To /INTERVENTIONS");
 })
 
+app.get('/posts', function (req, res) {
+
+    var q = "SELECT * interventions";
+
+    connection.query(q, function (error, result) {
+        if (error) throw error;
+        res.send(JSON.stringify(result));
+    });
+})
+
+
 
 app.listen(8080, function () {
     console.log("Server is listening on port 8080!");

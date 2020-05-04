@@ -9,14 +9,28 @@ class WarningFrequency extends Component {
             data: this.props.warningVal,
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
-            width: window.innerWidth -250,
+            width: window.innerWidth - 250,
             height: 250,
+            methods: []
         }
         this.chartRef = React.createRef();
         this.drawLineChart = this.drawLineChart.bind(this);
     }
 
     drawLineChart() {
+        fetch('http://147.46.215.219:8080/posts', {
+            method: 'GET'
+        }).then(function (response) {
+            if (response.status >= 400) {
+                throw new Error("Server bad response");
+            }
+
+            return response.json();
+        }).then(function (data) {
+            this.setState({ methods: data });
+        }).catch(error => console.log(error))
+        
+        console.log(methods);
 
         var keys = [
             "Interventions",
