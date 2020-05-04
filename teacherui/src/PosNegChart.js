@@ -50,6 +50,7 @@ class PosNegChart extends Component {
             .text(firstVal + " - " + lastVal)
 
         // data contains positive and negative values
+        
         var series = d3.stack()
             .keys(keyVal)
             .offset(d3.stackOffsetDiverging)

@@ -31,7 +31,7 @@ class Overview extends Component {
                         <StudentsSidebar students={StudentData}
                             onNavigate={this.props.onNavigate} />
                     </Col>
-                    <Col lg='7'>
+                    <Col lg ='11'>
                         <WarningFrequency warningVal={FrequencyData} />
                         <MethodsTable methods={InterventionsData} />
                     </Col>
