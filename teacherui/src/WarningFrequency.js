@@ -168,7 +168,16 @@ class WarningFrequency extends Component {
                 .attr("cy", function (d) {
                     return yScale(yAccessor(d));
                 })
-                .style("fill", "#16AFE8");
+                .style("fill", function (d) {
+                    console.log("This is intervention type " + d.interventionType);
+                    var colorVal;
+                    if (d.interventionType === "Consultation") {
+                        colorVal = "#16AFE8";
+                    } else {
+                        colorVal = "#4CE3CE";
+                    }
+                    return colorVal;
+                });
         })
 
     }
