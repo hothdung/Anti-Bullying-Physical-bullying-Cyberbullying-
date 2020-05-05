@@ -11,13 +11,13 @@ class WarningFrequency extends Component {
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
             width: window.innerWidth - 250,
-            height: 250,
-            methods: []
+            height: 250
         }
         this.chartRef = React.createRef();
         this.drawLineChart = this.drawLineChart.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.formatDate = this.formatDate.bind(this);
+        this.createJSON = this.createJSON.bind(this);
     }
 
     formatDate(datum) {
@@ -153,18 +153,45 @@ class WarningFrequency extends Component {
             .style("font-weight", "bold")
             .text(function (d) { return d; })
 
-        let jsonData;
         this.fetchData().then((data) => {
-            jsonData = data;
+            var circleData = this.createJSON(data);
             bounds.append("g")
+                .selectAll(".circle")
+                .data(circleData)
+                .enter()
                 .append("circle")
                 .attr("class", "circle")
-                .attr("r", 7)
-                .attr("cx", xScale(dateParser("2019-04-15")))
-                .attr("cy", yScale(5.13))
+                .attr("r", 6)
+                .attr("cx", function (d) {
+                    return xScale(xAccessor(d))
+                })
+                .attr("cy", function (d) {
+                    return yScale(yAccessor(d));
+                })
                 .style("fill", "#16AFE8");
         })
 
+    }
+
+    createJSON(obj) {
+        var arrayObj = [];
+        var i, j;
+
+        // length of warning json
+        var jsonLength = Object.keys(this.state.data).length;
+        for (i = 0; i < obj.length; i++) {
+            var methodObj = {};
+            methodObj["interventionType"] = obj[i].interventionType;
+            var date = this.formatDate(obj[i].date);
+            for (j = 0; j < jsonLength; j++) {
+                if (date === this.state.data[j].date) {
+                    methodObj["date"] = date;
+                    methodObj["warningMax"] = this.state.data[j].warningMax;
+                    arrayObj.push(methodObj);
+                }
+            }
+        }
+        return arrayObj;
     }
 
     fetchData() {
