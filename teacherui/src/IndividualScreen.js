@@ -23,7 +23,7 @@ function IndividualScreen(props) {
         <Container fluid={true}>
             <Row noGutters={true}>
                 <Col lg='12' className="navCol">
-                    <Navbar color="dark">
+                    <Navbar color="dark" fixed="top">
                         <Nav className="ml-auto">
                             <NavbarText style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>
                                 <VisibilityRoundedIcon /> Anti-Bullying Monitoring Dashboard

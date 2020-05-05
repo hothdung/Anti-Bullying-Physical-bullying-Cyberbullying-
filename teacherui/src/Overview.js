@@ -16,7 +16,7 @@ class Overview extends Component {
             <Container fluid={true}>
                 <Row>
                     <Col lg="12" className="navCol">
-                        <Navbar color="dark">
+                        <Navbar color="dark" fixed="top">
                             <Nav className="ml-auto">
                                 <NavbarText style={{ fontWeight: 'bold', color: 'white', fontSize: "18px" }}>
                                     <VisibilityRoundedIcon />  Anti-Bullying Monitoring Dashboard Overview
@@ -31,7 +31,7 @@ class Overview extends Component {
                         <StudentsSidebar students={StudentData}
                             onNavigate={this.props.onNavigate} />
                     </Col>
-                    <Col lg ='11'>
+                    <Col lg='11'>
                         <WarningFrequency warningVal={FrequencyData} />
                         <MethodsTable methods={InterventionsData} />
                     </Col>
