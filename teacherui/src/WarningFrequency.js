@@ -18,6 +18,7 @@ class WarningFrequency extends Component {
         this.fetchData = this.fetchData.bind(this);
         this.formatDate = this.formatDate.bind(this);
         this.createJSON = this.createJSON.bind(this);
+        this.createCircleData = this.createCircleData.bind(this);
     }
 
     formatDate(datum) {
@@ -139,11 +140,14 @@ class WarningFrequency extends Component {
             .attr("transform", function (d, i) {
                 return "translate(0," + i * 20 + ")";
             });
-
+        // Ids of rects = keys Interventions, Consultations
         legend.append("rect")
             .attr("x", dimensions.boundedWidth - 19)
             .attr("width", 19)
             .attr("height", 19)
+            .attr("id", function (d) {
+                return d;
+            })
             .attr("fill", colors)
 
         legend.append("text")
@@ -151,16 +155,28 @@ class WarningFrequency extends Component {
             .attr("y", 9.5)
             .attr("dy", "0.32em")
             .style("font-weight", "bold")
-            .text(function (d) { return d; })
+            .text(function (d) {
+                return d;
+            })
 
         this.fetchData().then((data) => {
             var circleData = this.createJSON(data);
+
+            // distinguish between intervention and consultation marks
+            var consultations = [];
+            var interventions = [];
+            var consultationStr = "Consultation", interventionStr = "Intervention";
+
+            consultations = this.createCircleData(consultationStr, circleData);
+            interventions = this.createCircleData(interventionStr, circleData);
+
+            // plotting the consultations
             bounds.append("g")
                 .selectAll(".circle")
-                .data(circleData)
+                .data(consultations)
                 .enter()
                 .append("circle")
-                .attr("class", "circle")
+                .attr("class", "consultationCircle")
                 .attr("r", 6)
                 .attr("cx", function (d) {
                     return xScale(xAccessor(d))
@@ -168,18 +184,58 @@ class WarningFrequency extends Component {
                 .attr("cy", function (d) {
                     return yScale(yAccessor(d));
                 })
-                .style("fill", function (d) {
-                    console.log("This is intervention type " + d.interventionType);
-                    var colorVal;
-                    if (d.interventionType === "Consultation") {
-                        colorVal = "#16AFE8";
-                    } else {
-                        colorVal = "#4CE3CE";
-                    }
-                    return colorVal;
-                });
+                .style("fill", "#16AFE8")
+                .style("opacity", 0);
+
+            // plotting interventions
+            bounds.append("g").selectAll(".circle")
+                .data(interventions)
+                .enter()
+                .append("circle")
+                .attr("class", "interventionCircle")
+                .attr("r", 6)
+                .attr("cx", function (d) {
+                    return xScale(xAccessor(d))
+                })
+                .attr("cy", function (d) {
+                    return yScale(yAccessor(d));
+                })
+                .style("fill", "#4CE3CE")
+                .style("opacity", 0);
+
+            // adding click events to legend rects
+            d3.select("#Consultations").on("click", function () {
+                var cOpacity = d3.selectAll(".consultationCircle").style("opacity");
+                if (cOpacity == 0) {
+                    d3.selectAll(".consultationCircle").style("opacity", 1);
+                } else {
+                    d3.selectAll(".consultationCircle").style("opacity", 0);
+                }
+            });
+
+
+            d3.select("#Interventions").on("click", function () {
+                var cOpacity = d3.selectAll(".interventionCircle").style("opacity");
+                if (cOpacity == 0) {
+                    d3.selectAll(".interventionCircle").style("opacity", 1);
+                } else {
+                    d3.selectAll(".interventionCircle").style("opacity", 0);
+                }
+            })
+
         })
 
+    }
+
+    createCircleData(str, jsonData) {
+        var i;
+        var methods = [];
+        for (i = 0; i < jsonData.length; i++) {
+            if (jsonData[i].interventionType === str) {
+                methods.push(jsonData[i]);
+            }
+        }
+        return methods;
     }
 
     createJSON(obj) {
