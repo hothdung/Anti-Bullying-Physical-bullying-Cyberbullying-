@@ -20,12 +20,19 @@ var connection = mysql.createConnection({
 })
 
 app.post('/interventions', function (req, res) {
+    const intervention = {
+        interventionType: req.body.interventionType,
+        place: req.body.place,
+        students: req.body.students,
+        date: req.body.date,
+        time: req.body.time,
+        severity: req.body.severity,
+        teachers: req.body.teachers
+    }
 
-    const { interventionType, place, students, date, time, severity, teachers } = req.body;
+    var q = "INSERT INTO interventions SET ?;";
 
-    var q = "INSERT INTO interventions (interventionType,place,students,date,time,severity,teachers) VALUES('" + interventionType + "','" + place + "','" + students + "','" + date + "','" + time + "','" + severity + "','" + teachers + "');";
-
-    connection.query(q, function (error, result) {
+    connection.query(q, intervention, function (error, result) {
         if (error) throw error;
         console.log(result);
         res.send("Posted to DB");

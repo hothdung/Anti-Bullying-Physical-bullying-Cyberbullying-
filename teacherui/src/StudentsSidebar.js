@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 function StudentsSidebar(props) {
 
     const [query, setQuery] = useState("");
-    const [heading, setHeading] = useState("Class " + props.students[0].studentsClassname);
     const [searchRes, setSearchRes] = useState([]);
     const handleChange = event => {
         setQuery((event.target.value).toLowerCase());
@@ -28,20 +27,18 @@ function StudentsSidebar(props) {
         setSearchRes(results);
     }, [query]);
 
-    const handleClick = (headingElem, index, color) => event => {
-        setHeading(headingElem);
-        props.onNavigate(headingElem, index, color);
+    const handleClick = (index, color) => event => {
+        props.onNavigate(index, color);
     }
 
     props.students.sort((a, b) => b.alert - a.alert);
     return (
         <div className="studentsSidebar">
             <List disablePadding dense>
-                {props.stateScreen === 'individual' ? <div><h4 key={0}>{props.studentVal}</h4></div> : <div><h4 key={0}>{heading}</h4></div>}
                 <input
                     className="search-students"
                     type="text"
-                    placeholder="Search ..."
+                    placeholder="Class 7c ..."
                     style={{ width: "100%", fontSize: 12 }}
                     value={query}
                     onChange={handleChange}
