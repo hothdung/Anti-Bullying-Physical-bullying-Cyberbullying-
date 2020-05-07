@@ -9,6 +9,14 @@ import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
 import Navigation from './Navigation';
 import { spacing } from '@material-ui/system';
+import FeelingsCloud from './FeelingsCloud';
+import ReportingChart from './ReportingChart';
+import AtmosphereChart from './AtmosphereChart';
+import LocationsChart from './LocationsChart';
+import FeelingsTag from './data/emotions.json';
+import ReportingData from './data/reportMethods.json';
+import EmotionData from './data/classAtmosphere.json';
+import LocationData from './data/locations.json';
 
 
 const cstyle = {
@@ -21,7 +29,7 @@ class Overview extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            option: ""
+            option: "Overview"
         }
 
     }
@@ -34,8 +42,10 @@ class Overview extends Component {
     }
     render() {
 
-        const { option } = this.state;
+        console.log("This is the option" + this.state.option);
 
+        const { option } = this.state;
+        const getOption = this.state.option;
         return (
             <Container fluid={true} style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <Row noGutters={true} style={{ marginLeft: 0, marginRight: 0, marginTop: 0 }}>
@@ -51,16 +61,31 @@ class Overview extends Component {
                     </Col>
                 </Row >
                 <Row noGutters={true} style={{ marginLeft: 0, marginRight: 0, marginTop: 0 }}>
-                    <Col lg='1' style={{ paddingLeft: 0, paddingRight: 0 }}>
+                    <Col lg='1' style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                         <StudentsSidebar students={StudentData}
                             onNavigate={this.props.onNavigate} />
                     </Col>
-                    <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0 }}>
+
+                    <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                         <Navigation onSelect={this.handleOptionSelected}
                             option={this.state.option} />
-                        <WarningFrequency warningVal={FrequencyData} />
-                        <MethodsTable methods={InterventionsData} />
+
+                        {this.state.option === "Overview" ?
+                            <div><WarningFrequency warningVal={FrequencyData} />
+                                <MethodsTable methods={InterventionsData} /></div> :
+                            <div>
+                                <Col lg='7' style={{ float: "left" }}>
+                                    <FeelingsCloud cloudTags={FeelingsTag} />
+                                    <ReportingChart reportingMethods={ReportingData} />
+                                </Col>
+                                <Col lg='3' style={{ float: "left", marginLeft: "80px" }}>
+                                    <AtmosphereChart emotionsVal={EmotionData} />
+                                    <LocationsChart locations={LocationData} />
+                                </Col>
+                            </div>
+                        }
                     </Col>
+
                 </Row>
             </Container >
         )
