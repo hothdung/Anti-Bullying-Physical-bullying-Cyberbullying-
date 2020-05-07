@@ -9,8 +9,8 @@ class ReportingChart extends Component {
         super(props);
         this.state = {
             data: this.props.reportingMethods,
-            width: 700,
-            height: 250,
+            width: window.innerWidth - 900,
+            height: 300,
         }
 
         this.chartRef = React.createRef();

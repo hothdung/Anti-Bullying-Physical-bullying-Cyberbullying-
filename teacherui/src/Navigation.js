@@ -11,12 +11,19 @@ const useStyles = makeStyles({
     }
 });
 
-export default function Navigation() {
+export default function Navigation({ option, onSelect }) {
+
+    const index = option === "Overview" ? 0 : 1;
     const classes = useStyles();
+
+    const indexSelect = (e, index) => {
+        onSelect(index === 0 ? "Overview" : "Reporting Data")
+    }
     return (
         <Paper className={classes.root}>
             <Tabs
-                value={0}
+                value={index}
+                onChange={indexSelect}
                 indicatorColor="primary"
                 textColor="primary"
                 centered
