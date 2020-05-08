@@ -102,7 +102,6 @@ class ReportingChart extends Component {
         bar.selectAll("rect")
             .data(layer => layer)
             .join("rect")
-            .style('opacity', 0)
             .attr("x", sequence => {
                 return x(sequence.data.month);
             })
@@ -123,10 +122,7 @@ class ReportingChart extends Component {
                     .duration(500)
                     .style("opacity", 0);
 
-            })
-            .transition().delay(function (d, i) { return i * 850; })
-            .duration(850)
-            .style('opacity', 1);
+            });
 
         var legend = bounds.append("g")
             .attr("font-size", 10)

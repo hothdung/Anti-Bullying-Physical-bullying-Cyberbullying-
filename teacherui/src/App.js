@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import StudentData from './data/schoolClass.json'
 import Overview from './Overview';
-import TestView from './TestView';
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import "bootstrap/dist/css/bootstrap.css";

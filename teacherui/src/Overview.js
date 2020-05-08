@@ -19,11 +19,6 @@ import EmotionData from './data/classAtmosphere.json';
 import LocationData from './data/locations.json';
 
 
-const cstyle = {
-    margin: "0px",
-    padding: "0px",
-    border: "0px"
-}
 class Overview extends Component {
 
     constructor(props) {
@@ -42,13 +37,11 @@ class Overview extends Component {
     }
     render() {
 
-        console.log("This is the option" + this.state.option);
-
         const { option } = this.state;
-        const getOption = this.state.option;
+
         return (
             <Container fluid={true} style={{ paddingLeft: 0, paddingRight: 0 }}>
-                <Row noGutters={true} style={{ marginLeft: 0, marginRight: 0, marginTop: 0 }}>
+                <Row noGutters={true} style={{ marginLeft: 0, marginRight: 0 }}>
                     <Col lg="12" className="navCol" style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Navbar color="dark" fixed="top">
                             <Nav className="ml-auto">
@@ -60,13 +53,13 @@ class Overview extends Component {
                         </Navbar>
                     </Col>
                 </Row >
-                <Row noGutters={true} style={{ marginLeft: 0, marginRight: 0, marginTop: 0 }}>
+                <Row noGutters={true} style={{ marginLeft: 0, marginRight: 0 }}>
                     <Col lg='1' style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                         <StudentsSidebar students={StudentData}
                             onNavigate={this.props.onNavigate} />
                     </Col>
 
-                    <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
+                    <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Navigation onSelect={this.handleOptionSelected}
                             option={this.state.option} />
 
