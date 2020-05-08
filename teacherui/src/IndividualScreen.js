@@ -63,14 +63,9 @@ class IndividualScreen extends Component {
 
                         <Col lg='7'>
                             <MultipleWarnings warningVal={FrequencyData} warningIndividual={warning_inData[this.props.index]}
-                                colorVal={this.props.colorVal}
-                            />
-                            <ReportingChart reportingMethods={ReportingData} />
+                                colorVal={this.props.colorVal} />
+                            {console.log("This is color val " + this.props.colorVal + "and warningIndi " + warning_inData[this.props.index])}
                             <MethodsTable methods={InterventionsData} />
-                        </Col>
-                        <Col lg='3'>
-                            <PosNegChart posNegEmotionVal={EmotionVals} />
-                            <DepressionComponent depressiveInfo={DepressiveInfo} studentVal={this.props.studentVal} />
                         </Col>
                     </Col>
                 </Row>
