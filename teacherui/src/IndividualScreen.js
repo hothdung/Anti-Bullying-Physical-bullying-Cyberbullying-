@@ -61,12 +61,19 @@ class IndividualScreen extends Component {
                         <Navigation onSelect={this.handleOptionSelected}
                             option={this.state.option} />
 
-                        <Col lg='7'>
-                            <MultipleWarnings warningVal={FrequencyData} warningIndividual={warning_inData[this.props.index]}
+                        {this.state.option === "Overview" ?
+                            <div><MultipleWarnings warningVal={FrequencyData} warningIndividual={warning_inData[this.props.index]}
                                 colorVal={this.props.colorVal} />
-                            {console.log("This is color val " + this.props.colorVal + "and warningIndi " + warning_inData[this.props.index])}
-                            <MethodsTable methods={InterventionsData} />
-                        </Col>
+                                <MethodsTable methods={InterventionsData} /></div> :
+                            <div style={{ marginTop: 80 }}>
+                                <Col lg='7' style={{ float: "left" }}>
+                                    <ReportingChart reportingMethods={ReportingData} />
+                                </Col>
+                                <Col lg='3' style={{ float: "left", marginLeft: "80px" }}>
+                                    <PosNegChart posNegEmotionVal={EmotionVals} />
+                                </Col>
+                            </div>
+                        }
                     </Col>
                 </Row>
             </Container>
