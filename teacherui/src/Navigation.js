@@ -3,24 +3,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import DepressionComponent from './DepressionComponent'
+import DurationInfo from './data/depressionDuration.json'
 
 
-const useStyles = makeStyles({
-    root: {
-        paddingTop: '0px'
-    }
-});
+// const useStyles = makeStyles({
+//     root: {
+//         flexGrow: 1
+//     }
+// });
 
-export default function Navigation({ option, onSelect }) {
+function Navigation(props) {
 
-    const index = option === "Overview" ? 0 : 1;
-    const classes = useStyles();
+    const index = props.option === "Overview" ? 0 : 1;
+    // const classes = useStyles();
 
     const indexSelect = (e, index) => {
-        onSelect(index === 0 ? "Overview" : "Reporting Data")
+        props.onSelect(index === 0 ? "Overview" : "Reporting Data")
     }
+
+    console.log("This is the screen " + props.stateScreen);
     return (
-        <Paper className={classes.root}>
             <Tabs
                 value={index}
                 onChange={indexSelect}
@@ -31,6 +34,7 @@ export default function Navigation({ option, onSelect }) {
                 <Tab label="Overview" />
                 <Tab label="Reporting Data" />
             </Tabs>
-        </Paper>
     );
 }
+
+export default Navigation;

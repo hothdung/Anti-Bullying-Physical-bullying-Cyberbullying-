@@ -8,13 +8,18 @@ import ReportingChart from './ReportingChart';
 import ReportingData from './data/reportMethods.json';
 import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
-import DepressiveInfo from './data/depressionDuration.json';
-import DepressionComponent from './DepressionComponent';
 import EmotionVals from "./data/posNegEmotionValues.json";
 import PosNegChart from "./PosNegChart";
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import WarningsIndividual from './warningData/WarningIndividual';
 import Navigation from './Navigation';
+import Toolbar from '@material-ui/core/Toolbar';
+import DepressionComponent from './DepressionComponent'
+import DurationInfo from './data/depressionDuration.json'
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
 
 const warning_inData = [WarningsIndividual.Warning0, WarningsIndividual.Warning1, WarningsIndividual.Warning2, WarningsIndividual.Warning3, WarningsIndividual.Warning4, WarningsIndividual.Warning5, WarningsIndividual.Warning6, WarningsIndividual.Warning7, WarningsIndividual.Warning8, WarningsIndividual.Warning9, WarningsIndividual.Warning10, WarningsIndividual.Warning11, WarningsIndividual.Warning12, WarningsIndividual.Warning13, WarningsIndividual.Warning14, WarningsIndividual.Warning15, WarningsIndividual.Warning16, WarningsIndividual.Warning17, WarningsIndividual.Warning18, WarningsIndividual.Warning19, WarningsIndividual.Warning20, WarningsIndividual.Warning21, WarningsIndividual.Warning22, WarningsIndividual.Warning23, WarningsIndividual.Warning24];
 
@@ -58,9 +63,19 @@ class IndividualScreen extends Component {
                             studentVal={this.props.studentVal} />
                     </Col>
                     <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0 }}>
-                        <Navigation onSelect={this.handleOptionSelected}
-                            option={this.state.option} />
-
+                        <Paper>
+                            <Tabs
+                                value={0}
+                                indicatorColor="primary"
+                                textColor="primary"
+                            >
+                                <Tab label="Class" />
+                            </Tabs>
+                            <Navigation onSelect={this.handleOptionSelected}
+                                option={this.state.option}
+                                stateScreen={this.props.stateScreenF} />
+                            <DepressionComponent depressiveInfo={DurationInfo} />
+                        </Paper>
                         {this.state.option === "Overview" ?
                             <div><MultipleWarnings warningVal={FrequencyData} warningIndividual={warning_inData[this.props.index]}
                                 colorVal={this.props.colorVal} />

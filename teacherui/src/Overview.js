@@ -17,6 +17,7 @@ import FeelingsTag from './data/emotions.json';
 import ReportingData from './data/reportMethods.json';
 import EmotionData from './data/classAtmosphere.json';
 import LocationData from './data/locations.json';
+import Paper from '@material-ui/core/Paper';
 
 
 class Overview extends Component {
@@ -60,8 +61,10 @@ class Overview extends Component {
                     </Col>
 
                     <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0 }}>
-                        <Navigation onSelect={this.handleOptionSelected}
-                            option={this.state.option} />
+                        <Paper>
+                            <Navigation onSelect={this.handleOptionSelected}
+                                option={this.state.option}
+                                stateScreen={this.props.stateScreen} /></Paper>
 
                         {this.state.option === "Overview" ?
                             <div><WarningFrequency warningVal={FrequencyData} />
