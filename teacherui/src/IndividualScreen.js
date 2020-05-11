@@ -64,17 +64,9 @@ class IndividualScreen extends Component {
                     </Col>
                     <Col lg='11' style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Paper>
-                            <Tabs
-                                value={0}
-                                indicatorColor="primary"
-                                textColor="primary"
-                            >
-                                <Tab label="Class" />
-                            </Tabs>
                             <Navigation onSelect={this.handleOptionSelected}
                                 option={this.state.option}
                                 stateScreen={this.props.stateScreenF} />
-                            <DepressionComponent depressiveInfo={DurationInfo} />
                         </Paper>
                         {this.state.option === "Overview" ?
                             <div><MultipleWarnings warningVal={FrequencyData} warningIndividual={warning_inData[this.props.index]}

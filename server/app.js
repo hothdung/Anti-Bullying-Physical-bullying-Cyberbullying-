@@ -19,6 +19,14 @@ var connection = mysql.createConnection({
     port: process.env.DB_PORT
 })
 
+var signalsConnection = mysql.createConnection({
+    host: process.env.DB_SIG_HOST,
+    user: process.env.DB_SIG_USER,
+    password: process.env.DB_SIG_PASS,
+    database: process.env.DB_SIG_DATABASE,
+    port: process.env.DB_SIG_PORT
+})
+
 app.post('/interventions', function (req, res) {
     const intervention = {
         interventionType: req.body.interventionType,
@@ -50,6 +58,72 @@ app.get('/posts', function (req, res) {
         console.log(JSON.stringify(result));
         res.send(JSON.stringify(result));
     });
+})
+
+app.post('/addSignal', function (req, res) {
+    var signalType = req.body.signalType;
+    var dataObj = {};
+    var q;
+    var tableSpec;
+    if (signalType === "heartrate") {
+        dataObj = {
+            bpm: req.body.bpm,
+            date: req.body.date,
+            studentId: req.body.studentId
+        }
+        q = "INSERT INTO heartrate SET ?;"
+        tableSpec = "heartrate table"
+    }
+    else if (signalType === "locations") {
+        dataObj = {
+            long: req.body.long,
+            lat: req.body.lat,
+            date: req.body.date,
+            studentId: req.body.studentId
+        }
+        q = "INSERT INTO locations SET ?;"
+        tableSpec = "locations table"
+    }
+
+    else if (signalType === "movements") {
+        dataObj = {
+            gravity: req.body.gravity,
+            acceleration: req.body.acceleration,
+            rotation: req.body.rotation,
+            attitude: req.body.attitude,
+            fallenDown: req.body.fallenDown,
+            date: req.body.date,
+            studentId: req.body.studentId
+        }
+        q = "INSERT INTO movements SET ?;"
+        tableSpec = "movements table"
+    }
+    else if (signalType === "manual") {
+        dataObj = {
+            long: req.body.long,
+            lat: req.body.lat,
+            bpm: req.body.bpm,
+            gravity: req.body.gravity,
+            acceleration: req.body.acceleration,
+            rotation: req.body.rotation,
+            attitude: req.body.attitude,
+            fallenDown: req.body.fallenDown,
+            message: req.body.message,
+            date: req.body.date,
+            studentId: req.body.studentId
+        }
+        q = "INSERT INTO manual SET ?;"
+        tableSpec = "manual table"
+    }
+    else {
+        return new Error('Wrong signal type!')
+    }
+    signalsConnection.query(q, dataObj, function (error, result) {
+        if (error) throw error;
+        console.log(result);
+        res.send("Posted to DB");
+        console.log("Posted to " + tableSpec);
+    })
 })
 
 
