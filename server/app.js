@@ -3,6 +3,7 @@ require('dotenv').config();
 var cors = require('cors');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+var http = require('http');
 var app = express();
 
 
@@ -11,6 +12,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
+// connection to interventions_db
+
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -18,6 +21,7 @@ var connection = mysql.createConnection({
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT
 })
+
 
 var signalsConnection = mysql.createConnection({
     host: process.env.DB_SIG_HOST,
@@ -127,6 +131,13 @@ app.post('/addSignal', function (req, res) {
 })
 
 
+
+app.post('/addSignal', function (req, res) {
+    // var parsedBody = JSON.parse(req.body);
+    // console.log(parsedBody)
+    console.log(req.body)
+    res.send("Request received")
+})
 
 app.listen(8080, function () {
     console.log("Server is listening on port 8080!");
