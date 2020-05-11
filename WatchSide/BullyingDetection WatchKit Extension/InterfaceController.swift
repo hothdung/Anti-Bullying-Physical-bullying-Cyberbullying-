@@ -127,29 +127,6 @@ class InterfaceController: WKInterfaceController {
         motionManager.stopUpdatingMotions()
     }
     
-    func sendToServer(params : Dictionary<String, Any>){
-        print(params)
-        guard let url = URL(string:"http://147.46.215.219:8080/addSignal") else
-        { print("URL could not be created")
-            return
-        }
-        let requestBody = try? JSONSerialization.data(withJSONObject: params,  options: [])
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.timeoutInterval = 240
-        urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "test")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        urlRequest.httpBody = requestBody
-        //print("Location:\(params)")
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: urlRequest)
-        task.resume()
-        print("Sending completed!")
-    }
-    
     func sendSignal(signalParams: Dictionary<String,Any>){
         
         let jsonData = try? JSONSerialization.data(withJSONObject: signalParams)
