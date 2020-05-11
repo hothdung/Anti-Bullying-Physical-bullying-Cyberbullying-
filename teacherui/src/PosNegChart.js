@@ -50,6 +50,7 @@ class PosNegChart extends Component {
             .text(firstVal + " - " + lastVal)
 
         // data contains positive and negative values
+
         var series = d3.stack()
             .keys(keyVal)
             .offset(d3.stackOffsetDiverging)
@@ -256,7 +257,7 @@ class PosNegChart extends Component {
 
     render() {
         return (
-            <div id='posNegChart' ref="canvas">
+            <div id='posNegChart' ref="canvas" style={{ marginTop: 35 }}>
             </div>
         );
     }
