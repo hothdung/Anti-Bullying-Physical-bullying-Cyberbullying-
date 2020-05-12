@@ -67,6 +67,7 @@ class InterfaceController: WKInterfaceController {
     var recordSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioSettings = [String : Int]()
+    let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -232,7 +233,6 @@ extension InterfaceController: LocationOutsideDelegate {
         let latitude = newLocation.coordinate.latitude
         let longitude = newLocation.coordinate.longitude
         let date = self.getCurrentDate()
-        let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
         manualLat = latitude
         manualLong = longitude
         print("Latitude \(latitude)")
@@ -255,8 +255,7 @@ extension InterfaceController: HeartRateManagerDelegate {
         let bpm = newHeartRate
         manualBpm = newHeartRate
         let date = self.getCurrentDate()
-        let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
-        
+      
         let heartrateParam: Dictionary = ["signalType": "heartrate", "bpm":bpm, "date":date,"studentId":studentId] as [String : Any]
         sendSignal(signalParams: heartrateParam)
     }
@@ -268,7 +267,6 @@ extension InterfaceController: MovementDelegate {
     func evalMovForSending(toSend: Bool, gravStr: String, accelStr: String, rotationStr: String, attStr: String){
         var movementParam: Dictionary<String,Any>
         let tmp = "\(gravStr), \(accelStr), \(rotationStr), \(attStr), "
-        let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
         let date:String
         if toSend{
             print("Student has fallen down!")
