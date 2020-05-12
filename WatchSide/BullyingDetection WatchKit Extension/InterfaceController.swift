@@ -204,8 +204,8 @@ class InterfaceController: WKInterfaceController {
             
         }
         
-        print("Audio component on!")
         if audioRecorder == nil{
+               print("Audio component on!")
             self.startRecording()
         }else{
             //self.finishRecording(success: true)
@@ -310,15 +310,13 @@ extension InterfaceController: AVAudioRecorderDelegate{
     }
     
     func startRecording(){
+        let audioURL = self.getAudioURL()
+        print("first \(audioURL)")
         do{
-            var counter = 0
-            
-            while counter < 20 {
-                audioRecorder = try AVAudioRecorder(url:self.getAudioURL(), settings: settings)
+                audioRecorder = try AVAudioRecorder(url:audioURL, settings: settings)
                 audioRecorder.delegate = self
-                audioRecorder.record(forDuration:5)
-                counter += 1
-            }
+                audioRecorder.record(forDuration:20)
+            
         }catch let error{
             //finishRecording(success: false)
             print(error)
@@ -326,7 +324,6 @@ extension InterfaceController: AVAudioRecorderDelegate{
     }
     
     func finishRecording(success: Bool){
-        print("This is the audio path \(getAudioURL())")
         audioRecorder.stop()
         if success{
             print("Recorded successfully")
@@ -336,15 +333,15 @@ extension InterfaceController: AVAudioRecorderDelegate{
         }
     }
     
-    /*
+    
      func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
      if !flag{
      finishRecording(success: false)
      }
-     print(recorder.url)
+     print("What is this url \(recorder.url)")
+        audioRecorder = nil
+        startRecording()
      }
-     */
-    
     
     func showUrls(){
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{return}
