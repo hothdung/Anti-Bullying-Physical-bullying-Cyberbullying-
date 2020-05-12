@@ -9,6 +9,7 @@ var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.raw({ type: 'audio/m4a', limit: '60mb' }))
 app.use(cors());
 
 
@@ -72,6 +73,11 @@ app.get('/posts', function (req, res) {
     });
 })
 
+
+app.post('/addAudio', function (req, res) {
+    console.log("Audio is successfully posted!")
+    console.log("Obtained audio data: ", req.body);
+})
 
 app.post('/addSignal', function (req, res) {
     var signalType = req.body.signalType;
