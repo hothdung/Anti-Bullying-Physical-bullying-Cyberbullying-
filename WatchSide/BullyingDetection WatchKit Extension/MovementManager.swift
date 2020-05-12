@@ -116,19 +116,19 @@ class MovementManager: NSObject {
             self.grav_x = x
             self.grav_y = y
             self.grav_z = z
-            self.gravityStr = String(format: "grav_x: %.2f, grav_y: %.2f, grav_z: %.2f" ,self.grav_x,self.grav_y,self.grav_z)
+            self.gravityStr = String(format: "grav_x: %.2f grav_y: %.2f grav_z: %.2f" ,self.grav_x,self.grav_y,self.grav_z)
             break
         case "U":
             self.acc_x = x
             self.acc_y = y
             self.acc_z = z
-            self.userAccelerStr = String(format: "acc_x: %.2f, acc_y: %.2f, acc_z: %.2f" ,self.acc_x,self.acc_y,self.acc_z)
+            self.userAccelerStr = String(format: "acc_x: %.2f acc_y: %.2f acc_z: %.2f" ,self.acc_x,self.acc_y,self.acc_z)
             break
         case "R":
-            self.rotationRateStr = String(format: "rota_x: %.2f, rota_y: %.2f, rota_z: %.2f" ,x,y,z)
+            self.rotationRateStr = String(format: "rota_x: %.2f rota_y: %.2f rota_z: %.2f" ,x,y,z)
             break
         case "A":
-            self.attitudeStr = String(format: "atti_roll: %.1f, atti_pitch: %.1f, atti_yaw: %.1f" ,x,y,z)
+            self.attitudeStr = String(format: "atti_roll: %.1f atti_pitch: %.1f atti_yaw: %.1f" ,x,y,z)
             break
         default:
             print("Not found!")

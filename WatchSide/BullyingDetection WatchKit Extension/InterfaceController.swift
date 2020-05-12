@@ -305,7 +305,7 @@ extension InterfaceController: AVAudioRecorderDelegate{
     }
     
     func getAudioURL() -> URL{
-        let fileName = NSUUID().uuidString+".m4a"
+        let fileName = ShortCodeGenerator.getCode(length: 6)+".m4a"
         return getDocumentsDirectory().appendingPathComponent(fileName)
     }
     
@@ -326,6 +326,7 @@ extension InterfaceController: AVAudioRecorderDelegate{
     }
     
     func finishRecording(success: Bool){
+        print("This is the audio path \(getAudioURL())")
         audioRecorder.stop()
         if success{
             print("Recorded successfully")
