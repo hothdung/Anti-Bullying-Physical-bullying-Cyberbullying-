@@ -31,6 +31,14 @@ var signalsConnection = mysql.createConnection({
     port: process.env.DB_SIG_PORT
 })
 
+var outputConnection = mysql.createConnection({
+    host: process.env.DB_OUT_HOST,
+    user: process.env.DB_OUT_USER,
+    password: process.env.DB_OUT_PASS,
+    database: process.env.DB_OUT_DATABASE,
+    port: process.env.DB_OUT_PORT
+})
+
 app.post('/interventions', function (req, res) {
     const intervention = {
         interventionType: req.body.interventionType,
@@ -64,6 +72,7 @@ app.get('/posts', function (req, res) {
     });
 })
 
+
 app.post('/addSignal', function (req, res) {
     var signalType = req.body.signalType;
     var dataObj = {};
@@ -75,8 +84,8 @@ app.post('/addSignal', function (req, res) {
             date: req.body.date,
             studentId: req.body.studentId
         }
-        q = "INSERT INTO heartrate SET ?;"
-        tableSpec = "heartrate table"
+        q = "INSERT INTO heartrate SET ?;";
+        tableSpec = "heartrate table";
     }
     else if (signalType === "locations") {
         dataObj = {
@@ -85,8 +94,8 @@ app.post('/addSignal', function (req, res) {
             date: req.body.date,
             studentId: req.body.studentId
         }
-        q = "INSERT INTO locations SET ?;"
-        tableSpec = "locations table"
+        q = "INSERT INTO locations SET ?;";
+        tableSpec = "locations table";
     }
 
     else if (signalType === "movements") {
@@ -99,8 +108,8 @@ app.post('/addSignal', function (req, res) {
             date: req.body.date,
             studentId: req.body.studentId
         }
-        q = "INSERT INTO movements SET ?;"
-        tableSpec = "movements table"
+        q = "INSERT INTO movements SET ?;";
+        tableSpec = "movements table";
     }
     else if (signalType === "manual") {
         dataObj = {
@@ -116,8 +125,24 @@ app.post('/addSignal', function (req, res) {
             date: req.body.date,
             studentId: req.body.studentId
         }
-        q = "INSERT INTO manual SET ?;"
-        tableSpec = "manual table"
+        q = "INSERT INTO manual SET ?;";
+        tableSpec = "manual table";
+
+        query = "INSERT INTO test_table SET ?;";
+        var outputObj = {};
+        outputObj = {
+            long: req.body.long,
+            lat: req.body.lat,
+            bpm: req.body.bpm,
+            message: req.body.message
+        }
+
+        outputConnection.query(query, outputObj, function (error, result) {
+            if (error) throw error;
+            console.log(result);
+            console.log("Posted to test_table");
+        })
+
     }
     else {
         return new Error('Wrong signal type!')
@@ -132,9 +157,18 @@ app.post('/addSignal', function (req, res) {
 
 
 
+app.get('/outputManual', function (req, res) {
+    var q = "SELECT * FROM test_table;";
+
+    outputConnection.query(q, function (error, result) {
+        if (error) throw error;
+        console.log(JSON.stringify(result));
+        res.send(JSON.stringify(result));
+    });
+})
+
+
 app.post('/addSignal', function (req, res) {
-    // var parsedBody = JSON.parse(req.body);
-    // console.log(parsedBody)
     console.log(req.body)
     res.send("Request received")
 })

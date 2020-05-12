@@ -16,7 +16,6 @@ import Navigation from './Navigation';
 import Toolbar from '@material-ui/core/Toolbar';
 import DepressionComponent from './DepressionComponent'
 import DurationInfo from './data/depressionDuration.json'
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
@@ -28,8 +27,10 @@ class IndividualScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            option: "Overview"
+            option: "Overview",
+            manuals: []
         }
+        this.fetchData = this.fetchData.bind(this);
     }
 
     handleOptionSelected = option => {
@@ -38,8 +39,34 @@ class IndividualScreen extends Component {
         })
     }
 
+    fetchData() {
+        fetch('http://147.46.215.219:8080/outputManual', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => {
+            if (response.status >= 400) {
+                throw new Error("Server bad response!");
+            }
+            return response.json().then((data) => {
+
+                this.setState({
+                    manuals: data
+                })
+            })
+        }).catch(error => {
+            console.log("Parsing not successful!", error);
+        })
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
     render() {
-        const { option } = this.state;
+        const { option, manuals } = this.state;
 
         return (
             <Container fluid={true}>
@@ -78,6 +105,18 @@ class IndividualScreen extends Component {
                                 </Col>
                                 <Col lg='3' style={{ float: "left", marginLeft: "80px" }}>
                                     <PosNegChart posNegEmotionVal={EmotionVals} />
+                                    <hr />
+                                    {manuals.map(manual => {
+                                        const { long, lat, bpm, message } = manual;
+                                        return (
+                                            <div>
+                                                <p>Longitude: {long}</p>
+                                                <p>Latitude: {lat}</p>
+                                                <p>bpm: {bpm}</p>
+                                                <p>message: {message}</p>
+                                            </div>
+                                        );
+                                    })}
                                 </Col>
                             </div>
                         }
