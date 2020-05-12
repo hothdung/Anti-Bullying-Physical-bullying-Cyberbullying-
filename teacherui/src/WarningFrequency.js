@@ -10,8 +10,13 @@ class WarningFrequency extends Component {
             data: this.props.warningVal,
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
+<<<<<<< HEAD
+            width: window.innerWidth-250,
+            height: 250,
+=======
             width: window.innerWidth - 250,
             height: 250
+>>>>>>> 97b078299b4e91cc0945d0b32f23cbb2eae09d20
         }
         this.chartRef = React.createRef();
         this.drawLineChart = this.drawLineChart.bind(this);

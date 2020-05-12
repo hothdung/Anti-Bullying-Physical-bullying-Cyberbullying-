@@ -169,7 +169,11 @@ function MethodsTable(props) {
     }
 
     return (
+<<<<<<< HEAD
+        <div className="reportingTable" style={{ width: window.innerWidth-200, paddingTop: 5 }}>
+=======
         <div className="reportingTable" style={{ width: window.innerWidth - 200, paddingTop: 5 }}>
+>>>>>>> 97b078299b4e91cc0945d0b32f23cbb2eae09d20
             <div className="addRow">
                 <Button
                     variant="contained"
