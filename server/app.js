@@ -31,7 +31,7 @@ const upload = multer({
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
-}).single('audioName');
+}).single('studentAudio');
 
 // checking the extension and mimeType
 function checkFileType(file, cb) {
@@ -116,11 +116,13 @@ app.post('/addAudio', (req, res) => {
             console.log("There is an error " + err)
         } else {
             console.log(req.file);
-            console.log("Obtained audio file!")
+            console.log("Obtained audio file!");
+            // getting the parameters
+            console.log("studentId: " + req.body.studentId);
+            console.log("date: " + req.body.date);
         }
     })
     console.log("Audio is successfully posted!")
-    console.log("Obtained audio data: ", req.file);
 
 })
 
