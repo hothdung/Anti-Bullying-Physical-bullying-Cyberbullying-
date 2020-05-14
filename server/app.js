@@ -110,11 +110,24 @@ app.get('/posts', function (req, res) {
 
 
 app.post('/addAudio', (req, res) => {
+    var q = "INSERT INTO audio_recordings SET ?;";
     upload(req, res, (err) => {
-
         if (err) {
             console.log("There is an error " + err)
         } else {
+            const audios = {
+                audioPath: req.file.path,
+                date: req.body.date,
+                studentId: req.body.studentId,
+            }
+
+            // Inserting into audio table
+            signalsConnection.query(q, audios, function (error, result) {
+                if (error) throw error;
+                console.log(result);
+                console.log("Posted to audio_recordings table");
+            })
+
             console.log(req.file);
             console.log("Obtained audio file!");
             // getting the parameters
