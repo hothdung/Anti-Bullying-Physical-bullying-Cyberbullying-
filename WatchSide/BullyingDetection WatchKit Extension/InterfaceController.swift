@@ -107,10 +107,10 @@
                 })
             }
             
-            settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                        AVSampleRateKey: 12000,
-                        AVNumberOfChannelsKey: 1,
-                        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
+            settings = [AVFormatIDKey: Int(kAudioFormatLinearPCM),
+                        AVSampleRateKey: 44100.0,
+                        AVNumberOfChannelsKey: 2,
+                        AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
             
             // initialize locationManager
             locationManager = LocationOutsideManager(delegate: self)
@@ -213,7 +213,7 @@
                     for (key, value) in params {
                         multipartFormData.append((value as! String).data(using: String.Encoding.utf8)!, withName: key)
                     }
-                    multipartFormData.append(audioData, withName: fieldName, fileName: fileName, mimeType: "audio/m4a")
+                    multipartFormData.append(audioData, withName: fieldName, fileName: fileName, mimeType: "audio/wav")
                 }, to: apiURL, usingThreshold: UInt64.init(), method: .post, headers: headers).response{ response in
                     
                     if((response.error != nil))
@@ -406,7 +406,7 @@
         }
         
         func getAudioURL() -> URL{
-            let fileName = "student"+ShortCodeGenerator.getCode(length: 6)+".m4a"
+            let fileName = "student"+ShortCodeGenerator.getCode(length: 6)+".wav"
             return getDocumentsDirectory().appendingPathComponent(fileName)
         }
         
@@ -416,7 +416,7 @@
             do{
                 audioRecorder = try AVAudioRecorder(url:audioURL, settings: settings)
                 audioRecorder.delegate = self
-                audioRecorder.record(forDuration:20)
+                audioRecorder.record(forDuration:60)
                 
             }catch let error{
                 //finishRecording(success: false)
