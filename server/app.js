@@ -12,7 +12,7 @@ const path = require('path');
 // building storage engine  cb --> callback
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(bodyParser.raw({ type: 'audio/m4a', limit: '60mb' }))
+app.use(bodyParser.raw({ type: 'audio/wav', limit: '60mb' }))
 app.use(cors());
 
 app.use(express.static('./public'));
@@ -36,12 +36,14 @@ const upload = multer({
 // checking the extension and mimeType
 function checkFileType(file, cb) {
 
-    const fileTypes = /m4a/;
+    const fileTypes = /wav/;
     // checking extension
     const extensionName = fileTypes.test(path.extname(file.originalname).toLowerCase());
     // checking mimeType
 
-    if (file.mimetype === "audio/m4a" && extensionName) {
+    console.log(file.mimetype === "audio/wav" && extensionName);
+
+    if (file.mimetype === "audio/wav" && extensionName) {
         return cb(null, true);
     } else {
         cb('Just audio files allowed!!')
