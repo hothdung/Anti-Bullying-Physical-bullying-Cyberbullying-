@@ -416,7 +416,7 @@
             do{
                 audioRecorder = try AVAudioRecorder(url:audioURL, settings: settings)
                 audioRecorder.delegate = self
-                audioRecorder.record(forDuration:60)
+                audioRecorder.record(forDuration:30)
                 
             }catch let error{
                 //finishRecording(success: false)
