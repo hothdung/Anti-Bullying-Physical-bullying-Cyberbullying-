@@ -50,6 +50,20 @@ function checkFileType(file, cb) {
     }
 }
 
+function parseMovementData(movStr) {
+    var result = movStr.split(" ");
+    var values = [];
+    var i;
+    for (i = 0; i < result.length; i++) {
+        var numStr = result[i].slice(result[i].lastIndexOf(':') + 1);
+        var numVal = parseFloat(numStr);
+        values.push(numVal);
+    }
+
+    return values;
+
+}
+
 // connection to interventions_db
 
 var connection = mysql.createConnection({
@@ -167,27 +181,56 @@ app.post('/addSignal', function (req, res) {
     }
 
     else if (signalType === "movements") {
+
+        var gravity = parseMovementData(req.body.gravity);
+        var acceleration = parseMovementData(req.body.acceleration);
+        var rotation = parseMovementData(req.body.rotation);
+        var attitude = parseMovementData(req.body.attitude);
+
         dataObj = {
-            gravity: req.body.gravity,
-            acceleration: req.body.acceleration,
-            rotation: req.body.rotation,
-            attitude: req.body.attitude,
+            gravityX: gravity[0],
+            gravityY: gravity[1],
+            gravityZ: gravity[2],
+            accX: acceleration[0],
+            accY: acceleration[1],
+            accZ: acceleration[2],
+            rotX: rotation[0],
+            rotY: rotation[1],
+            rotZ: rotation[2],
+            attRoll: attitude[0],
+            attPitch: attitude[1],
+            attYaw: attitude[2],
             fallenDown: req.body.fallenDown,
             date: req.body.date,
             studentId: req.body.studentId
         }
+
         q = "INSERT INTO movements SET ?;";
         tableSpec = "movements table";
     }
     else if (signalType === "manual") {
+        console.log("Here I am !!!!");
+        var gravity = parseMovementData(req.body.gravity);
+        console.log(gravity)
+        var acceleration = parseMovementData(req.body.acceleration);
+        var rotation = parseMovementData(req.body.rotation);
+        var attitude = parseMovementData(req.body.attitude);
         dataObj = {
             long: req.body.long,
             lat: req.body.lat,
             bpm: req.body.bpm,
-            gravity: req.body.gravity,
-            acceleration: req.body.acceleration,
-            rotation: req.body.rotation,
-            attitude: req.body.attitude,
+            gravityX: gravity[0],
+            gravityY: gravity[1],
+            gravityZ: gravity[2],
+            accX: acceleration[0],
+            accY: acceleration[1],
+            accZ: acceleration[2],
+            rotX: rotation[0],
+            rotY: rotation[1],
+            rotZ: rotation[2],
+            att_roll: attitude[0],
+            att_pitch: attitude[1],
+            att_yaw: attitude[2],
             fallenDown: req.body.fallenDown,
             message: req.body.message,
             date: req.body.date,
