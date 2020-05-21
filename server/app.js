@@ -63,16 +63,41 @@ function parseMovementData(movStr) {
     return values;
 
 }
+// testPython();
+
+// function testPython() {
+//     var spawn = require('child_process').spawn,
+//         py = spawn("python", ["testPython.py"]);
+
+//     // py.stdout.on('data', function (data) {
+//     //     console.log("This is the data " + data.toString());
+//     // });
+
+//     py.stdout.on('data', (data) => {
+//         console.log("This is the data " + data.toString());
+//     });
+
+
+//     py.stdin.write(JSON.stringify("Python changed the String!"));
+//     py.stdin.end();
+// }
 
 convertToText("test2.wav");
 
 function convertToText(str) {
     console.log("Here in method");
     const spawn = require('child_process').spawn;
-    const scriptExecution = spawn('python', ['./audioTranscribe.py', str])
+    const scriptExecution = spawn("python", ["audioTranscribe.py"])
+    console.log("Printed?");
     scriptExecution.stdout.on('data', function (data) {
+        console.log("This is a test");
         console.log(data.toString());
+        var myStr = data.toString();
+        console.log(myStr);
     });
+    // console.log("This is the str " + str);
+    scriptExecution.stdin.write(str);
+    scriptExecution.stdin.end();
 }
 
 // connection to interventions_db
