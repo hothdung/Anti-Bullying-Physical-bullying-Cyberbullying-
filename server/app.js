@@ -64,6 +64,17 @@ function parseMovementData(movStr) {
 
 }
 
+convertToText("test2.wav");
+
+function convertToText(str) {
+    console.log("Here in method");
+    const spawn = require('child_process').spawn;
+    const scriptExecution = spawn('python', ['./audioTranscribe.py', str])
+    scriptExecution.stdout.on('data', function (data) {
+        console.log(data.toString());
+    });
+}
+
 // connection to interventions_db
 
 var connection = mysql.createConnection({
@@ -124,7 +135,6 @@ app.get('/posts', function (req, res) {
     });
 })
 
-
 app.post('/addAudio', (req, res) => {
     var q = "INSERT INTO audio_recordings SET ?;";
     upload(req, res, (err) => {
@@ -136,7 +146,6 @@ app.post('/addAudio', (req, res) => {
                 date: req.body.date,
                 studentId: req.body.studentId,
             }
-
             // Inserting into audio table
             signalsConnection.query(q, audios, function (error, result) {
                 if (error) throw error;
@@ -148,7 +157,6 @@ app.post('/addAudio', (req, res) => {
             console.log("Obtained audio file!");
             // getting the parameters
             console.log("studentId: " + req.body.studentId);
-            console.log("date: " + req.body.date);
         }
     })
     console.log("Audio is successfully posted!")
