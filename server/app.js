@@ -7,6 +7,7 @@ var http = require('http');
 var app = express();
 var multer = require('multer');
 const path = require('path');
+const fs = require('fs')
 //var upload = multer({ dest: 'uploads/', limits: { fieldSize: 10000000000 } }).any()
 
 // building storage engine  cb --> callback
@@ -63,40 +64,23 @@ function parseMovementData(movStr) {
     return values;
 
 }
-// testPython();
-
-// function testPython() {
-//     var spawn = require('child_process').spawn,
-//         py = spawn("python", ["testPython.py"]);
-
-//     // py.stdout.on('data', function (data) {
-//     //     console.log("This is the data " + data.toString());
-//     // });
-
-//     py.stdout.on('data', (data) => {
-//         console.log("This is the data " + data.toString());
-//     });
-
-
-//     py.stdin.write(JSON.stringify("Python changed the String!"));
-//     py.stdin.end();
-// }
 
 convertToText("test2.wav");
 
 function convertToText(str) {
-    console.log("Here in method");
     const spawn = require('child_process').spawn;
     const scriptExecution = spawn("python", ["audioTranscribe.py"])
-    console.log("Printed?");
     scriptExecution.stdout.on('data', function (data) {
-        console.log("This is a test");
-        console.log(data.toString());
-        var myStr = data.toString();
-        console.log(myStr);
+        // console.log(data.toString());
+        var text = data.toString()
+        fs.writeFile('audioText.txt', text, function (err) {
+            if (err) {
+                return console.log(err)
+            }
+            console.log("File created!")
+        })
     });
-    // console.log("This is the str " + str);
-    scriptExecution.stdin.write(str);
+    scriptExecution.stdin.write(JSON.stringify(str));
     scriptExecution.stdin.end();
 }
 
