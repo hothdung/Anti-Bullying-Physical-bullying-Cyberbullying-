@@ -66,11 +66,12 @@ function parseMovementData(movStr) {
 }
 
 // testing 
-// convertToText("test2.wav", "audioToText");
+convertToText("test2.wav", "audioToText2");
 
 function convertToText(audioPath, filename) {
     const spawn = require('child_process').spawn;
     const scriptExecution = spawn("python", ["audioTranscribe.py"])
+    var info = [audioPath, "2020-05-11 16:04:22"];
     scriptExecution.stdout.on('data', function (data) {
         var text = data.toString()
         // saving transcribed files into transcriptions folder
@@ -81,7 +82,7 @@ function convertToText(audioPath, filename) {
             console.log("File created!")
         })
     });
-    scriptExecution.stdin.write(JSON.stringify(audioPath));
+    scriptExecution.stdin.write(JSON.stringify(info));
     scriptExecution.stdin.end();
 }
 
@@ -151,7 +152,7 @@ app.post('/addAudio', (req, res) => {
         if (err) {
             console.log("There is an error " + err)
         } else {
-            convertToText(req.file.path, req.filename);
+            //convertToText(req.file.path, req.filename);
             const audios = {
                 audioPath: req.file.path,
                 date: req.body.date,
