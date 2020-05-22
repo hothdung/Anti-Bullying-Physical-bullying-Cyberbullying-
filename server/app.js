@@ -67,14 +67,15 @@ function parseMovementData(movStr) {
 
 // var jsonObj = convertToText(req.file.path, req.filename, req.body.date);
 //"../data/test.csv"
-convertToText("public/uploads/test2.wav", "AudioText6test", "2020-05-11 16:04:22");
+//convertToText("public/uploads/test2.wav", "AudioText6test", "2020-05-11 16:04:22");
 function convertToText(audioPath, filename, date) {
     const spawn = require('child_process').spawn;
     const scriptExecution = spawn("python", ["audioTranscribe.py"])
-    var info = [audioPath, "2020-05-11 16:04:22"];
+    var info = [audioPath, date];
     var text;
     scriptExecution.stdout.on('data', function (data) {
         var text = data.toString()
+        console.log("Here:  " + data.toString());
         // saving transcribed files into transcriptions folder
         fs.writeFile('./transcriptions/' + filename + '.txt', text, function (err) {
             if (err) {
@@ -86,7 +87,7 @@ function convertToText(audioPath, filename, date) {
     scriptExecution.stdin.write(JSON.stringify(info));
     scriptExecution.stdin.end();
 
-    //return text;
+    return text;
 }
 
 // connection to interventions_db
@@ -149,39 +150,40 @@ app.get('/posts', function (req, res) {
     });
 })
 
-app.post('/addAudio', (req, res) => {
+app.post('/addAudio', upload, (req, res, err) => {
     var q = "INSERT INTO audio SET ?;";
-    upload(req, res, (err) => {
-        if (err) {
-            console.log("There is an error " + err)
-        } else {
-            console.log("This is the filename: " + req.file.filename)
-            //convertToText("public/uploads/test2.wav", "AudioText4test", "2020-05-11 16:04:22");
-            // var jsonStr = convertToText(req.file.path, req.file.filename, req.body.date);
-            // var obj = JSON.parse(jsonStr);
-            // console.log("This is the end time " + obj["end"]);
-            // console.log("This is the object!")
-            // const audios = {
-            //     studentId: req.body.studentId,
-            //     audioPath: req.file.path,
-            //     beginTime: obj["begin"],
-            //     endTime: obj["end"],
-            //     audioText: obj["audio_text"],
-            //     sentiment: "DEFAULT"
-            // }
-
-            // // Inserting into audio table
-            // signalsConnection.query(q, audios, function (error, result) {
-            //     if (error) throw error;
-            //     console.log(result);
-            //     console.log("Posted to audio_recordings table");
-            // })
-
-            console.log(req.file);
-            console.log("Obtained audio file!");
-            // getting the parameters
+    if (err) {
+        console.log("There is an error " + err)
+    } else {
+        console.log("This is the filename: " + req.file.filename)
+        // convertToText("public/uploads/test2.wav", "AudioText4test", "2020-05-11 16:04:22");
+        var jsonStr = convertToText(req.file.path, req.file.filename, req.body.date);
+        var obj = JSON.parse(jsonStr);
+        console.log("This is the end time " + obj["end"]);
+        console.log("This is the object!")
+        const audios = {
+            studentId: req.body.studentId,
+            audioPath: req.file.path,
+            beginTime: obj["begin"],
+            endTime: obj["end"],
+            audioText: obj["audio_text"],
+            sentiment: "DEFAULT"
         }
-    })
+
+        // Inserting into audio table
+        signalsConnection.query(q, audios, function (error, result) {
+            if (error) throw error;
+            console.log(result);
+            console.log("Posted to audio_recordings table");
+        })
+
+        console.log(req.file);
+        console.log("Obtained audio file!");
+    }
+
+    console.log("This is the filepath" + req.file.path);
+
+
     console.log("Audio is successfully posted!")
 
 })
