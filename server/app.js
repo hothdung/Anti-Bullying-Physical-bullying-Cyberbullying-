@@ -150,13 +150,22 @@ app.get('/posts', function (req, res) {
     });
 })
 
-app.post('/addAudio', upload, (req, res, err) => {
+app.post('/addAudio', function (req, res) {
     var q = "INSERT INTO audio SET ?;";
-    if (err) {
-        console.log("There is an error " + err)
-    } else {
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            console.log("There is an Multer error " + err)
+        }
+        else if (err) {
+            // An unknown error occurred when uploading.
+            console.log("There is an error " + err)
+        }
+
         console.log("This is the filename: " + req.file.filename)
-        // convertToText("public/uploads/test2.wav", "AudioText4test", "2020-05-11 16:04:22");
+        console.log(req.file);
+        console.log("Obtained audio file!");
+        console.log("Audio is successfully posted!")
+
         var jsonStr = convertToText(req.file.path, req.file.filename, req.body.date);
         var obj = JSON.parse(jsonStr);
         console.log("This is the end time " + obj["end"]);
@@ -176,16 +185,7 @@ app.post('/addAudio', upload, (req, res, err) => {
             console.log(result);
             console.log("Posted to audio_recordings table");
         })
-
-        console.log(req.file);
-        console.log("Obtained audio file!");
-    }
-
-    console.log("This is the filepath" + req.file.path);
-
-
-    console.log("Audio is successfully posted!")
-
+    })
 })
 
 // app.post('/addSignal', function (req, res) {
