@@ -65,22 +65,23 @@ function parseMovementData(movStr) {
 
 }
 
-convertToText("test2.wav");
+// testing 
+// convertToText("test2.wav", "audioToText");
 
-function convertToText(str) {
+function convertToText(audioPath, filename) {
     const spawn = require('child_process').spawn;
     const scriptExecution = spawn("python", ["audioTranscribe.py"])
     scriptExecution.stdout.on('data', function (data) {
-        // console.log(data.toString());
         var text = data.toString()
-        fs.writeFile('audioText.txt', text, function (err) {
+        // saving transcribed files into transcriptions folder
+        fs.writeFile('./transcriptions/' + filename + '.txt', text, function (err) {
             if (err) {
                 return console.log(err)
             }
             console.log("File created!")
         })
     });
-    scriptExecution.stdin.write(JSON.stringify(str));
+    scriptExecution.stdin.write(JSON.stringify(audioPath));
     scriptExecution.stdin.end();
 }
 
@@ -145,16 +146,20 @@ app.get('/posts', function (req, res) {
 })
 
 app.post('/addAudio', (req, res) => {
-    var q = "INSERT INTO audio_recordings SET ?;";
+    var q = "INSERT INTO audio SET ?;";
     upload(req, res, (err) => {
         if (err) {
             console.log("There is an error " + err)
         } else {
+            convertToText(req.file.path, req.filename);
             const audios = {
                 audioPath: req.file.path,
                 date: req.body.date,
                 studentId: req.body.studentId,
             }
+            // console.log("Here is the audio path: " + audios.audioPath);
+            // console.log("Here is the file name: " + req.file.filename);
+
             // Inserting into audio table
             signalsConnection.query(q, audios, function (error, result) {
                 if (error) throw error;
