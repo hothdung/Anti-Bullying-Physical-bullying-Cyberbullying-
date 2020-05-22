@@ -65,13 +65,14 @@ function parseMovementData(movStr) {
 
 }
 
-// testing 
-convertToText("test2.wav", "audioToText2");
-
-function convertToText(audioPath, filename) {
+// var jsonObj = convertToText(req.file.path, req.filename, req.body.date);
+//"../data/test.csv"
+convertToText("public/uploads/test2.wav", "AudioText6test", "2020-05-11 16:04:22");
+function convertToText(audioPath, filename, date) {
     const spawn = require('child_process').spawn;
     const scriptExecution = spawn("python", ["audioTranscribe.py"])
     var info = [audioPath, "2020-05-11 16:04:22"];
+    var text;
     scriptExecution.stdout.on('data', function (data) {
         var text = data.toString()
         // saving transcribed files into transcriptions folder
@@ -84,6 +85,8 @@ function convertToText(audioPath, filename) {
     });
     scriptExecution.stdin.write(JSON.stringify(info));
     scriptExecution.stdin.end();
+
+    //return text;
 }
 
 // connection to interventions_db
@@ -152,142 +155,147 @@ app.post('/addAudio', (req, res) => {
         if (err) {
             console.log("There is an error " + err)
         } else {
-            //convertToText(req.file.path, req.filename);
-            const audios = {
-                audioPath: req.file.path,
-                date: req.body.date,
-                studentId: req.body.studentId,
-            }
-            // console.log("Here is the audio path: " + audios.audioPath);
-            // console.log("Here is the file name: " + req.file.filename);
+            console.log("This is the filename: " + req.file.filename)
+            //convertToText("public/uploads/test2.wav", "AudioText4test", "2020-05-11 16:04:22");
+            // var jsonStr = convertToText(req.file.path, req.file.filename, req.body.date);
+            // var obj = JSON.parse(jsonStr);
+            // console.log("This is the end time " + obj["end"]);
+            // console.log("This is the object!")
+            // const audios = {
+            //     studentId: req.body.studentId,
+            //     audioPath: req.file.path,
+            //     beginTime: obj["begin"],
+            //     endTime: obj["end"],
+            //     audioText: obj["audio_text"],
+            //     sentiment: "DEFAULT"
+            // }
 
-            // Inserting into audio table
-            signalsConnection.query(q, audios, function (error, result) {
-                if (error) throw error;
-                console.log(result);
-                console.log("Posted to audio_recordings table");
-            })
+            // // Inserting into audio table
+            // signalsConnection.query(q, audios, function (error, result) {
+            //     if (error) throw error;
+            //     console.log(result);
+            //     console.log("Posted to audio_recordings table");
+            // })
 
             console.log(req.file);
             console.log("Obtained audio file!");
             // getting the parameters
-            console.log("studentId: " + req.body.studentId);
         }
     })
     console.log("Audio is successfully posted!")
 
 })
 
-app.post('/addSignal', function (req, res) {
-    var signalType = req.body.signalType;
-    var dataObj = {};
-    var q;
-    var tableSpec;
-    if (signalType === "heartrate") {
-        dataObj = {
-            bpm: req.body.bpm,
-            date: req.body.date,
-            studentId: req.body.studentId
-        }
-        q = "INSERT INTO heartrate SET ?;";
-        tableSpec = "heartrate table";
-    }
-    else if (signalType === "locations") {
-        dataObj = {
-            long: req.body.long,
-            lat: req.body.lat,
-            date: req.body.date,
-            studentId: req.body.studentId
-        }
-        q = "INSERT INTO locations SET ?;";
-        tableSpec = "locations table";
-    }
+// app.post('/addSignal', function (req, res) {
+//     var signalType = req.body.signalType;
+//     var dataObj = {};
+//     var q;
+//     var tableSpec;
+//     if (signalType === "heartrate") {
+//         dataObj = {
+//             bpm: req.body.bpm,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//         q = "INSERT INTO heartrate SET ?;";
+//         tableSpec = "heartrate table";
+//     }
+//     else if (signalType === "locations") {
+//         dataObj = {
+//             long: req.body.long,
+//             lat: req.body.lat,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//         q = "INSERT INTO locations SET ?;";
+//         tableSpec = "locations table";
+//     }
 
-    else if (signalType === "movements") {
+//     else if (signalType === "movements") {
 
-        var gravity = parseMovementData(req.body.gravity);
-        var acceleration = parseMovementData(req.body.acceleration);
-        var rotation = parseMovementData(req.body.rotation);
-        var attitude = parseMovementData(req.body.attitude);
+//         var gravity = parseMovementData(req.body.gravity);
+//         var acceleration = parseMovementData(req.body.acceleration);
+//         var rotation = parseMovementData(req.body.rotation);
+//         var attitude = parseMovementData(req.body.attitude);
 
-        dataObj = {
-            gravityX: gravity[0],
-            gravityY: gravity[1],
-            gravityZ: gravity[2],
-            accX: acceleration[0],
-            accY: acceleration[1],
-            accZ: acceleration[2],
-            rotX: rotation[0],
-            rotY: rotation[1],
-            rotZ: rotation[2],
-            attRoll: attitude[0],
-            attPitch: attitude[1],
-            attYaw: attitude[2],
-            fallenDown: req.body.fallenDown,
-            date: req.body.date,
-            studentId: req.body.studentId
-        }
+//         dataObj = {
+//             gravityX: gravity[0],
+//             gravityY: gravity[1],
+//             gravityZ: gravity[2],
+//             accX: acceleration[0],
+//             accY: acceleration[1],
+//             accZ: acceleration[2],
+//             rotX: rotation[0],
+//             rotY: rotation[1],
+//             rotZ: rotation[2],
+//             attRoll: attitude[0],
+//             attPitch: attitude[1],
+//             attYaw: attitude[2],
+//             fallenDown: req.body.fallenDown,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
 
-        q = "INSERT INTO movements SET ?;";
-        tableSpec = "movements table";
-    }
-    else if (signalType === "manual") {
-        console.log("Here I am !!!!");
-        var gravity = parseMovementData(req.body.gravity);
-        console.log(gravity)
-        var acceleration = parseMovementData(req.body.acceleration);
-        var rotation = parseMovementData(req.body.rotation);
-        var attitude = parseMovementData(req.body.attitude);
-        dataObj = {
-            long: req.body.long,
-            lat: req.body.lat,
-            bpm: req.body.bpm,
-            gravityX: gravity[0],
-            gravityY: gravity[1],
-            gravityZ: gravity[2],
-            accX: acceleration[0],
-            accY: acceleration[1],
-            accZ: acceleration[2],
-            rotX: rotation[0],
-            rotY: rotation[1],
-            rotZ: rotation[2],
-            att_roll: attitude[0],
-            att_pitch: attitude[1],
-            att_yaw: attitude[2],
-            fallenDown: req.body.fallenDown,
-            message: req.body.message,
-            date: req.body.date,
-            studentId: req.body.studentId
-        }
-        q = "INSERT INTO manual SET ?;";
-        tableSpec = "manual table";
+//         q = "INSERT INTO movements SET ?;";
+//         tableSpec = "movements table";
+//     }
+//     else if (signalType === "manual") {
+//         console.log("Here I am !!!!");
+//         var gravity = parseMovementData(req.body.gravity);
+//         console.log(gravity)
+//         var acceleration = parseMovementData(req.body.acceleration);
+//         var rotation = parseMovementData(req.body.rotation);
+//         var attitude = parseMovementData(req.body.attitude);
+//         dataObj = {
+//             long: req.body.long,
+//             lat: req.body.lat,
+//             bpm: req.body.bpm,
+//             gravityX: gravity[0],
+//             gravityY: gravity[1],
+//             gravityZ: gravity[2],
+//             accX: acceleration[0],
+//             accY: acceleration[1],
+//             accZ: acceleration[2],
+//             rotX: rotation[0],
+//             rotY: rotation[1],
+//             rotZ: rotation[2],
+//             att_roll: attitude[0],
+//             att_pitch: attitude[1],
+//             att_yaw: attitude[2],
+//             fallenDown: req.body.fallenDown,
+//             message: req.body.message,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//         q = "INSERT INTO manual SET ?;";
+//         tableSpec = "manual table";
 
-        query = "INSERT INTO test_table SET ?;";
-        var outputObj = {};
-        outputObj = {
-            long: req.body.long,
-            lat: req.body.lat,
-            bpm: req.body.bpm,
-            message: req.body.message
-        }
+//         query = "INSERT INTO test_table SET ?;";
+//         var outputObj = {};
+//         outputObj = {
+//             long: req.body.long,
+//             lat: req.body.lat,
+//             bpm: req.body.bpm,
+//             message: req.body.message
+//         }
 
-        outputConnection.query(query, outputObj, function (error, result) {
-            if (error) throw error;
-            console.log(result);
-            console.log("Posted to test_table");
-        })
+//         outputConnection.query(query, outputObj, function (error, result) {
+//             if (error) throw error;
+//             console.log(result);
+//             console.log("Posted to test_table");
+//         })
 
-    }
-    else {
-        return new Error('Wrong signal type!')
-    }
-    signalsConnection.query(q, dataObj, function (error, result) {
-        if (error) throw error;
-        console.log(result);
-        res.send("Posted to DB");
-        console.log("Posted to " + tableSpec);
-    })
-})
+//     }
+//     else {
+//         return new Error('Wrong signal type!')
+//     }
+//     signalsConnection.query(q, dataObj, function (error, result) {
+//         if (error) throw error;
+//         console.log(result);
+//         res.send("Posted to DB");
+//         console.log("Posted to " + tableSpec);
+//     })
+// })
 
 
 

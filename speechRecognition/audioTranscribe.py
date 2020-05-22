@@ -21,13 +21,14 @@ def myconverter(o):
 
 
 def convertToString():
-    # lines = read_in()
+    lines = read_in()
     r = sr.Recognizer()
     text = ""
     duration = 0.0
-    arr = ["test2.wav", "2020-05-11 16:04:22"]
-    # for item in lines:
-    #     arr.append(item)
+    arr = []
+    # arr = ["public/uploads/test2.wav", "2020-05-11 16:04:22"]
+    for item in lines:
+        arr.append(item)
 
     # print(arr)
     audio = arr[0]
