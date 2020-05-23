@@ -50,7 +50,7 @@ class LocationOutsideManager: NSObject {
             return true
         }
         let distance = lastUpdatedLocation.distance(from: updatedLocation)
-        return distance > 25
+        return distance > 15
     }
     
     private func queryWatchLocation(location: CLLocation){
