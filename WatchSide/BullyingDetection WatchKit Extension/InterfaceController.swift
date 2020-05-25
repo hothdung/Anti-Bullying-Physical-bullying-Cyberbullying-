@@ -167,7 +167,7 @@
         func getCurrentDate() -> String{
             let date = Date()
             let df = DateFormatter()
-            df.dateFormat = "yyyy-MM-dd HH:mm::ss"
+            df.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let dateString = df.string(from:date)
             
             return dateString;
