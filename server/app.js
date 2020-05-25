@@ -333,6 +333,6 @@ app.post('/addSignal', function (req, res) {
     res.send("Request received")
 })
 
-app.listen(8080, function () {
-    console.log("Server is listening on port 8080!");
+app.listen(1551, function () {
+    console.log("Server is listening on port 1551!");
 });
