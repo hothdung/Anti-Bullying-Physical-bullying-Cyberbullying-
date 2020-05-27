@@ -43,6 +43,8 @@
         // Outlets for testing
         @IBOutlet weak var button: WKInterfaceButton!
         @IBOutlet weak var furtherSigLabels: WKInterfaceLabel!
+        
+        @IBOutlet weak var audioRBtn: WKInterfaceButton!
         var settings = [String : Any]()
         
         // distinguish start recording heartbeat
@@ -69,6 +71,7 @@
         var audioRecorder: AVAudioRecorder!
         var audioSettings = [String : Int]()
         let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
+        var audioIsRecording: Bool = true
         
         override func awake(withContext context: Any?) {
             super.awake(withContext: context)
@@ -134,7 +137,7 @@
             let jsonData = try? JSONSerialization.data(withJSONObject: signalParams)
             
             let session = URLSession.shared
-            let url = URL(string:"http://147.46.215.219:8080/addSignal")
+            let url = URL(string:"http://147.46.215.219:1551/addSignal")
             var request = URLRequest(url:url!)
             request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -175,7 +178,7 @@
         
         func sendAudio(audioPath: URL, idParam: String,dateParam:String){
             
-            guard let apiURL = URL(string:"http://147.46.215.219:8080/addAudio") else
+            guard let apiURL = URL(string:"http://147.46.215.219:1551/addAudio") else
             {
                 print("URL could not be created!")
                 return
@@ -306,14 +309,35 @@
                 //healthStore.end(session!)
                 
             }
-            
+ /*
             if audioRecorder == nil{
                 print("Audio component on!")
                 self.startRecording()
             }else{
                 self.finishRecording(success: true)
                 // since audio recording stops after 20 seconds
-                //audioRecorder.stop()
+                audioRecorder.stop()
+                //showUrls()
+            }
+     */
+            
+        }
+        
+        
+        @IBAction func recordingBtn() {
+            
+            if audioRecorder == nil{
+                audioRBtn.setTitle("Start recording!")
+                print("Audio component on!")
+                self.startRecording()
+                audioIsRecording = false
+            }else{
+                audioRBtn.setTitle("Stop recording!")
+                self.finishRecording(success: true)
+                // since audio recording stops after 20 seconds
+                audioRecorder.stop()
+                audioRecorder = nil
+                audioIsRecording = true
                 //showUrls()
             }
             
@@ -360,7 +384,7 @@
             let date = self.getCurrentDate()
             
             let heartrateParam: Dictionary = ["signalType": "heartrate", "bpm":bpm, "date":date,"studentId":studentId] as [String : Any]
-            sendSignal(signalParams: heartrateParam)
+           sendSignal(signalParams: heartrateParam)
         }
     }
     
@@ -376,7 +400,7 @@
                 movement = "\(tmp) _1"
                 date = self.getCurrentDate()
                 movementParam = ["signalType": "movements","gravity":gravStr,"acceleration":accelStr,"rotation":rotationStr,"attitude":attStr,"fallenDown":toSend,"date":date, "studentId":studentId]
-                sendSignal(signalParams: movementParam)
+               sendSignal(signalParams: movementParam)
                 manualGravity = gravStr
                 manualAcceleration = accelStr
                 manualRotation = rotationStr
@@ -387,7 +411,7 @@
                 movement = "\(tmp) _2"
                 date = self.getCurrentDate()
                 movementParam = ["signalType": "movements","gravity":gravStr,"acceleration":accelStr,"rotation":rotationStr,"attitude":attStr,"fallenDown":toSend,"date":date, "studentId":studentId]
-                sendSignal(signalParams: movementParam)
+               sendSignal(signalParams: movementParam)
                 manualGravity = gravStr
                 manualAcceleration = accelStr
                 manualRotation = rotationStr
