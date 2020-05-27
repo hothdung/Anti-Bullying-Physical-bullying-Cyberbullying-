@@ -6,8 +6,9 @@ from datetime import datetime, date, time, timedelta
 import wave
 import contextlib
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# from importlib import reload
+# reload(sys)
+# sys.setdefaultencoding
 
 
 def read_in():
@@ -26,28 +27,28 @@ def convertToString():
     text = ""
     duration = 0.0
     arr = []
-    # arr = ["public/uploads/test2.wav", "2020-05-11 16:04:22"]
+    # testing
+    # arr = ["public/uploads/test2.wav", "2020-05-27 16:48:46"]
     for item in lines:
         arr.append(item)
-
     # print(arr)
     audio = arr[0]
-    timestamp_begin = datetime.strptime(arr[1], '%Y-%m-%d %H:%M:%S')
-    with contextlib.closing(wave.open(audio, 'r')) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        # duration should be in seconds
-        duration = frames / float(rate)
-    with sr.AudioFile(audio) as source:
-        audio = r.record(source)
     try:
+        with sr.AudioFile(audio) as source:
+            audio = r.record(source)
         text = r.recognize_google(audio, language='ko-kr')
     except Exception as e:
+        text = "non-transcribable"
         print(e)
-    result = {'begin': timestamp_begin, 'end': timestamp_begin +
-              timedelta(0, duration), 'audio_text': text}
-    print(json.dumps(result, default=myconverter,
-                     ensure_ascii=False).encode('utf8'))
+    #     arr.append(item)
+    print(text)
+    # result = {'audio_text': text}
+    # # print(json.dumps(result, default=myconverter,
+    #                  ensure_ascii = False))
+    # lines = read_in()
+    # arr = []
+    # for item in lines:
+    #     arr.append(item)
 
 
 def main():

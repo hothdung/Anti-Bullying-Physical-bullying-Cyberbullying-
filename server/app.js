@@ -65,29 +65,35 @@ function parseMovementData(movStr) {
 
 }
 
-// var jsonObj = convertToText(req.file.path, req.filename, req.body.date);
+//var jsonObj = convertToText(req.file.path, req.filename, req.body.date);
 //"../data/test.csv"
-//convertToText("public/uploads/test2.wav", "AudioText6test", "2020-05-11 16:04:22");
-// function convertToText(audioPath, filename, date) {
-//     const spawn = require('child_process').spawn;
-//     const scriptExecution = spawn("python", ["audioTranscribe.py"])
-//     var info = [audioPath, date];
-//     var text;
-//     scriptExecution.stdout.on('data', function (data) {
-//         var text = data.toString()
-//         console.log("Here:  " + data.toString());
-//         // saving transcribed files into transcriptions folder
-//         fs.writeFile('./transcriptions/' + filename + '.txt', text, function (err) {
-//             if (err) {
-//                 return console.log(err)
-//             }
-//             console.log("File created!")
-//         })
+convertToText("public/uploads/test2.wav", "AudioText7test", "2020-05-27 16:49:47");
+function convertToText(audioPath, filename, date) {
+    console.log("Here I am!")
+    const spawn = require('child_process').spawn;
+    const scriptExecution = spawn("python", ["audioTranscribe.py"])
+    var info = [audioPath];
+    var text;
+    console.log("Here I am2!")
+    scriptExecution.stdout.on('data', function (data) {
+        console.log("Python execution!")
+        var text = data.toString()
+        console.log("Here:  " + data.toString());
+        // saving transcribed files into transcriptions folder
+        fs.writeFile('./transcriptions/' + filename + '.txt', text, function (err) {
+            if (err) {
+                return console.log(err)
+            }
+            console.log("File created!")
+        })
 
-//     });
-//     scriptExecution.stdin.write(JSON.stringify(info));
-//     scriptExecution.stdin.end();
-// }
+    });
+    console.log("Here I am3!")
+    var data = JSON.stringify(info);
+    scriptExecution.stdin.write(data);
+    console.log("Here I am4!")
+    scriptExecution.stdin.end();
+}
 
 // connection to interventions_db
 
@@ -138,17 +144,18 @@ app.post('/interventions', function (req, res) {
     console.log("POST Request SENT To /INTERVENTIONS");
 })
 
-app.get('/posts', function (req, res) {
+// app.get('/posts', function (req, res) {
 
-    var q = "SELECT * FROM interventions;";
+//     var q = "SELECT * FROM interventions;";
 
-    connection.query(q, function (error, result) {
-        if (error) throw error;
-        console.log(JSON.stringify(result));
-        res.send(JSON.stringify(result));
-    });
-})
+//     connection.query(q, function (error, result) {
+//         if (error) throw error;
+//         console.log(JSON.stringify(result));
+//         res.send(JSON.stringify(result));
+//     });
+// })
 
+/**
 app.post('/addAudio', function (req, res) {
     var q = "INSERT INTO audio SET ?;";
     upload(req, res, function (err) {
@@ -170,7 +177,9 @@ app.post('/addAudio', function (req, res) {
         const scriptExecution = spawn("python", ["audioTranscribe.py"])
         var info = [req.file.path, req.body.date];
         var text;
+        console.log(req.file.path + " " + req.body.date);
         scriptExecution.stdout.on('data', function (data) {
+            console.log("Here in stdout")
             var obj = JSON.parse(data.toString());
             console.log("Here:  " + data.toString());
 
@@ -190,7 +199,7 @@ app.post('/addAudio', function (req, res) {
                 console.log("Posted to audio_recordings table");
             })
             // saving transcribed files into transcriptions folder
-            fs.writeFile('./transcriptions/' + req.file.filename + '.txt', text, function (err) {
+            fs.writeFile('./transcriptions/' + req.file.filename + '.txt', obj["audio_text"], function (err) {
                 if (err) {
                     return console.log(err)
                 }
@@ -199,10 +208,13 @@ app.post('/addAudio', function (req, res) {
 
         });
         scriptExecution.stdin.write(JSON.stringify(info));
+        console.log("Processed here!");
         scriptExecution.stdin.end();
 
     })
 })
+
+*/
 
 app.post('/addSignal', function (req, res) {
     var signalType = req.body.signalType;
@@ -328,10 +340,10 @@ app.get('/outputManual', function (req, res) {
 })
 
 
-app.post('/addSignal', function (req, res) {
-    console.log(req.body)
-    res.send("Request received")
-})
+// app.post('/addSignal', function (req, res) {
+//     console.log(req.body)
+//     res.send("Request received")
+// })
 
 app.listen(1551, function () {
     console.log("Server is listening on port 1551!");
