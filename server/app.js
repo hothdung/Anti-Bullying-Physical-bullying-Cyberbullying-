@@ -67,33 +67,33 @@ function parseMovementData(movStr) {
 
 //var jsonObj = convertToText(req.file.path, req.filename, req.body.date);
 //"../data/test.csv"
-convertToText("public/uploads/test2.wav", "AudioText7test", "2020-05-27 16:49:47");
-function convertToText(audioPath, filename, date) {
-    console.log("Here I am!")
-    const spawn = require('child_process').spawn;
-    const scriptExecution = spawn("python", ["audioTranscribe.py"])
-    var info = [audioPath];
-    var text;
-    console.log("Here I am2!")
-    scriptExecution.stdout.on('data', function (data) {
-        console.log("Python execution!")
-        var text = data.toString()
-        console.log("Here:  " + data.toString());
-        // saving transcribed files into transcriptions folder
-        fs.writeFile('./transcriptions/' + filename + '.txt', text, function (err) {
-            if (err) {
-                return console.log(err)
-            }
-            console.log("File created!")
-        })
+// convertToText("public/uploads/test2.wav", "AudioText7test", "2020-05-27 16:49:47");
+// function convertToText(audioPath, filename, date) {
+//     console.log("Here I am!")
+//     const spawn = require('child_process').spawn;
+//     const scriptExecution = spawn("python", ["audioTranscribe.py"])
+//     var info = [audioPath,date];
+//     var text;
+//     console.log("Here I am2!")
+//     scriptExecution.stdout.on('data', function (data) {
+//         console.log("Python execution!")
+//         var text = data.toString()
+//         console.log("Here:  " + data.toString());
+//         // saving transcribed files into transcriptions folder
+//         fs.writeFile('./transcriptions/' + filename + '.txt', text, function (err) {
+//             if (err) {
+//                 return console.log(err)
+//             }
+//             console.log("File created!")
+//         })
 
-    });
-    console.log("Here I am3!")
-    var data = JSON.stringify(info);
-    scriptExecution.stdin.write(data);
-    console.log("Here I am4!")
-    scriptExecution.stdin.end();
-}
+//     });
+//     console.log("Here I am3!")
+//     var data = JSON.stringify(info);
+//     scriptExecution.stdin.write(data);
+//     console.log("Here I am4!")
+//     scriptExecution.stdin.end();
+// }
 
 // connection to interventions_db
 
@@ -155,7 +155,7 @@ app.post('/interventions', function (req, res) {
 //     });
 // })
 
-/**
+
 app.post('/addAudio', function (req, res) {
     var q = "INSERT INTO audio SET ?;";
     upload(req, res, function (err) {
@@ -214,7 +214,6 @@ app.post('/addAudio', function (req, res) {
     })
 })
 
-*/
 
 app.post('/addSignal', function (req, res) {
     var signalType = req.body.signalType;
