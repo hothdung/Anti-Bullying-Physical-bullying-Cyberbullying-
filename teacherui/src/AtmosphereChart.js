@@ -23,7 +23,7 @@ class AtmosphereChart extends Component {
 
     drawChart() {
 
-        var colors = ['#FF0000', '#5588ff', '#993299', '#A3A319', '#19D219'];
+        var colors = ['#FF0000', '#5588ff', '#993299', '#A3A319', '#19D219', "#DEC01F"];
 
         var color = d3.scaleOrdinal().range(colors);
 
@@ -104,21 +104,21 @@ class AtmosphereChart extends Component {
             .style('stroke', 'black')
             .style('stroke-width', 0.4);
 
-        svg.append("text")
-            .attr("x", 0)
-            .attr("y", 30)
-            .attr("dy", "1em")
-            .style("font-size", "12px")
-            .style("font-weight", "bold")
-            .text("0 %")
+        // svg.append("text")
+        //     .attr("x", 0)
+        //     .attr("y", 30)
+        //     .attr("dy", "1em")
+        //     .style("font-size", "12px")
+        //     .style("font-weight", "bold")
+        //     .text("0 %")
 
-        svg.append("text")
-            .attr("x", prev_percentage + 20)
-            .attr("y", 30)
-            .attr("dy", "1em")
-            .style("font-size", "12px")
-            .style("font-weight", "bold")
-            .text("100 %")
+        // svg.append("text")
+        //     .attr("x", prev_percentage + 20)
+        //     .attr("y", 30)
+        //     .attr("dy", "1em")
+        //     .style("font-size", "12px")
+        //     .style("font-weight", "bold")
+        //     .text("100 %")
 
 
 
@@ -169,10 +169,6 @@ class AtmosphereChart extends Component {
             .attr('cx', x(0.5))
             .attr('cy', (d) => y(d[this.state.yAxisAttribute]) + 15)
             .attr('r', 20)
-            .style("stroke", function (d, i) {
-                return color(i);
-            })
-            .style("stroke-width", 4.5)
             .attr('fill', (d) => "url(#" + d[this.state.yAxisAttribute] + ")")
             .transition().delay((d, i) => {
                 return i * 2000;

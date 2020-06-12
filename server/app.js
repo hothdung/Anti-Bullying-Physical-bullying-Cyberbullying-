@@ -67,7 +67,7 @@ function parseMovementData(movStr) {
 
 //var jsonObj = convertToText(req.file.path, req.filename, req.body.date);
 //"../data/test.csv"
-// convertToText("public/uploads/test2.wav", "AudioText7test", "2020-05-27 16:49:47");
+// convertToText("public/uploads/studentAudio-1590569980908.wav", "AudioText8test", "2020-05-27 16:49:47");
 // function convertToText(audioPath, filename, date) {
 //     console.log("Here I am!")
 //     const spawn = require('child_process').spawn;
@@ -144,16 +144,16 @@ app.post('/interventions', function (req, res) {
     console.log("POST Request SENT To /INTERVENTIONS");
 })
 
-// app.get('/posts', function (req, res) {
+app.get('/posts', function (req, res) {
 
-//     var q = "SELECT * FROM interventions;";
+    var q = "SELECT * FROM interventions;";
 
-//     connection.query(q, function (error, result) {
-//         if (error) throw error;
-//         console.log(JSON.stringify(result));
-//         res.send(JSON.stringify(result));
-//     });
-// })
+    connection.query(q, function (error, result) {
+        if (error) throw error;
+        console.log(JSON.stringify(result));
+        res.send(JSON.stringify(result));
+    });
+})
 
 
 app.post('/addAudio', function (req, res) {

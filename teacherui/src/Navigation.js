@@ -15,25 +15,26 @@ import DurationInfo from './data/depressionDuration.json'
 
 function Navigation(props) {
 
-    const index = props.option === "Overview" ? 0 : 1;
+    const index = props.option === "Overview" ? 0 : props.option === "Reporting Data" ? 1 : 2;
     // const classes = useStyles();
 
     const indexSelect = (e, index) => {
-        props.onSelect(index === 0 ? "Overview" : "Reporting Data")
+        props.onSelect(index === 0 ? "Overview" : index === 1 ? "Reporting Data" : "Verification")
     }
 
     console.log("This is the screen " + props.stateScreen);
     return (
-            <Tabs
-                value={index}
-                onChange={indexSelect}
-                indicatorColor="primary"
-                textColor="primary"
-                centered
-            >
-                <Tab label="Overview" />
-                <Tab label="Reporting Data" />
-            </Tabs>
+        <Tabs
+            value={index}
+            onChange={indexSelect}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+        >
+            <Tab label="Overview" />
+            <Tab label="Reporting Data" />
+            <Tab label="Verification" />
+        </Tabs>
     );
 }
 

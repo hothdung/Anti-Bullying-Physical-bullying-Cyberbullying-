@@ -10,7 +10,7 @@ class WarningFrequency extends Component {
             data: this.props.warningVal,
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
-            width: window.innerWidth-250,
+            width: window.innerWidth - 250,
             height: 250,
             width: window.innerWidth - 250,
             height: 250
@@ -263,7 +263,7 @@ class WarningFrequency extends Component {
     }
 
     fetchData() {
-        return fetch('http://147.46.215.219:8080/posts', {
+        return fetch('http://147.46.215.219:1551/posts', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

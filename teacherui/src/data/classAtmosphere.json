@@ -16,34 +16,41 @@
         "nameEmotion": "Anger",
         "total": 100,
         "percentage": 30,
-        "image": "/images/Anger.jpg"
+        "image": "/images/anger.png"
     },
     {
         "id": 2,
         "nameEmotion": "Sadness",
         "total": 100,
         "percentage": 21,
-        "image": "/images/Sadness.jpg"
+        "image": "/images/sadness.png"
     },
     {
         "id": 3,
         "nameEmotion": "Fear",
         "total": 100,
         "percentage": 35,
-        "image": "/images/Fear.jpg"
+        "image": "/images/fear.png"
     },
     {
         "id": 4,
         "nameEmotion": "Disgust",
         "total": 100,
         "percentage": 41,
-        "image": "/images/Disgust.jpg"
+        "image": "/images/disgust.png"
     },
     {
         "id": 5,
         "nameEmotion": "Enjoyment",
         "total": 100,
         "percentage": 55,
-        "image": "/images/Enjoyment.jpg"
+        "image": "/images/Joy.png"
+    },
+    {
+        "id": 6,
+        "nameEmotion": "Surprise",
+        "total": 100,
+        "percentage": 23,
+        "image": "/images/surprise.png"
     }
 ]

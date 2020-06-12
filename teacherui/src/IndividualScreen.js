@@ -106,6 +106,7 @@ class IndividualScreen extends Component {
                                 <Col lg='3' style={{ float: "left", marginLeft: "80px" }}>
                                     <PosNegChart posNegEmotionVal={EmotionVals} />
                                     <hr />
+                                    <DepressionComponent depressiveInfo={DurationInfo} studentVal={this.props.studentVal} />
                                     {manuals.map(manual => {
                                         const { long, lat, bpm, message } = manual;
                                         return (

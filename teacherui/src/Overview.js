@@ -8,6 +8,7 @@ import FrequencyData from './data/warningSample.json';
 import InterventionsData from './data/interventions.json';
 import MethodsTable from './MethodsTable';
 import Navigation from './Navigation';
+import Paper from '@material-ui/core/Paper';
 import { spacing } from '@material-ui/system';
 import FeelingsCloud from './FeelingsCloud';
 import ReportingChart from './ReportingChart';
@@ -17,6 +18,7 @@ import FeelingsTag from './data/emotions.json';
 import ReportingData from './data/reportMethods.json';
 import EmotionData from './data/classAtmosphere.json';
 import LocationData from './data/locations.json';
+import VerificationTable from './VerificationTable.js';
 
 
 
@@ -65,20 +67,26 @@ class Overview extends Component {
                             <Navigation onSelect={this.handleOptionSelected}
                                 option={this.state.option}
                                 stateScreen={this.props.stateScreen} /></Paper>
-
                         {this.state.option === "Overview" ?
                             <div><WarningFrequency warningVal={FrequencyData} />
                                 <MethodsTable methods={InterventionsData} /></div> :
-                            <div>
-                                <Col lg='7' style={{ float: "left" }}>
-                                    <FeelingsCloud cloudTags={FeelingsTag} />
-                                    <ReportingChart reportingMethods={ReportingData} />
-                                </Col>
-                                <Col lg='3' style={{ float: "left", marginLeft: "80px" }}>
-                                    <AtmosphereChart emotionsVal={EmotionData} />
-                                    <LocationsChart locations={LocationData} />
-                                </Col>
-                            </div>
+                            this.state.option === "Reporting Data" ?
+                                <div>
+                                    <Col lg='7' style={{ paddingLeft: 0, float: "left" }}>
+                                        <FeelingsCloud cloudTags={FeelingsTag} />
+                                        <ReportingChart reportingMethods={ReportingData} />
+                                    </Col>
+                                    <Col lg='3' style={{ float: "left", marginLeft: "80px" }}>
+                                        <AtmosphereChart emotionsVal={EmotionData} />
+                                        <LocationsChart locations={LocationData} />
+                                    </Col>
+                                </div> :
+                                <div>
+                                    <Col lg='11' style={{ paddingLeft: 40, paddingRight: 0, paddingTop: 40 }}>
+                                        <VerificationTable />
+                                    </Col>
+                                </div>
+
                         }
                     </Col>
 
