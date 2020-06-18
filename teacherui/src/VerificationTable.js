@@ -31,7 +31,7 @@ const VerificationTable = (props) => {
                     <td>서울 관악구 대학동</td>
                     <td>2020-05-24 23:23:24</td>
                     <td>Not Bullying</td>
-                    <td>0.9752</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -43,7 +43,7 @@ const VerificationTable = (props) => {
                     <td>서울 관악구 대학동</td>
                     <td>2020-05-27 22:54:33</td>
                     <td>Not Bullying </td>
-                    <td>0.9752</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -55,7 +55,7 @@ const VerificationTable = (props) => {
                     <td>서울 특별시 강남구 강남대로 122 길 60</td>
                     <td>2020-05-26 20:37:09</td>
                     <td>Bullying</td>
-                    <td>0.9802</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -67,7 +67,7 @@ const VerificationTable = (props) => {
                     <td>경기도 이천시 광고 동 196-16</td>
                     <td>2020-05-29 00:08:58</td>
                     <td>Bullying</td>
-                    <td>0.9752</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -79,7 +79,7 @@ const VerificationTable = (props) => {
                     <td>경기도 이천시 광고 동 196-16</td>
                     <td>2020-05-29 00:10:59</td>
                     <td>Not Bullying</td>
-                    <td>0.9604</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -91,7 +91,7 @@ const VerificationTable = (props) => {
                     <td>경기도 이천시 광고 동 196-16</td>
                     <td>2020-05-29 00:13:00</td>
                     <td>Bullying</td>
-                    <td>0.9802</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -103,7 +103,7 @@ const VerificationTable = (props) => {
                     <td>서울대 공과 대학</td>
                     <td>2020-05-29 13:22:57</td>
                     <td>Bullying</td>
-                    <td>0.9653</td>
+                    <td> 0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -115,7 +115,7 @@ const VerificationTable = (props) => {
                     <td>서울대 공과 대학</td>
                     <td>2020-05-29 14:27:00</td>
                     <td>Bullying</td>
-                    <td>0.9554</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -127,7 +127,7 @@ const VerificationTable = (props) => {
                     <td>서울 특별시 강남구 강남대로 122 길 60</td>
                     <td>2020-05-29 14:44:10</td>
                     <td>Not Bullying</td>
-                    <td>0.9653</td>
+                    <td>0.9603</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
