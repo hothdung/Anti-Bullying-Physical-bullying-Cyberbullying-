@@ -17,19 +17,21 @@ const VerificationTable = (props) => {
                     <th>Location</th>
                     <th>Time</th>
                     <th>Bullying</th>
-                    <th>    Check</th>
+                    <th>Accuracy</th>
+                    <th>Check</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>studentdsfrot</td>
-                    <td>80</td>
+                    <td>99</td>
                     <td>사람들이 능력이 없어서 그런거 아니야</td>
                     <td>NEUTRAL</td>
-                    <td>서일중학교 운동장</td>
-                    <td>2020-05-24 18:20:22</td>
-                    <td>Not Bullying </td>
+                    <td>서울 관악구 대학동</td>
+                    <td>2020-05-24 23:23:24</td>
+                    <td>Not Bullying</td>
+                    <td>0.9752</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -38,86 +40,94 @@ const VerificationTable = (props) => {
                     <td>80</td>
                     <td>여기 너무 예뻐요 당연하죠 전 캘리포니아보다 여기 훨씬 더 좋아요</td>
                     <td>POSITIVE</td>
-                    <td>이천시부발읍현대아파트</td>
+                    <td>서울 관악구 대학동</td>
                     <td>2020-05-27 22:54:33</td>
                     <td>Not Bullying </td>
-                    <td><DoneIcon /></td>
-                    <td><ClearIcon /></td>
-                </tr>
-                <tr>
-                    <td>student6fV21d</td>
-                    <td>102</td>
-                    <td>제발 다시는 학교에서 안 봤으면 한다</td>
-                    <td>NEGATIVE</td>
-                    <td>서울외국어고등학교</td>
-                    <td>2020-05-28 15:22:22</td>
-                    <td>Bullying</td>
+                    <td>0.9752</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
                 <tr>
                     <td>studentrqkzUq</td>
-                    <td>105</td>
-                    <td>착각하지 마 때리는 거야</td>
-                    <td>NEGATIVE</td>
-                    <td>동부이촌동아파트</td>
-                    <td>2020-05-28 20:22:22</td>
-                    <td>Bullying</td>
-                    <td><DoneIcon /></td>
-                    <td><ClearIcon /></td>
-                </tr>
-                <tr>
-                    <td>studentrqkzUq</td>
-                    <td>101</td>
-                    <td>미친 진짜 하지마. 제일 힘들어 지금 삶이 힘들다 삶이 힘들다 </td>
-                    <td>NEGATIVE</td>
-                    <td>이천시부발읍현대아파트</td>
-                    <td>2020-05-28 21:19:22</td>
-                    <td>Bullying</td>
-                    <td><DoneIcon /></td>
-                    <td><ClearIcon /></td>
-                </tr>
-                <tr>
-                    <td>studenturk7A3</td>
-                    <td>103</td>
-                    <td>에 신동우! 가서 물떠와! 물떠오라고 빨리!</td>
-                    <td>NEGATIVE</td>
-                    <td>이천시부발읍현대아파트</td>
-                    <td>2020-05-28 21:19:22</td>
-                    <td>Bullying</td>
-                    <td><DoneIcon /></td>
-                    <td><ClearIcon /></td>
-                </tr>
-                <tr>
-                    <td>studenturk7A3</td>
                     <td>100</td>
-                    <td>안 한다고 미친 진짜 하지마! 너야 신동우 너가 토요일날 11시까지 데려가줘 그다음에 여행가라 질러하지마. 질러하지마! 질러하지마 진짜. 집에서 뭘 도와주는 거 있어? 걸어가! 걸아가! 너가 돕고 안 하잖아. 안 하다고! 맨날 걸어가 맨날 걸어가! 미친 걸어갈 걸. 렌트가로 타고 가고! 렌트타고 가 그냥!</td>
+                    <td>착각하지 마 그냥 데리거야</td>
                     <td>NEGATIVE</td>
-                    <td>이천시부발읍현대아파트</td>
-                    <td>2020-05-29 00:08:28</td>
+                    <td>서울 특별시 강남구 강남대로 122 길 60</td>
+                    <td>2020-05-26 20:37:09</td>
                     <td>Bullying</td>
+                    <td>0.9802</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
                 <tr>
-                    <td>studentk5ldHN</td>
-                    <td>102</td>
-                    <td>저는 잘 맞아요. 사람마다 좀 다르긴 한데 저는 잘 맞는 것 같아요. 사람들이 한약 별로 안 좋더라고요. 진짜 도움이 되냐? 맞아요.</td>
+                    <td>studenturk7A3</td>
+                    <td>105</td>
+                    <td>에 신동우 빨리 물 떠와 야 지금 물 빨리 떠오라고!</td>
                     <td>NEGATIVE</td>
-                    <td>서울외국어고등학교</td>
-                    <td>2020-05-29 14:44:10</td>
+                    <td>경기도 이천시 광고 동 196-16</td>
+                    <td>2020-05-29 00:08:58</td>
                     <td>Bullying</td>
+                    <td>0.9752</td>
+                    <td><DoneIcon /></td>
+                    <td><ClearIcon /></td>
+                </tr>
+                <tr>
+                    <td>studenturk7A3</td>
+                    <td>94</td>
+                    <td>걔가 있잖아 그렇게 말하는 거 10분 해주고 싶고 왜 할래 걔가 뭐가 하려고 학교에서 기다리고 있어 그 거 어쩌라고 걔인데</td>
+                    <td>NEGATIVE</td>
+                    <td>경기도 이천시 광고 동 196-16</td>
+                    <td>2020-05-29 00:10:59</td>
+                    <td>Not Bullying</td>
+                    <td>0.9604</td>
+                    <td><DoneIcon /></td>
+                    <td><ClearIcon /></td>
+                </tr>
+                <tr>
+                    <td>studenturk7A3</td>
+                    <td>96</td>
+                    <td>안 한다고! 미친. 하지마. 너야 신동우 너 누나 11시까지 잤을 것 같으면 그 다음에 여행가라 질러하지마 질러자지마 진짜 네가 돕지 않았잖아 네가 돕고 안 하잖아 네가 솔직히 집에서 뭘 도와주는 거 있어? 걸어가. 맨날 걸아가. 미친 걸억갈걸. 걸어가. 너가 11시까지 잤으지마 진짜. 렌트타고 가고! 렌트타고 가 그냥</td>
+                    <td>NEGATIVE</td>
+                    <td>경기도 이천시 광고 동 196-16</td>
+                    <td>2020-05-29 00:13:00</td>
+                    <td>Bullying</td>
+                    <td>0.9802</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
                 <tr>
                     <td>studentnRgJWf</td>
-                    <td>99</td>
-                    <td>왜 이렇게 사는 게 힘들기만 한지 누가 세상에 아름답다고 말한 건지 태어났을 때부터 삶이 내게 준 배치 문제 너무 힘들어 너도 걔 이제 돌아가 이제 끝나면</td>
+                    <td>94</td>
+                    <td>내가 일등이 있어야 되는 왜 내 자리를 뺐어.</td>
                     <td>NEGATIVE</td>
-                    <td>이천시부발읍현대아파트</td>
-                    <td>2020-05-29 13:21:57</td>
+                    <td>서울대 공과 대학</td>
+                    <td>2020-05-29 13:22:57</td>
                     <td>Bullying</td>
+                    <td>0.9653</td>
+                    <td><DoneIcon /></td>
+                    <td><ClearIcon /></td>
+                </tr>
+                <tr>
+                    <td>studentk5ldHN</td>
+                    <td>94</td>
+                    <td>인생이 의미가 없어 아아</td>
+                    <td>NEGATIVE</td>
+                    <td>서울대 공과 대학</td>
+                    <td>2020-05-29 14:27:00</td>
+                    <td>Bullying</td>
+                    <td>0.9554</td>
+                    <td><DoneIcon /></td>
+                    <td><ClearIcon /></td>
+                </tr>
+                <tr>
+                    <td>studentk5ldHN</td>
+                    <td>70</td>
+                    <td>저는 잘 맞아요. 사람마다 좀 다르긴 한데 저는 잘 맞는 것 같아요. 사람들이 한약 별로 안 좋더라고요. 진짜 도움이 되냐? 맞아요.</td>
+                    <td>POSITIVE</td>
+                    <td>서울 특별시 강남구 강남대로 122 길 60</td>
+                    <td>2020-05-29 14:44:10</td>
+                    <td>Not Bullying</td>
+                    <td>0.9653</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
