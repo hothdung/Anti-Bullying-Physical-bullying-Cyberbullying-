@@ -52,7 +52,6 @@ dat = dat[
 dat.raw_sentence = dat.raw_sentence.map(
     lambda text: re.sub('^ | $', '', re.sub('\\W+', ' ', text)))
 
-print("This is dat raw "+dat.raw_sentence)
 
 # Label FastText columns
 # Using p, i, subt, and subp to distinguish in FT output
@@ -85,6 +84,9 @@ test.to_csv(
 model = fasttext.train_supervised(
     DIR + '/corpus_ft.train', lr=1.0, epoch=25, wordNgrams=3, bucket=200000, dim=50, loss='ova'
 )
+
+classifier = fasttext.train_supervised(
+    DIR + '/corpus_ft.train', model, dat.polarity)
 
 
 def print_results(N, p, r):
