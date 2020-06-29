@@ -22,8 +22,7 @@ class AtmosphereChart extends Component {
     }
 
     drawChart() {
-
-        var colors = ['#FF0000', '#5588ff', '#993299', '#A3A319', '#19D219', "#DEC01F"];
+        var colors = ['#FF0000', '#993299', '#5588ff', '#A3A319', '#19D219', "#DEC01F"];
 
         var color = d3.scaleOrdinal().range(colors);
 

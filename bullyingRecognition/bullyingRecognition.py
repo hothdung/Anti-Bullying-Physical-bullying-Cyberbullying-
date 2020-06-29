@@ -7,7 +7,7 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import preprocessing
-from sklearn import metrics
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
 
 # print(sklearn.__version__)
@@ -69,7 +69,9 @@ print(classifier.predict([[270, 95, 126.93525873029968, 37.46846711884488,
                            0.18, -0.19, -0.97, -0.02, -0.08, 0.06, 0.56, 0.18, -0.16, 0.2, 0.2, 0, 0]]))
 
 # measuring performance
-print("Accuracy: ", metrics.accuracy_score(y_test, y_prediction))
+print("Accuracy: ", accuracy_score(y_test, y_prediction))
+print(confusion_matrix(y_test, y_prediction))
+print(classification_report(y_test, y_prediction))
 
 # saving the model
 savedModel = 'recognitionModel.sav'

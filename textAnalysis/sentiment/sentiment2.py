@@ -52,8 +52,6 @@ dat = dat[
 dat.raw_sentence = dat.raw_sentence.map(
     lambda text: re.sub('^ | $', '', re.sub('\\W+', ' ', text)))
 
-print("This is dat raw "+dat.raw_sentence)
-
 # Label FastText columns
 # Using p, i, subt, and subp to distinguish in FT output
 dat.polarity = '__label__p_' + dat.polarity
@@ -66,10 +64,11 @@ dat = dat.drop('confident', 1)
 
 # Randomly Split into Training and Test Sets (80/20)
 # Training Data 80% (sample without replacement)
-train = dat.sample(frac=.8, replace=False)
+# train = dat.sample(frac=.8, replace=False)
+train = dat.sample(frac=.8, replace=False).sort_index()
 
 # Testing Data 20% (select data not in training)
-test = dat.loc[list(set(dat.index) - set(train.index))]
+test = dat.loc[list(set(dat.index) - set(train.index))].sort_index()
 
 # Write training data to tsv files
 train.to_csv(
@@ -121,7 +120,7 @@ dat.to_csv(
 # Manual Method
 # Train Model on Entire Dataset
 model = fasttext.train_supervised(
-    DIR + '/corpus_ft.dat', lr=1.0, epoch=25, wordNgrams=3, bucket=200000, dim=50, loss='ova'
+    DIR + '/corpus_ft.dat', lr=1.0, epoch=25, wordNgrams=3, bucket=20000, dim=50, loss='ova'
 )
 
 # # Auto-Tunes parameters
@@ -139,7 +138,7 @@ model = fasttext.train_supervised(
 # fasttext.load_model(DIR + '/sentiment_predictor.bin')
 
 model.save_model("sentimenAnalysis2.bin")
-print(model.predict('그는 못 생기다', k=1))
-print(model.predict('정말 감사합니다', k=1))
-print(model.predict('인생이 힘들다', k=1))
-print(model.predict('그 아이가 예쁘다', k=1))
+print(model.predict("안 한다고! 미친. 하지마. 너야 신동우 너 누나 11시까지 잤을 것 같으면 그 다음에 여행가라 질러하지마 질러자지마 진짜 네가 돕지 않았잖아 네가 돕고 안 하잖아 네가 솔직히 집에서 뭘 도와주는 거 있어? 걸어가. 맨날 걸아가. 미친 걸어갈걸. 걸어가. 너가 11시까지 잤으지마 진짜. 렌트타고 가고! 렌트타고 가 그냥", k=1))
+print(model.predict("인생이 의미가 없다", k=1))
+print(model.predict(
+    "저는 잘 맞아요. 사람마다 좀 다르긴 한데 저는 잘 맞는 것 같아요. 사람들이 한약 별로 안 좋더라고요. 진짜 도움이 되냐? 맞아요. ", k=1))

@@ -31,7 +31,7 @@ const VerificationTable = (props) => {
                     <td>서울 관악구 대학동</td>
                     <td>2020-05-24 23:23:24</td>
                     <td>Not Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -43,7 +43,7 @@ const VerificationTable = (props) => {
                     <td>서울 관악구 대학동</td>
                     <td>2020-05-27 22:54:33</td>
                     <td>Not Bullying </td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -55,7 +55,7 @@ const VerificationTable = (props) => {
                     <td>서울 특별시 강남구 강남대로 122 길 60</td>
                     <td>2020-05-26 20:37:09</td>
                     <td>Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -67,7 +67,7 @@ const VerificationTable = (props) => {
                     <td>경기도 이천시 광고 동 196-16</td>
                     <td>2020-05-29 00:08:58</td>
                     <td>Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -79,19 +79,19 @@ const VerificationTable = (props) => {
                     <td>경기도 이천시 광고 동 196-16</td>
                     <td>2020-05-29 00:10:59</td>
                     <td>Not Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
                 <tr>
                     <td>studenturk7A3</td>
                     <td>96</td>
-                    <td>안 한다고! 미친. 하지마. 너야 신동우 너 누나 11시까지 잤을 것 같으면 그 다음에 여행가라 질러하지마 질러자지마 진짜 네가 돕지 않았잖아 네가 돕고 안 하잖아 네가 솔직히 집에서 뭘 도와주는 거 있어? 걸어가. 맨날 걸아가. 미친 걸억갈걸. 걸어가. 너가 11시까지 잤으지마 진짜. 렌트타고 가고! 렌트타고 가 그냥</td>
+                    <td>안 한다고! 미친. 하지마. 너야 신동우 너 누나 11시까지 잤을 것 같으면 그 다음에 여행가라 질러하지마 질러자지마 진짜 네가 돕지 않았잖아 네가 돕고 안 하잖아 네가 솔직히 집에서 뭘 도와주는 거 있어? 걸어가. 맨날 걸아가. 미친 걸어갈걸. 걸어가. 너가 11시까지 잤으지마 진짜. 렌트타고 가고! 렌트타고 가 그냥</td>
                     <td>NEGATIVE</td>
                     <td>경기도 이천시 광고 동 196-16</td>
                     <td>2020-05-29 00:13:00</td>
                     <td>Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -103,7 +103,7 @@ const VerificationTable = (props) => {
                     <td>서울대 공과 대학</td>
                     <td>2020-05-29 13:22:57</td>
                     <td>Bullying</td>
-                    <td> 0.9603</td>
+                    <td> 0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -115,7 +115,7 @@ const VerificationTable = (props) => {
                     <td>서울대 공과 대학</td>
                     <td>2020-05-29 14:27:00</td>
                     <td>Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
@@ -127,7 +127,7 @@ const VerificationTable = (props) => {
                     <td>서울 특별시 강남구 강남대로 122 길 60</td>
                     <td>2020-05-29 14:44:10</td>
                     <td>Not Bullying</td>
-                    <td>0.9603</td>
+                    <td>0.9604</td>
                     <td><DoneIcon /></td>
                     <td><ClearIcon /></td>
                 </tr>
